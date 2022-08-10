@@ -1,0 +1,28 @@
+# mkdocs serve
+
+site_name: Single Node OpenShift
+
+site_url: https://ibm-mas-manage.github.io/sno/
+
+repo_name: GitHub
+repo_url: https://github.com/ibm-mas-manage/sno
+edit_uri: blob/master/docs/
+
+nav:
+  - 'Single Node OpenShift': index.md
+
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_languages:
+    - yaml
+  prev_next_buttons_location: none
+extra_css:
+  - extra.css
+markdown_extensions:
+  - toc:
+      permalink: 
+  - admonition
+  # Add this to support expandable sections
+  #- pymdownx.details
+
