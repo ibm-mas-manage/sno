@@ -1,12 +1,12 @@
 # Single Node OpenShift (OpenShift 4.10+) 
+**MAS 8.8/Manage 8.4**
 **Technology Preview**
 
-###MAS 8.8/Manage 8.4
 This page documents how to setup MAS Manage on a SNO cluster.
 
 ### Minimum Requirements
-vCPU: 16Cores
-RAM: 64Gb
+- vCPU: 16Cores
+- RAM: 64Gb
 
 ## AWS
 This is based on a M5.4xlarge EC2 instance with mongo, db2u, db2w db, ibm sls, mas core, mas manage deployed.  
@@ -60,18 +60,6 @@ For example, region: us-east-2
 
 - Delete SNO cluster
 	- openshift-install delete cluster --dir /root/sno
-
-## Azure
-
-In Progress
-
-## vSphere
-
-In Progress
-
-## Bare Metal
-
-In Progress
 
 ## Install MAS and dependencies
 
@@ -132,6 +120,7 @@ oc login --token=xxxx --server=<https://myocpserver>
 ```
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 
+
 - Run the Core ansible collection:
 ```
 ansible-playbook ~/.ansible/collections/ansible_collections/ibm/mas_devops/playbooks/oneclick_core.yml
@@ -140,9 +129,7 @@ ansible-playbook ~/.ansible/collections/ansible_collections/ibm/mas_devops/playb
 ## Intall DB2 (optional)
 
 - Install DB2 using this [link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
-- Use gp2 as storage class.
 - Sample
-
 ```
 export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
 export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
@@ -161,11 +148,13 @@ oc login --token=xxxx --server=<https://myocpserver>
 ```
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 
+
 - Run the Manage ansible collection:
 
 ```
 ansible-playbook  ~/.ansible/collections/ansible_collections/ibm/mas_devops/playbooks/oneclick_add_manage.yml
 ```
+
 - Configure the database, if you want to use an existing database.
 
 https://www.ibm.com/docs/en/maximo-manage/continuous-delivery?topic=manage-configuring-database
