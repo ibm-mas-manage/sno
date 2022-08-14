@@ -177,7 +177,7 @@ ansible-playbook  playbooks/oneclick_add_manage.yml
 		 
 		- Install Manage from Catalog page.
 		
-		![image](images/installManage.png)
+		![image](images/installmanage.png)
 		 
 		- Select `Application version` action to deploy operator.
 		
