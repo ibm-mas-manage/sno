@@ -45,31 +45,15 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href=".">Single Node OpenShift</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#mas-88manage-84">MAS 8.8/Manage 8.4</a>
-    </li>
     <li class="toctree-l2"><a class="reference internal" href="#minimum-requirements">Minimum Requirements</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#aws">AWS</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#create-sno-cluster">Create SNO cluster</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#delete-sno-cluster">Delete SNO cluster</a>
-    </li>
         </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#azure">Azure</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#vsphere">vSphere</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#bare-metal">Bare Metal</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#install-mas-and-dependencies">Install MAS and dependencies</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#set-environment-variables">Set Environment variables</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#mas-core-ansible-collection">MAS core ansible collection</a>
-    </li>
-        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#intall-db2-optional">Intall DB2 (optional)</a>
     </li>
@@ -104,12 +88,14 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="single-node-openshift-openshift-410">Single Node OpenShift (OpenShift 4.10+)<a class="headerlink" href="#single-node-openshift-openshift-410" title="Permanent link"></a></h1>
-<p><strong>Technology Preview</strong></p>
-<h3 id="mas-88manage-84">MAS 8.8/Manage 8.4<a class="headerlink" href="#mas-88manage-84" title="Permanent link"></a></h3>
+<p><strong>MAS 8.8/Manage 8.4</strong>
+<strong>Technology Preview</strong></p>
 <p>This page documents how to setup MAS Manage on a SNO cluster.</p>
 <h3 id="minimum-requirements">Minimum Requirements<a class="headerlink" href="#minimum-requirements" title="Permanent link"></a></h3>
-<p>vCPU: 16Cores
-RAM: 64Gb</p>
+<ul>
+<li>vCPU: 16Cores</li>
+<li>RAM: 64Gb</li>
+</ul>
 <h2 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link"></a></h2>
 <p>This is based on a M5.4xlarge EC2 instance with mongo, db2u, db2w db, ibm sls, mas core, mas manage deployed.<br />
 - Download <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">AWS CLI</a>
@@ -157,31 +143,46 @@ pullSecret: '&lt;your secret&gt;'
 <li>Create cluster
 <code>openshift-install create cluster --dir=sno</code></li>
 </ul>
-<h3 id="delete-sno-cluster">Delete SNO cluster<a class="headerlink" href="#delete-sno-cluster" title="Permanent link"></a></h3>
-<ul>
-<li>Delete SNO cluster<ul>
-<li>openshift-install delete cluster --dir /root/sno</li>
-</ul>
-</li>
-</ul>
-<h2 id="azure">Azure<a class="headerlink" href="#azure" title="Permanent link"></a></h2>
-<p>In Progress</p>
-<h2 id="vsphere">vSphere<a class="headerlink" href="#vsphere" title="Permanent link"></a></h2>
-<p>In Progress</p>
-<h2 id="bare-metal">Bare Metal<a class="headerlink" href="#bare-metal" title="Permanent link"></a></h2>
-<p>In Progress</p>
 <h2 id="install-mas-and-dependencies">Install MAS and dependencies<a class="headerlink" href="#install-mas-and-dependencies" title="Permanent link"></a></h2>
 <ul>
+<li>OC Login: </li>
+</ul>
+<pre><code>oc login --token=xxxx --server=&lt;https://myocpserver&gt;
+</code></pre>
+<p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.
+You can get OC Login information from OpenShift Console (top right kube:admin drop down list-&gt; <code>Copy login command</code>)</p>
+<ul>
 <li>
-<p>Follow this <a href="https://ibm-mas.github.io/ansible-devops/#running-in-docker">link</a> to install <a href="Install Python &amp; Ansible">Python &amp; Ansible</a>, <a href="https://ibm-mas.github.io/ansible-devops/#install-openshift-cli">OpenShift CLI</a>
-and the <a href="https://ibm-mas.github.io/ansible-devops/#install-the-ansible-collection">Ansible Collection</a></p>
-</li>
+<p>Run the core ansible collection:</p>
+<ul>
+<li>Open Terminal/PowerShell</li>
+</ul>
+<p>```
+docker run -ti quay.io/ibmmas/ansible-devops bash
+tar -zxf ibm-mas_devops.tar.gz</p>
+<p>mkdir ~/masconfig
+```</p>
+<ul>
 <li>
-<p>Prepare for <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">Core Installation</a></p>
+<p>Copy the entitlement license file to masconfig folder:</p>
+<ul>
+<li>Open Terminal/PowerShell</li>
+<li><code>docker ps</code> to get CONTAINER</li>
+<li>docker cp SRC_PATH CONTAINER:/DEST_PATH/.<ul>
+<li>For example, <code>docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.</code></li>
+</ul>
 </li>
 </ul>
-<h3 id="set-environment-variables">Set Environment variables<a class="headerlink" href="#set-environment-variables" title="Permanent link"></a></h3>
-<pre><code>export MONGODB_STORAGE_CLASS=&lt;storage-class&gt;
+</li>
+<li>
+<p>From the docker terminal/PowerShell:</p>
+<ul>
+<li>Set the following environment variables</li>
+</ul>
+</li>
+</ul>
+<p><code>export MONGODB_STORAGE_CLASS=&lt;storage-class&gt;
+export IBM_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
 export MAS_APP_ID=manage
 export SLS_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
 export SLS_STORAGE_CLASS=&lt;storage-class&gt;
@@ -189,21 +190,22 @@ export SLS_LICENSE_ID=&lt;license-id&gt;
 export SLS_LICENSE_FILE=&lt;license-file&gt;
 export UDS_STORAGE_CLASS=&lt;storage-class&gt;
 export UDS_CONTACT_EMAIL=&lt;your email-id&gt;
-exportand Ansible collections (Install the Ansible Collection) UDS_CONTACT_FIRSTNAME=&lt;your first name&gt;
+export UDS_CONTACT_FIRSTNAME=&lt;your first name&gt;
 export UDS_CONTACT_LASTNAME=&lt;your first name&gt;
 export MAS_INSTANCE_ID=&lt;instance-id&gt;
 export MAS_CONFIG_DIR=&lt;config-dir&gt;
-export MAS_WORKSPACE_ID=&lt;mas-workspace--d&gt;
+export MAS_WORKSPACE_ID=&lt;mas-workspace-id&gt;
 export MAS_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
 export PROMETHEUS_STORAGE_CLASS=&lt;storage-class&gt;
 export PROMETHEUS_ALERTMGR_STORAGE_CLASS=&lt;storage-class&gt;
 export GRAFANA_INSTANCE_STORAGE_CLASS=&lt;storage-class&gt;
-export MONGODB_REPLICAS=1
-</code></pre>
+export MONGODB_REPLICAS=1</code>
+- To get the IBM Entitlement key and SLS License file check this <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">link</a>
+- AWS has default storage class <code>gp2</code>.</p>
 <ul>
-<li>Sample</li>
+<li>Sample environment variables:</li>
 </ul>
-<pre><code>export MONGODB_STORAGE_CLASS=gp2
+<p><code>export MONGODB_STORAGE_CLASS=gp2
 export MAS_APP_ID=manage
 export SLS_STORAGE_CLASS=gp2
 export SLS_LICENSE_ID=0242ac110002 
@@ -219,50 +221,90 @@ export MAS_INSTANCE_ID=sno
 export PROMETHEUS_STORAGE_CLASS=gp2
 export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
 export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
-export MONGODB_REPLICAS=1
-</code></pre>
-<h3 id="mas-core-ansible-collection">MAS core ansible collection<a class="headerlink" href="#mas-core-ansible-collection" title="Permanent link"></a></h3>
+export MONGODB_REPLICAS=1</code> </p>
 <ul>
-<li>OC Login: </li>
+<li>Run the ansible playbook to install MAS core and dependencies.
+<code>ansible-playbook playbooks/oneclick_core.yml</code></li>
 </ul>
-<pre><code>oc login --token=xxxx --server=&lt;https://myocpserver&gt;
-</code></pre>
-<p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.</p>
-<ul>
-<li>Run the Core ansible collection:</li>
+</li>
+<li>
+<p>Addition Details: <a href="https://ibm-mas.github.io/ansible-devops/">MAS Ansible Devops Documentation</a>   </p>
+</li>
 </ul>
-<pre><code>ansible-playbook ~/.ansible/collections/ansible_collections/ibm/mas_devops/playbooks/oneclick_core.yml
-</code></pre>
 <h2 id="intall-db2-optional">Intall DB2 (optional)<a class="headerlink" href="#intall-db2-optional" title="Permanent link"></a></h2>
 <ul>
-<li>Install DB2 using this <a href="https://ibm-mas.github.io/ansible-devops/roles/db2/">link</a></li>
-<li>Use gp2 as storage class.</li>
-<li>Sample</li>
-</ul>
-<pre><code>export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
+<li>Install DB2 using this <a href="https://ibm-mas.github.io/ansible-devops/roles/db2/">link</a><ul>
+<li>Sample
+<code>export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
 export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
 export DB2_META_STORAGE_CLASS=gp2
 export DB2_DATA_STORAGE_CLASS=gp2
 export DB2_BACKUP_STORAGE_CLASS=gp2
 export DB2_LOGS_STORAGE_CLASS=gp2
-export DB2_TEMP_STORAGE_CLASS=gp2
-</code></pre>
+export DB2_TEMP_STORAGE_CLASS=gp2</code> </li>
+</ul>
+</li>
+</ul>
 <h2 id="install-manage">Install Manage<a class="headerlink" href="#install-manage" title="Permanent link"></a></h2>
 <ul>
-<li>OC Login: </li>
+<li>You can the run following automation playbook to install DB2 and Manage.</li>
 </ul>
-<pre><code>oc login --token=xxxx --server=&lt;https://myocpserver&gt;
-</code></pre>
-<p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.</p>
-<ul>
-<li>Run the Manage ansible collection:</li>
-</ul>
-<pre><code>ansible-playbook  ~/.ansible/collections/ansible_collections/ibm/mas_devops/playbooks/oneclick_add_manage.yml
+<pre><code>ansible-playbook  playbooks/oneclick_add_manage.yml
 </code></pre>
 <ul>
-<li>Configure the database, if you want to use an existing database.</li>
+<li>
+<p>If you have your own database that you would like to use, inatall Manage app and configure database using the follwing steps:</p>
+<ul>
+<li>
+<p>Go to MAS admin UI.</p>
+<ul>
+<li>From OpenShift Console, go to Routes -&gt; Admin dashboard -&gt; click on Locations to go MAS admin dashboard.</li>
 </ul>
-<p>https://www.ibm.com/docs/en/maximo-manage/continuous-delivery?topic=manage-configuring-database</p>
+<p><img alt="image" src="images/route.png" /></p>
+<ul>
+<li>
+<p>Make sure you can connect to coreapi service route.</p>
+</li>
+<li>
+<p>Get the superuser password from <code>mas-sno-core</code> project secrets to login to MAS admin dashboard.</p>
+</li>
+</ul>
+<p><img alt="image" src="images/superuser.png" /></p>
+<ul>
+<li>Create an authorized admin user using <code>Users</code> page.</li>
+</ul>
+<p><img alt="image" src="images/createuser.png" /></p>
+<ul>
+<li>Install Manage from Catalog page.</li>
+</ul>
+<p><img alt="image" src="images/installmanage.png" /></p>
+<ul>
+<li>Select <code>Application version</code> action to deploy operator.</li>
+</ul>
+<p><img alt="image" src="images/applicationversion.png" /></p>
+<ul>
+<li>Select subscription </li>
+</ul>
+<p><img alt="image" src="images/subscription.png" /></p>
+<ul>
+<li>After deployment is completed, select <code>Update configuration</code> by selecting the action from the top right corner of the page:</li>
+</ul>
+<p><img alt="image" src="images/configurationnew.png" /></p>
+<ul>
+<li>Update database connection:</li>
+</ul>
+<p><img alt="image" src="images/dbconnection.png" /></p>
+<ul>
+<li>Update database configuration:</li>
+</ul>
+<p><img alt="image" src="images/dbconfig.png" /></p>
+<ul>
+<li>Apply changes by click on blue <code>Activate</code> button on the top right.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
               
             </div>
           </div><footer>
@@ -309,5 +351,5 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-08-11 02:12:08.589730+00:00
+Build Date UTC : 2022-08-14 06:12:19.231720+00:00
 -->
