@@ -106,10 +106,12 @@ You can get OC Login information from OpenShift Console (top right kube:admin dr
 	export GRAFANA_INSTANCE_STORAGE_CLASS=<storage-class>
 	export MONGODB_REPLICAS=1
 	```
+	
 	- To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	- AWS has default storage class `gp2`.
 	
 	- Sample environment variables:
+	
 	
 	```
 	export MONGODB_STORAGE_CLASS=gp2
@@ -132,6 +134,7 @@ You can get OC Login information from OpenShift Console (top right kube:admin dr
 	```	
 	
 	- Run the ansible playbook to install MAS core and dependencies.
+	
 	```
 	ansible-playbook playbooks/oneclick_core.yml
 	```
@@ -142,6 +145,7 @@ You can get OC Login information from OpenShift Console (top right kube:admin dr
 
 - Install DB2 using this [link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
 	- Sample
+	
 	```
 	export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
 	export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
@@ -150,18 +154,20 @@ You can get OC Login information from OpenShift Console (top right kube:admin dr
 	export DB2_BACKUP_STORAGE_CLASS=gp2
 	export DB2_LOGS_STORAGE_CLASS=gp2
 	export DB2_TEMP_STORAGE_CLASS=gp2
-	```	
+	```
 
 ## Install Manage
 
 - You can the run following automation playbook to install DB2 and Manage.
+
 ```
 ansible-playbook  playbooks/oneclick_add_manage.yml
-```	
+```
+	
 - If you have your own database that you would like to use, inatall Manage app and configure database using the follwing steps:
 	 
 	- Go to MAS admin UI.
-		- From OpenShift Console, go to Routes -> Admin dashboard -> click on Locations to go MAS admin dashboard.
+		- From OpenShift Console, go to Routes. Select Admin dashboard. Click on Locations to go MAS admin dashboard.
 		
 		![image](images/route.png)
 		
