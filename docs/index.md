@@ -50,111 +50,162 @@ platform:
 publish: External
 pullSecret: '<your secret>'
 ```
-
 For example, region: us-east-2
 
 - Create cluster
 `openshift-install create cluster --dir=sno`
 
-### Delete SNO cluster
-
-- Delete SNO cluster
-	- openshift-install delete cluster --dir /root/sno
 
 ## Install MAS and dependencies
-
-- Follow this [link](https://ibm-mas.github.io/ansible-devops/#running-in-docker) to install [Python & Ansible](Install Python & Ansible), [OpenShift CLI](https://ibm-mas.github.io/ansible-devops/#install-openshift-cli)
-and the [Ansible Collection](https://ibm-mas.github.io/ansible-devops/#install-the-ansible-collection)
-
-- Prepare for [Core Installation](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
-  
-### Set Environment variables
-
-```
-export MONGODB_STORAGE_CLASS=<storage-class>
-export MAS_APP_ID=manage
-export SLS_ENTITLEMENT_KEY=<entitlement-key>
-export SLS_STORAGE_CLASS=<storage-class>
-export SLS_LICENSE_ID=<license-id>
-export SLS_LICENSE_FILE=<license-file>
-export UDS_STORAGE_CLASS=<storage-class>
-export UDS_CONTACT_EMAIL=<your email-id>
-exportand Ansible collections (Install the Ansible Collection) UDS_CONTACT_FIRSTNAME=<your first name>
-export UDS_CONTACT_LASTNAME=<your first name>
-export MAS_INSTANCE_ID=<instance-id>
-export MAS_CONFIG_DIR=<config-dir>
-export MAS_WORKSPACE_ID=<mas-workspace--d>
-export MAS_ENTITLEMENT_KEY=<entitlement-key>
-export PROMETHEUS_STORAGE_CLASS=<storage-class>
-export PROMETHEUS_ALERTMGR_STORAGE_CLASS=<storage-class>
-export GRAFANA_INSTANCE_STORAGE_CLASS=<storage-class>
-export MONGODB_REPLICAS=1
-```
-
-- Sample
-```
-export MONGODB_STORAGE_CLASS=gp2
-export MAS_APP_ID=manage
-export SLS_STORAGE_CLASS=gp2
-export SLS_LICENSE_ID=0242ac110002 
-export SLS_LICENSE_FILE=~/masconfig/entitlement.lic
-export UDS_STORAGE_CLASS=gp2
-export UDS_CONTACT_EMAIL=abc@us.ibm.com
-export UDS_CONTACT_FIRSTNAME=abc
-export UDS_CONTACT_LASTNAME=abc
-export MAS_INSTANCE_ID=sno
-export MAS_CONFIG_DIR=~/masconfig
-export MAS_WORKSPACE_ID=masdev
-export MAS_INSTANCE_ID=sno
-export PROMETHEUS_STORAGE_CLASS=gp2
-export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
-export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
-export MONGODB_REPLICAS=1
-```
-
-### MAS core ansible collection
 
 - OC Login: 
 ```
 oc login --token=xxxx --server=<https://myocpserver>
 ```
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
+You can get OC Login information from OpenShift Console (top right kube:admin drop down list-> `Copy login command`)
 
+- Run the core ansible collection:
+	- Open Terminal/PowerShell
 
-- Run the Core ansible collection:
-```
-ansible-playbook ~/.ansible/collections/ansible_collections/ibm/mas_devops/playbooks/oneclick_core.yml
-```
+	```
+	docker run -ti quay.io/ibmmas/ansible-devops bash
+	tar -zxf ibm-mas_devops.tar.gz
+
+	mkdir ~/masconfig
+	```
+
+	- Copy the entitlement license file to masconfig folder:
+	
+		- Open Terminal/PowerShell
+		- `docker ps` to get CONTAINER
+		- docker cp SRC_PATH CONTAINER:/DEST_PATH/.
+			- For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
+
+	- From the docker terminal/PowerShell:
+		- Set the following environment variables
+
+	```
+	export MONGODB_STORAGE_CLASS=<storage-class>
+	export IBM_ENTITLEMENT_KEY=<entitlement-key>
+	export MAS_APP_ID=manage
+	export SLS_ENTITLEMENT_KEY=<entitlement-key>
+	export SLS_STORAGE_CLASS=<storage-class>
+	export SLS_LICENSE_ID=<license-id>
+	export SLS_LICENSE_FILE=<license-file>
+	export UDS_STORAGE_CLASS=<storage-class>
+	export UDS_CONTACT_EMAIL=<your email-id>
+	export UDS_CONTACT_FIRSTNAME=<your first name>
+	export UDS_CONTACT_LASTNAME=<your first name>
+	export MAS_INSTANCE_ID=<instance-id>
+	export MAS_CONFIG_DIR=<config-dir>
+	export MAS_WORKSPACE_ID=<mas-workspace-id>
+	export MAS_ENTITLEMENT_KEY=<entitlement-key>
+	export PROMETHEUS_STORAGE_CLASS=<storage-class>
+	export PROMETHEUS_ALERTMGR_STORAGE_CLASS=<storage-class>
+	export GRAFANA_INSTANCE_STORAGE_CLASS=<storage-class>
+	export MONGODB_REPLICAS=1
+	```
+	- To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
+	- AWS has default storage class `gp2`.
+	
+	- Sample environment variables:
+	
+	```
+	export MONGODB_STORAGE_CLASS=gp2
+	export MAS_APP_ID=manage
+	export SLS_STORAGE_CLASS=gp2
+	export SLS_LICENSE_ID=0242ac110002 
+	export SLS_LICENSE_FILE=~/masconfig/entitlement.lic
+	export UDS_STORAGE_CLASS=gp2
+	export UDS_CONTACT_EMAIL=abc@us.ibm.com
+	export UDS_CONTACT_FIRSTNAME=abc
+	export UDS_CONTACT_LASTNAME=abc
+	export MAS_INSTANCE_ID=sno
+	export MAS_CONFIG_DIR=~/masconfig
+	export MAS_WORKSPACE_ID=masdev
+	export MAS_INSTANCE_ID=sno
+	export PROMETHEUS_STORAGE_CLASS=gp2
+	export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
+	export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
+	export MONGODB_REPLICAS=1
+	```	
+	
+	- Run the ansible playbook to install MAS core and dependencies.
+	```
+	ansible-playbook playbooks/oneclick_core.yml
+	```
+	
+- Addition Details: [MAS Ansible Devops Documentation](https://ibm-mas.github.io/ansible-devops/)   
 
 ## Intall DB2 (optional)
 
 - Install DB2 using this [link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
-- Sample
-```
-export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
-export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
-export DB2_META_STORAGE_CLASS=gp2
-export DB2_DATA_STORAGE_CLASS=gp2
-export DB2_BACKUP_STORAGE_CLASS=gp2
-export DB2_LOGS_STORAGE_CLASS=gp2
-export DB2_TEMP_STORAGE_CLASS=gp2
-```	
+	- Sample
+	```
+	export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
+	export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
+	export DB2_META_STORAGE_CLASS=gp2
+	export DB2_DATA_STORAGE_CLASS=gp2
+	export DB2_BACKUP_STORAGE_CLASS=gp2
+	export DB2_LOGS_STORAGE_CLASS=gp2
+	export DB2_TEMP_STORAGE_CLASS=gp2
+	```	
 
 ## Install Manage
 
-- OC Login: 
+- You can the run following automation playbook to install DB2 and Manage.
 ```
-oc login --token=xxxx --server=<https://myocpserver>
-```
-Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
+ansible-playbook  playbooks/oneclick_add_manage.yml
+```	
+- If you have your own database that you would like to use, inatall Manage app and configure database using the follwing steps:
+	 
+	- Go to MAS admin UI.
+		- From OpenShift Console, go to Routes -> Admin dashboard -> click on Locations to go MAS admin dashboard.
+		
+		![image](images/route.png)
+		
+		- Make sure you can connect to coreapi service route.
+		
+		- Get the superuser password from `mas-sno-core` project secrets to login to MAS admin dashboard.
+		
+		![image](images/superuser.png)
+		
+		- Create an authorized admin user using `Users` page.
+		
+		![image](images/createuser.png)
+		 
+		- Install Manage from Catalog page.
+		
+		![image](images/installManage.png)
+		 
+		- Select `Application version` action to deploy operator.
+		
+		![image](images/applicationversion.png)
+		
+		- Select subscription 
+		
+		![image](images/subscription.png)
+		
+		- After deployment is completed, select `Update configuration` by selecting the action from the top right corner of the page:
+		
+		![image](images/configurationnew.png)
+		 
+		- Update database connection:
+		
+		![image](images/dbconnection.png)
+		 
+		- Update database configuration:
+		
+		![image](images/dbconfig.png)
+		
+		- Apply changes by click on blue `Activate` button on the top right.
+		
+		
+		
+		
+		
+			
+	    
 
-
-- Run the Manage ansible collection:
-
-```
-ansible-playbook  ~/.ansible/collections/ansible_collections/ibm/mas_devops/playbooks/oneclick_add_manage.yml
-```
-
-- Configure the database, if you want to use an existing database.
-
-https://www.ibm.com/docs/en/maximo-manage/continuous-delivery?topic=manage-configuring-database
+	
