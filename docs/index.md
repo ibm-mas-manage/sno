@@ -80,15 +80,12 @@ tar -zxf ibm-mas_devops.tar.gz
 mkdir ~/masconfig
 ```
 
-    - Copy the entitlement license file to masconfig folder:
-	
-        - Open Terminal/PowerShell
-		
-        - docker cp SRC_PATH CONTAINER:/DEST_PATH/.
-            - `docker ps` to get CONTAINER
-            - For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
+	- Copy the entitlement license file to masconfig folder:
+		- Open Terminal/PowerShell
+			- docker cp SRC_PATH CONTAINER:/DEST_PATH/.
+				- `docker ps` to get CONTAINER
+				- For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
 			
-
     - From the docker terminal/PowerShell, set the following environment variables:
 		
 		
@@ -113,38 +110,38 @@ export PROMETHEUS_ALERTMGR_STORAGE_CLASS=<storage-class>
 export GRAFANA_INSTANCE_STORAGE_CLASS=<storage-class>
 export MONGODB_REPLICAS=1
 ```
-	
+
 !!! note
     To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	
 	
-    - Sample environment variables:
+- Sample environment variables:
 	
-	```
-	export MONGODB_STORAGE_CLASS=gp2
-	export MAS_APP_ID=manage
-	export SLS_STORAGE_CLASS=gp2
-	export SLS_LICENSE_ID=0242ac110002 
-	export SLS_LICENSE_FILE=~/masconfig/entitlement.lic
-	export UDS_STORAGE_CLASS=gp2
-	export UDS_CONTACT_EMAIL=abc@us.ibm.com
-	export UDS_CONTACT_FIRSTNAME=abc
-	export UDS_CONTACT_LASTNAME=abc
-	export MAS_INSTANCE_ID=sno
-	export MAS_CONFIG_DIR=~/masconfig
-	export MAS_WORKSPACE_ID=masdev
-	export MAS_INSTANCE_ID=sno
-	export PROMETHEUS_STORAGE_CLASS=gp2
-	export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
-	export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
-	export MONGODB_REPLICAS=1
-	```	
+```
+export MONGODB_STORAGE_CLASS=gp2
+export MAS_APP_ID=manage
+export SLS_STORAGE_CLASS=gp2
+export SLS_LICENSE_ID=0242ac110002 
+export SLS_LICENSE_FILE=~/masconfig/entitlement.lic
+export UDS_STORAGE_CLASS=gp2
+export UDS_CONTACT_EMAIL=abc@us.ibm.com
+export UDS_CONTACT_FIRSTNAME=abc
+export UDS_CONTACT_LASTNAME=abc
+export MAS_INSTANCE_ID=sno
+export MAS_CONFIG_DIR=~/masconfig
+export MAS_WORKSPACE_ID=masdev
+export MAS_INSTANCE_ID=sno
+export PROMETHEUS_STORAGE_CLASS=gp2
+export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
+export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
+export MONGODB_REPLICAS=1
+```	
 	
-	- Run the ansible playbook to install MAS core and dependencies.
+- Run the ansible playbook to install MAS core and dependencies.
 	
-	```
-	ansible-playbook playbooks/oneclick_core.yml
-	```
+```
+ansible-playbook playbooks/oneclick_core.yml
+```
 	
 - Addition Details: [MAS Ansible Devops Documentation](https://ibm-mas.github.io/ansible-devops/)   
 
