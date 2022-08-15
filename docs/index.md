@@ -69,9 +69,9 @@ oc login --token=xxxx --server=<https://myocpserver>
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
 
-### Run the core ansible collection:
+### Run the core ansible collection
 
-1) Open Terminal/PowerShell
+- Open Terminal/PowerShell
 	
 ```
 docker run -ti quay.io/ibmmas/ansible-devops bash
@@ -80,7 +80,7 @@ tar -zxf ibm-mas_devops.tar.gz
 mkdir ~/masconfig
 ```
 
-2) Copy the entitlement license file to masconfig folder:
+- Copy the entitlement license file to masconfig folder:
 	- Open Terminal/PowerShell
 		- docker cp SRC_PATH CONTAINER:/DEST_PATH/.
 			- `docker ps` to get CONTAINER
@@ -118,7 +118,7 @@ export MONGODB_REPLICAS=1
 Sample environment variables:
 	
 ```
-export MONGODB_STORAGE_CLASS=gp2
+export MONGODB_STORAGE_CLASS=gp2 
 export MAS_APP_ID=manage
 export SLS_STORAGE_CLASS=gp2
 export SLS_LICENSE_ID=0242ac110002 
@@ -136,8 +136,11 @@ export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
 export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
 export MONGODB_REPLICAS=1
 ```	
+
+!!! note
+    gp2 is default storage class in AWS. You can optionally install Red Hat LVM (Logical Volume Manager) operator using OperatorHub for volume management.
 	
-3) Run the ansible playbook to install MAS core and dependencies.
+- Run the ansible playbook to install MAS core and dependencies.
 	
 ```
 ansible-playbook playbooks/oneclick_core.yml
@@ -171,7 +174,7 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 ansible-playbook  playbooks/oneclick_add_manage.yml
 ```
 	
-- If you have your own database that you would like to use, inatall Manage app and configure database using the follwing steps:
+- If you want to use an existing database, install Manage app and configure database using the following steps(MAS admin dashboard):
 	 
 	- Go to MAS admin UI.
 		- From OpenShift Console, go to Routes. Select Admin dashboard. Click on Locations to go MAS admin dashboard.
@@ -184,11 +187,11 @@ ansible-playbook  playbooks/oneclick_add_manage.yml
 		
 		![image](images/superuser.png)
 		
-		- Create an authorized admin user using `Users` page.
+		- Create an authorized admin user using `Users` page. For example, masadmin
 		
 		![image](images/createuser.png)
 		 
-		- Install Manage from Catalog page.
+		- Login as admin user `masadmin` created in the previous step. Install Manage from Catalog page.
 		
 		![image](images/installmanage.png)
 		 
@@ -214,5 +217,3 @@ ansible-playbook  playbooks/oneclick_add_manage.yml
 		
 		- Apply changes by click on blue `Activate` button on the top right.
 		
-	
-	
