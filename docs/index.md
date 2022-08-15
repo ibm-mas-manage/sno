@@ -54,14 +54,11 @@ For example, region: us-east-2
 
 - Create cluster
 `openshift-install create cluster --dir=sno`
-
-!!! note
-    To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	
 
 ## Install MAS and dependencies
 
-OC Login: 
+1) OC Login: 
 ```
 oc login --token=xxxx --server=<https://myocpserver>
 ```
@@ -69,7 +66,7 @@ oc login --token=xxxx --server=<https://myocpserver>
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
 
-### Run the core ansible collection
+2) Run the core ansible collection by following the steps below:
 
 - Open Terminal/PowerShell
 	
@@ -112,7 +109,7 @@ export MONGODB_REPLICAS=1
 ```
 
 !!! note
-    To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
+    To get the IBM Entitlement key and SLS License file check this [preparation link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	
 	
 Sample environment variables:
@@ -151,8 +148,7 @@ ansible-playbook playbooks/oneclick_core.yml
 
 ## Intall DB2 (optional)
 
-Install DB2 using this [link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
-	
+Install DB2 using this [Db2 link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
 Sample
 	
 ```
@@ -171,7 +167,7 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 - You can the run following automation playbook to install DB2 and Manage.
 
 ```
-ansible-playbook  playbooks/oneclick_add_manage.yml
+ansible-playbook playbooks/oneclick_add_manage.yml
 ```
 	
 - If you want to use an existing database, install Manage app and configure database using the following steps(MAS admin dashboard):
