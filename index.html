@@ -157,7 +157,7 @@ You can get OC Login information from OpenShift Console (top right corner <code>
 <ul>
 <li>Open Terminal/PowerShell</li>
 </ul>
-<p>```bash
+<p>```
 docker run -ti quay.io/ibmmas/ansible-devops bash
 tar -zxf ibm-mas_devops.tar.gz</p>
 <p>mkdir ~/masconfig
@@ -183,8 +183,7 @@ tar -zxf ibm-mas_devops.tar.gz</p>
 <ul>
 <li>Set the following environment variables:</li>
 </ul>
-<p><code>bash
-MONGODB_STORAGE_CLASS
+<p><code>MONGODB_STORAGE_CLASS
 IBM_ENTITLEMENT_KEY
 MAS_APP_ID
 SLS_ENTITLEMENT_KEY
@@ -214,8 +213,7 @@ export MONGODB_REPLICAS=1</code></p>
 <p>Sample environment variables:</p>
 </li>
 </ul>
-<p><code>bash
-export MONGODB_STORAGE_CLASS=gp2
+<p><code>export MONGODB_STORAGE_CLASS=gp2
 export MAS_APP_ID=manage
 export SLS_STORAGE_CLASS=gp2
 export SLS_LICENSE_ID=0242ac110002 
@@ -235,8 +233,7 @@ export MONGODB_REPLICAS=1</code> </p>
 <ul>
 <li>Run the ansible playbook to install MAS core and dependencies.</li>
 </ul>
-<p><code>bash
-ansible-playbook playbooks/oneclick_core.yml</code></p>
+<p><code>ansible-playbook playbooks/oneclick_core.yml</code></p>
 </li>
 <li>
 <p>Addition Details: <a href="https://ibm-mas.github.io/ansible-devops/">MAS Ansible Devops Documentation</a>   </p>
@@ -249,8 +246,7 @@ ansible-playbook playbooks/oneclick_core.yml</code></p>
 <ul>
 <li>Sample</li>
 </ul>
-<p><code>bash
-export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
+<p><code>export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
 export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
 export DB2_META_STORAGE_CLASS=gp2
 export DB2_DATA_STORAGE_CLASS=gp2
@@ -263,7 +259,7 @@ export DB2_TEMP_STORAGE_CLASS=gp2</code></p>
 <ul>
 <li>You can the run following automation playbook to install DB2 and Manage.</li>
 </ul>
-<pre><code class="language-bash">ansible-playbook  playbooks/oneclick_add_manage.yml
+<pre><code>ansible-playbook  playbooks/oneclick_add_manage.yml
 </code></pre>
 <ul>
 <li>
@@ -365,5 +361,5 @@ export DB2_TEMP_STORAGE_CLASS=gp2</code></p>
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-08-15 05:14:57.094867+00:00
+Build Date UTC : 2022-08-15 05:18:58.510130+00:00
 -->
