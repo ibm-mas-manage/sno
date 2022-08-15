@@ -176,10 +176,8 @@ mkdir ~/masconfig
 
 
 - From the docker terminal/PowerShell, set the following environment variables:
-
-
-```
-export MONGODB_STORAGE_CLASS=&lt;storage-class&gt;
+</code></pre>
+<pre><code>export MONGODB_STORAGE_CLASS=&lt;storage-class&gt;
 export IBM_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
 export MAS_APP_ID=manage
 export SLS_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
@@ -198,16 +196,14 @@ export PROMETHEUS_STORAGE_CLASS=&lt;storage-class&gt;
 export PROMETHEUS_ALERTMGR_STORAGE_CLASS=&lt;storage-class&gt;
 export GRAFANA_INSTANCE_STORAGE_CLASS=&lt;storage-class&gt;
 export MONGODB_REPLICAS=1
-```
-
-!!! note
-    To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
-
-
-- Sample environment variables:
-
-```
-export MONGODB_STORAGE_CLASS=gp2
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To get the IBM Entitlement key and SLS License file check this <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">link</a></p>
+<ul>
+<li>Sample environment variables:</li>
+</ul>
+<p><code>export MONGODB_STORAGE_CLASS=gp2
 export MAS_APP_ID=manage
 export SLS_STORAGE_CLASS=gp2
 export SLS_LICENSE_ID=0242ac110002 
@@ -223,15 +219,12 @@ export MAS_INSTANCE_ID=sno
 export PROMETHEUS_STORAGE_CLASS=gp2
 export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
 export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
-export MONGODB_REPLICAS=1
-```
-
-- Run the ansible playbook to install MAS core and dependencies.
-
-```
-ansible-playbook playbooks/oneclick_core.yml
-```
-</code></pre>
+export MONGODB_REPLICAS=1</code> </p>
+<ul>
+<li>Run the ansible playbook to install MAS core and dependencies.</li>
+</ul>
+<p><code>ansible-playbook playbooks/oneclick_core.yml</code></p>
+</div>
 <ul>
 <li>Addition Details: <a href="https://ibm-mas.github.io/ansible-devops/">MAS Ansible Devops Documentation</a>   </li>
 </ul>
@@ -357,5 +350,5 @@ export DB2_TEMP_STORAGE_CLASS=gp2</code></p>
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-08-15 19:01:03.654398+00:00
+Build Date UTC : 2022-08-15 19:09:28.264179+00:00
 -->
