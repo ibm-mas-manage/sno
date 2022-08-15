@@ -62,18 +62,20 @@ For example, region: us-east-2
 ```
 oc login --token=xxxx --server=<https://myocpserver>
 ```
+
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
-You can get OC Login information from OpenShift Console (top right kube:admin drop down list-> `Copy login command`)
+You can get OC Login information from OpenShift Console (top right corner `kube:admin' drop down list, select `Copy login command`)
 
 - Run the core ansible collection:
 	- Open Terminal/PowerShell
 
-	```
-	docker run -ti quay.io/ibmmas/ansible-devops bash
-	tar -zxf ibm-mas_devops.tar.gz
 
-	mkdir ~/masconfig
-	```
+```
+docker run -ti quay.io/ibmmas/ansible-devops bash
+tar -zxf ibm-mas_devops.tar.gz
+
+mkdir ~/masconfig
+```
 
 	- Copy the entitlement license file to masconfig folder:
 	
@@ -84,7 +86,8 @@ You can get OC Login information from OpenShift Console (top right kube:admin dr
 
 	- From the docker terminal/PowerShell:
 		- Set the following environment variables
-
+		
+		
 	```
 	export MONGODB_STORAGE_CLASS=<storage-class>
 	export IBM_ENTITLEMENT_KEY=<entitlement-key>
