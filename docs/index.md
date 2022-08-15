@@ -109,7 +109,7 @@ export MONGODB_REPLICAS=1
 ```
 
 !!! note
-    To get the IBM Entitlement key and SLS License file check this [preparation link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
+    How to get the `IBM Entitlement key` and `SLS License file` check this [preparation link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	
 	
 Sample environment variables:
@@ -135,15 +135,16 @@ export MONGODB_REPLICAS=1
 ```	
 
 !!! note
-    gp2 is default storage class in AWS. You can optionally install Red Hat LVM (Logical Volume Manager) operator using OperatorHub for volume management.
+    `gp2` is the default storage class in AWS. You can optionally install RedHat LV.M (Logical Volume Manager) operator using OperatorHub for volume management.
 	
 - Run the ansible playbook to install MAS core and dependencies.
 	
 ```
 ansible-playbook playbooks/oneclick_core.yml
 ```
-	
-- Addition Details: [MAS Ansible Devops Documentation](https://ibm-mas.github.io/ansible-devops/)   
+
+!!! Additional information
+    Check out [MAS Ansible Devops Documentation](https://ibm-mas.github.io/ansible-devops/) for more information
 
 
 ## Intall DB2 (optional)
@@ -170,7 +171,7 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 ansible-playbook playbooks/oneclick_add_manage.yml
 ```
 	
-- If you want to use an existing database, install Manage app and configure database using the following steps(MAS admin dashboard):
+- If you want to use an existing database, install Manage app and configure database using the following steps (MAS admin dashboard):
 	 
 	- Go to MAS admin UI.
 		- From OpenShift Console, go to Routes. Select Admin dashboard. Click on Locations to go MAS admin dashboard.
