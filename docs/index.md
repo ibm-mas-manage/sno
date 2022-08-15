@@ -111,7 +111,8 @@ mkdir ~/masconfig
 	export MONGODB_REPLICAS=1
 	```
 	
-	!!! tip To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
+	!!! note
+	    To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	
 	
 	- Sample environment variables:
