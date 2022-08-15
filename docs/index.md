@@ -69,12 +69,14 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 - Run the core ansible collection:
 	- Open Terminal/PowerShell
 	
+	
 	```
 	docker run -ti quay.io/ibmmas/ansible-devops bash
 	tar -zxf ibm-mas_devops.tar.gz
 
 	mkdir ~/masconfig
 	```
+
 
 	- Copy the entitlement license file to masconfig folder:
 	
@@ -107,11 +109,14 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 		PROMETHEUS_ALERTMGR_STORAGE_CLASS
 		GRAFANA_INSTANCE_STORAGE_CLASS
 		export MONGODB_REPLICAS=1	
+		
 		```
 	
 	
 	- To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
+	
 	- AWS has default storage class `gp2`.
+	
 	
 	- Sample environment variables:
 	
