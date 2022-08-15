@@ -157,17 +157,21 @@ You can get OC Login information from OpenShift Console (top right corner <code>
 <ul>
 <li>Open Terminal/PowerShell</li>
 </ul>
-<p>```
-docker run -ti quay.io/ibmmas/ansible-devops bash
+<p>```</p>
+<p>docker run -ti quay.io/ibmmas/ansible-devops bash
 tar -zxf ibm-mas_devops.tar.gz</p>
-<p>mkdir ~/masconfig
-```</p>
+<p>mkdir ~/masconfig</p>
+<p>```</p>
 <ul>
 <li>
 <p>Copy the entitlement license file to masconfig folder:</p>
 <ul>
-<li>Open Terminal/PowerShell</li>
-<li>docker cp SRC_PATH CONTAINER:/DEST_PATH/.<ul>
+<li>
+<p>Open Terminal/PowerShell</p>
+</li>
+<li>
+<p>docker cp SRC_PATH CONTAINER:/DEST_PATH/.</p>
+<ul>
 <li><code>docker ps</code> to get CONTAINER</li>
 <li>For example, <code>docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.</code></li>
 </ul>
@@ -179,8 +183,7 @@ tar -zxf ibm-mas_devops.tar.gz</p>
 <ul>
 <li>Set the following environment variables:</li>
 </ul>
-<p>``` 
-MONGODB_STORAGE_CLASS
+<p><code>MONGODB_STORAGE_CLASS
 IBM_ENTITLEMENT_KEY
 MAS_APP_ID
 SLS_ENTITLEMENT_KEY
@@ -198,8 +201,7 @@ MAS_ENTITLEMENT_KEY
 PROMETHEUS_STORAGE_CLASS
 PROMETHEUS_ALERTMGR_STORAGE_CLASS
 GRAFANA_INSTANCE_STORAGE_CLASS
-export MONGODB_REPLICAS=1   </p>
-<p>```</p>
+export MONGODB_REPLICAS=1</code></p>
 </li>
 <li>
 <p>To get the IBM Entitlement key and SLS License file check this <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">link</a></p>
@@ -359,5 +361,5 @@ export DB2_TEMP_STORAGE_CLASS=gp2</code></p>
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-08-15 04:57:06.645027+00:00
+Build Date UTC : 2022-08-15 04:59:12.007123+00:00
 -->
