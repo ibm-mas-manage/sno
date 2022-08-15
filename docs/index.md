@@ -86,37 +86,33 @@ mkdir ~/masconfig
 			- For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
 			
 
-	- From the docker terminal/PowerShell:
-	
-		- Set the following environment variables:
+	- From the docker terminal/PowerShell, set the following environment variables:
 		
 		
-		```
-		MONGODB_STORAGE_CLASS
-		IBM_ENTITLEMENT_KEY
-		MAS_APP_ID
-		SLS_ENTITLEMENT_KEY
-		SLS_STORAGE_CLASS
-		SLS_LICENSE_ID
-		SLS_LICENSE_FILE
-		UDS_STORAGE_CLASS
-		UDS_CONTACT_EMAIL
-		UDS_CONTACT_FIRSTNAME
-		UDS_CONTACT_LASTNAME
-		MAS_INSTANCE_ID
-		MAS_CONFIG_DIR
-		MAS_WORKSPACE_ID
-		MAS_ENTITLEMENT_KEY
-		PROMETHEUS_STORAGE_CLASS
-		PROMETHEUS_ALERTMGR_STORAGE_CLASS
-		GRAFANA_INSTANCE_STORAGE_CLASS
-		export MONGODB_REPLICAS=1		
-		```
+	```
+	export MONGODB_STORAGE_CLASS=<storage-class>
+	export IBM_ENTITLEMENT_KEY=<entitlement-key>
+	export MAS_APP_ID=manage
+	export SLS_ENTITLEMENT_KEY=<entitlement-key>
+	export SLS_STORAGE_CLASS=<storage-class>
+	export SLS_LICENSE_ID=<license-id>
+	export SLS_LICENSE_FILE=<license-file>
+	export UDS_STORAGE_CLASS=<storage-class>
+	export UDS_CONTACT_EMAIL=<your email-id>
+	export UDS_CONTACT_FIRSTNAME=<your first name>
+	export UDS_CONTACT_LASTNAME=<your first name>
+	export MAS_INSTANCE_ID=<instance-id>
+	export MAS_CONFIG_DIR=<config-dir>
+	export MAS_WORKSPACE_ID=<mas-workspace-id>
+	export MAS_ENTITLEMENT_KEY=<entitlement-key>
+	export PROMETHEUS_STORAGE_CLASS=<storage-class>
+	export PROMETHEUS_ALERTMGR_STORAGE_CLASS=<storage-class>
+	export GRAFANA_INSTANCE_STORAGE_CLASS=<storage-class>
+	export MONGODB_REPLICAS=1
+	```
 	
-	
+	!!! tip
 	- To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
-	
-	- AWS has default storage class `gp2`.
 	
 	
 	- Sample environment variables:
