@@ -70,7 +70,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	- Open Terminal/PowerShell
 	
 	
-	```bash
+	```
 	docker run -ti quay.io/ibmmas/ansible-devops bash
 	tar -zxf ibm-mas_devops.tar.gz
 
@@ -91,7 +91,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 		- Set the following environment variables:
 		
 		
-		```bash
+		```
 		MONGODB_STORAGE_CLASS
 		IBM_ENTITLEMENT_KEY
 		MAS_APP_ID
@@ -121,7 +121,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	
 	- Sample environment variables:
 	
-	```bash
+	```
 	export MONGODB_STORAGE_CLASS=gp2
 	export MAS_APP_ID=manage
 	export SLS_STORAGE_CLASS=gp2
@@ -143,7 +143,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	
 	- Run the ansible playbook to install MAS core and dependencies.
 	
-	```bash
+	```
 	ansible-playbook playbooks/oneclick_core.yml
 	```
 	
@@ -155,7 +155,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	- Sample
 	
 	
-	```bash
+	```
 	export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
 	export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
 	export DB2_META_STORAGE_CLASS=gp2
@@ -169,7 +169,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 
 - You can the run following automation playbook to install DB2 and Manage.
 
-```bash
+```
 ansible-playbook  playbooks/oneclick_add_manage.yml
 ```
 	
