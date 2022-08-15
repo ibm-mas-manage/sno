@@ -151,69 +151,68 @@ pullSecret: '&lt;your secret&gt;'
 </code></pre>
 <p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner <code>kube:admin' drop down list, select</code>Copy login command`)</p>
-<ul>
-<li>
-<p>Run the core ansible collection:</p>
-<ul>
-<li>Open Terminal/PowerShell</li>
-</ul>
-<p>```
+<p>Run the core ansible collection:
+Open Terminal/PowerShell</p>
+<pre><code>```bash
 docker run -ti quay.io/ibmmas/ansible-devops bash
-tar -zxf ibm-mas_devops.tar.gz</p>
-<p>mkdir ~/masconfig
-```</p>
-<ul>
-<li>
-<p>Copy the entitlement license file to masconfig folder:</p>
-<ul>
-<li>
-<p>Open Terminal/PowerShell</p>
-</li>
-<li>
-<p>docker cp SRC_PATH CONTAINER:/DEST_PATH/.</p>
-<ul>
-<li><code>docker ps</code> to get CONTAINER</li>
-<li>For example, <code>docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>From the docker terminal/PowerShell:</p>
-<ul>
-<li>Set the following environment variables:</li>
-</ul>
-<p><code>MONGODB_STORAGE_CLASS
-IBM_ENTITLEMENT_KEY
-MAS_APP_ID
-SLS_ENTITLEMENT_KEY
-SLS_STORAGE_CLASS
-SLS_LICENSE_ID
-SLS_LICENSE_FILE
-UDS_STORAGE_CLASS
-UDS_CONTACT_EMAIL
-UDS_CONTACT_FIRSTNAME
-UDS_CONTACT_LASTNAME
-MAS_INSTANCE_ID
-MAS_CONFIG_DIR
-MAS_WORKSPACE_ID
-MAS_ENTITLEMENT_KEY
-PROMETHEUS_STORAGE_CLASS
-PROMETHEUS_ALERTMGR_STORAGE_CLASS
-GRAFANA_INSTANCE_STORAGE_CLASS
-export MONGODB_REPLICAS=1</code></p>
-</li>
-<li>
-<p>To get the IBM Entitlement key and SLS License file check this <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">link</a></p>
-</li>
-<li>
-<p>AWS has default storage class <code>gp2</code>.</p>
-</li>
-<li>
-<p>Sample environment variables:</p>
-</li>
-</ul>
-<p><code>export MONGODB_STORAGE_CLASS=gp2
+tar -zxf ibm-mas_devops.tar.gz
+
+mkdir ~/masconfig
+```
+
+```
+docker run -ti quay.io/ibmmas/ansible-devops bash
+tar -zxf ibm-mas_devops.tar.gz
+
+mkdir ~/masconfig
+```
+
+
+- Copy the entitlement license file to masconfig folder:
+
+    - Open Terminal/PowerShell
+
+    - docker cp SRC_PATH CONTAINER:/DEST_PATH/.
+        - `docker ps` to get CONTAINER
+        - For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
+
+
+- From the docker terminal/PowerShell:
+    - Set the following environment variables:
+
+
+    ```
+    MONGODB_STORAGE_CLASS
+    IBM_ENTITLEMENT_KEY
+    MAS_APP_ID
+    SLS_ENTITLEMENT_KEY
+    SLS_STORAGE_CLASS
+    SLS_LICENSE_ID
+    SLS_LICENSE_FILE
+    UDS_STORAGE_CLASS
+    UDS_CONTACT_EMAIL
+    UDS_CONTACT_FIRSTNAME
+    UDS_CONTACT_LASTNAME
+    MAS_INSTANCE_ID
+    MAS_CONFIG_DIR
+    MAS_WORKSPACE_ID
+    MAS_ENTITLEMENT_KEY
+    PROMETHEUS_STORAGE_CLASS
+    PROMETHEUS_ALERTMGR_STORAGE_CLASS
+    GRAFANA_INSTANCE_STORAGE_CLASS
+    export MONGODB_REPLICAS=1       
+    ```
+
+
+- To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
+
+- AWS has default storage class `gp2`.
+
+
+- Sample environment variables:
+
+```
+export MONGODB_STORAGE_CLASS=gp2
 export MAS_APP_ID=manage
 export SLS_STORAGE_CLASS=gp2
 export SLS_LICENSE_ID=0242ac110002 
@@ -229,15 +228,17 @@ export MAS_INSTANCE_ID=sno
 export PROMETHEUS_STORAGE_CLASS=gp2
 export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
 export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
-export MONGODB_REPLICAS=1</code> </p>
+export MONGODB_REPLICAS=1
+```
+
+- Run the ansible playbook to install MAS core and dependencies.
+
+```
+ansible-playbook playbooks/oneclick_core.yml
+```
+</code></pre>
 <ul>
-<li>Run the ansible playbook to install MAS core and dependencies.</li>
-</ul>
-<p><code>ansible-playbook playbooks/oneclick_core.yml</code></p>
-</li>
-<li>
-<p>Addition Details: <a href="https://ibm-mas.github.io/ansible-devops/">MAS Ansible Devops Documentation</a>   </p>
-</li>
+<li>Addition Details: <a href="https://ibm-mas.github.io/ansible-devops/">MAS Ansible Devops Documentation</a>   </li>
 </ul>
 <h2 id="intall-db2-optional">Intall DB2 (optional)<a class="headerlink" href="#intall-db2-optional" title="Permanent link"></a></h2>
 <ul>
@@ -361,5 +362,5 @@ export DB2_TEMP_STORAGE_CLASS=gp2</code></p>
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-08-15 05:18:58.510130+00:00
+Build Date UTC : 2022-08-15 05:25:04.921025+00:00
 -->
