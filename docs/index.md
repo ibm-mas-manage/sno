@@ -71,19 +71,24 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	
 	
 	```
+	
 	docker run -ti quay.io/ibmmas/ansible-devops bash
 	tar -zxf ibm-mas_devops.tar.gz
 
 	mkdir ~/masconfig
+	
+	
 	```
 
 
 	- Copy the entitlement license file to masconfig folder:
 	
 		- Open Terminal/PowerShell
+		
 		- docker cp SRC_PATH CONTAINER:/DEST_PATH/.
 			- `docker ps` to get CONTAINER
 			- For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
+			
 
 	- From the docker terminal/PowerShell:
 		- Set the following environment variables:
@@ -108,8 +113,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 		PROMETHEUS_STORAGE_CLASS
 		PROMETHEUS_ALERTMGR_STORAGE_CLASS
 		GRAFANA_INSTANCE_STORAGE_CLASS
-		export MONGODB_REPLICAS=1	
-		
+		export MONGODB_REPLICAS=1		
 		```
 	
 	
