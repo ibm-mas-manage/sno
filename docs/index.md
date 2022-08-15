@@ -69,14 +69,6 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 - Run the core ansible collection:
 	- Open Terminal/PowerShell
 
-
-	```
-	docker run -ti quay.io/ibmmas/ansible-devops bash
-	tar -zxf ibm-mas_devops.tar.gz
-
-	mkdir ~/masconfig
-	```
-
 	- Copy the entitlement license file to masconfig folder:
 	
 		- Open Terminal/PowerShell
@@ -210,11 +202,5 @@ ansible-playbook  playbooks/oneclick_add_manage.yml
 		
 		- Apply changes by click on blue `Activate` button on the top right.
 		
-		
-		
-		
-		
-			
-	    
-
+	
 	
