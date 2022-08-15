@@ -91,7 +91,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 		- Set the following environment variables:
 		
 		
-		```	bash
+		```bash
 		MONGODB_STORAGE_CLASS
 		IBM_ENTITLEMENT_KEY
 		MAS_APP_ID
@@ -121,7 +121,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	
 	- Sample environment variables:
 	
-	``` bash
+	```bash
 	export MONGODB_STORAGE_CLASS=gp2
 	export MAS_APP_ID=manage
 	export SLS_STORAGE_CLASS=gp2
@@ -153,6 +153,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 
 - Install DB2 using this [link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
 	- Sample
+	
 	
 	```bash
 	export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
