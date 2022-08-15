@@ -81,14 +81,14 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	- Copy the entitlement license file to masconfig folder:
 	
 		- Open Terminal/PowerShell
-		- `docker ps` to get CONTAINER
 		- docker cp SRC_PATH CONTAINER:/DEST_PATH/.
+			- `docker ps` to get CONTAINER
 			- For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
 
 	- From the docker terminal/PowerShell:
 		- Set the following environment variables:
 		
-
+		
 		```	
 		MONGODB_STORAGE_CLASS
 		IBM_ENTITLEMENT_KEY
