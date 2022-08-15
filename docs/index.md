@@ -208,7 +208,7 @@ ansible-playbook playbooks/oneclick_add_manage.yml
 		
 		![image](images/dbconnection.png)
 		 
-		- Update database configuration. Select `Install Demo Data` if want to have maxdemo data.
+		- Update database configuration. Select `Install Demo Data` if want to add maxdemo data.
 		
 		![image](images/dbconfig.png)
 		
