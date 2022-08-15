@@ -79,8 +79,20 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	- From the docker terminal/PowerShell:
 		- Set the following environment variables
 		
-		
+	
 	```
+	export MAS_APP_ID=manage
+	
+	```
+	
+	```
+	export MAS_APP_ID=manage
+	export MONGODB_STORAGE_CLASS=<storage-class>
+	
+	```
+
+	```
+	
 	export MONGODB_STORAGE_CLASS=<storage-class>
 	export IBM_ENTITLEMENT_KEY=<entitlement-key>
 	export MAS_APP_ID=manage
@@ -100,7 +112,9 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	export PROMETHEUS_ALERTMGR_STORAGE_CLASS=<storage-class>
 	export GRAFANA_INSTANCE_STORAGE_CLASS=<storage-class>
 	export MONGODB_REPLICAS=1
+	
 	```
+	
 	
 	- To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	- AWS has default storage class `gp2`.
@@ -109,6 +123,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	
 	
 	```
+	
 	export MONGODB_STORAGE_CLASS=gp2
 	export MAS_APP_ID=manage
 	export SLS_STORAGE_CLASS=gp2
