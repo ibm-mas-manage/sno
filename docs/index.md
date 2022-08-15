@@ -55,6 +55,9 @@ For example, region: us-east-2
 - Create cluster
 `openshift-install create cluster --dir=sno`
 
+!!! note
+    To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
+	
 
 ## Install MAS and dependencies
 
@@ -76,6 +79,7 @@ tar -zxf ibm-mas_devops.tar.gz
 
 mkdir ~/masconfig
 ```
+
 
 	- Copy the entitlement license file to masconfig folder:
 	
