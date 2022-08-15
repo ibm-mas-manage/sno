@@ -66,9 +66,16 @@ oc login --token=xxxx --server=<https://myocpserver>
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner `kube:admin' drop down list, select `Copy login command`)
 
-- Run the core ansible collection:
-	- Open Terminal/PowerShell
+Run the core ansible collection:
+Open Terminal/PowerShell
 	
+	
+	```bash
+	docker run -ti quay.io/ibmmas/ansible-devops bash
+	tar -zxf ibm-mas_devops.tar.gz
+
+	mkdir ~/masconfig
+	```
 	
 	```
 	docker run -ti quay.io/ibmmas/ansible-devops bash
