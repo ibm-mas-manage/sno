@@ -171,37 +171,33 @@ mkdir ~/masconfig
         - For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
 
 
-- From the docker terminal/PowerShell:
-
-    - Set the following environment variables:
+- From the docker terminal/PowerShell, set the following environment variables:
 
 
-    ```
-    MONGODB_STORAGE_CLASS
-    IBM_ENTITLEMENT_KEY
-    MAS_APP_ID
-    SLS_ENTITLEMENT_KEY
-    SLS_STORAGE_CLASS
-    SLS_LICENSE_ID
-    SLS_LICENSE_FILE
-    UDS_STORAGE_CLASS
-    UDS_CONTACT_EMAIL
-    UDS_CONTACT_FIRSTNAME
-    UDS_CONTACT_LASTNAME
-    MAS_INSTANCE_ID
-    MAS_CONFIG_DIR
-    MAS_WORKSPACE_ID
-    MAS_ENTITLEMENT_KEY
-    PROMETHEUS_STORAGE_CLASS
-    PROMETHEUS_ALERTMGR_STORAGE_CLASS
-    GRAFANA_INSTANCE_STORAGE_CLASS
-    export MONGODB_REPLICAS=1       
-    ```
+```
+export MONGODB_STORAGE_CLASS=&lt;storage-class&gt;
+export IBM_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
+export MAS_APP_ID=manage
+export SLS_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
+export SLS_STORAGE_CLASS=&lt;storage-class&gt;
+export SLS_LICENSE_ID=&lt;license-id&gt;
+export SLS_LICENSE_FILE=&lt;license-file&gt;
+export UDS_STORAGE_CLASS=&lt;storage-class&gt;
+export UDS_CONTACT_EMAIL=&lt;your email-id&gt;
+export UDS_CONTACT_FIRSTNAME=&lt;your first name&gt;
+export UDS_CONTACT_LASTNAME=&lt;your first name&gt;
+export MAS_INSTANCE_ID=&lt;instance-id&gt;
+export MAS_CONFIG_DIR=&lt;config-dir&gt;
+export MAS_WORKSPACE_ID=&lt;mas-workspace-id&gt;
+export MAS_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
+export PROMETHEUS_STORAGE_CLASS=&lt;storage-class&gt;
+export PROMETHEUS_ALERTMGR_STORAGE_CLASS=&lt;storage-class&gt;
+export GRAFANA_INSTANCE_STORAGE_CLASS=&lt;storage-class&gt;
+export MONGODB_REPLICAS=1
+```
 
-
+!!! tip
 - To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
-
-- AWS has default storage class `gp2`.
 
 
 - Sample environment variables:
@@ -357,5 +353,5 @@ export DB2_TEMP_STORAGE_CLASS=gp2</code></p>
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-08-15 17:21:41.543598+00:00
+Build Date UTC : 2022-08-15 17:37:22.004840+00:00
 -->
