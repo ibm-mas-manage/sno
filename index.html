@@ -155,9 +155,14 @@ You can get OC Login information from OpenShift Console (top right corner <code>
 <li>
 <p>Run the core ansible collection:</p>
 <ul>
-<li>
-<p>Open Terminal/PowerShell</p>
-</li>
+<li>Open Terminal/PowerShell</li>
+</ul>
+<p>```
+docker run -ti quay.io/ibmmas/ansible-devops bash
+tar -zxf ibm-mas_devops.tar.gz</p>
+<p>mkdir ~/masconfig
+```</p>
+<ul>
 <li>
 <p>Copy the entitlement license file to masconfig folder:</p>
 <ul>
@@ -172,40 +177,31 @@ You can get OC Login information from OpenShift Console (top right corner <code>
 <li>
 <p>From the docker terminal/PowerShell:</p>
 <ul>
-<li>Set the following environment variables</li>
+<li>Set the following environment variables:</li>
 </ul>
+<p><code>MONGODB_STORAGE_CLASS
+IBM_ENTITLEMENT_KEY
+MAS_APP_ID
+SLS_ENTITLEMENT_KEY
+SLS_STORAGE_CLASS
+SLS_LICENSE_ID
+SLS_LICENSE_FILE
+UDS_STORAGE_CLASS
+UDS_CONTACT_EMAIL
+UDS_CONTACT_FIRSTNAME
+UDS_CONTACT_LASTNAME
+MAS_INSTANCE_ID
+MAS_CONFIG_DIR
+MAS_WORKSPACE_ID
+MAS_ENTITLEMENT_KEY
+PROMETHEUS_STORAGE_CLASS
+PROMETHEUS_ALERTMGR_STORAGE_CLASS
+GRAFANA_INSTANCE_STORAGE_CLASS
+export MONGODB_REPLICAS=1</code></p>
 </li>
-</ul>
-<p>```
-export MAS_APP_ID=manage</p>
-<p>```</p>
-<p>```
-export MAS_APP_ID=manage
-export MONGODB_STORAGE_CLASS=<storage-class></p>
-<p>```</p>
-<p>```</p>
-<p>export MONGODB_STORAGE_CLASS=<storage-class>
-export IBM_ENTITLEMENT_KEY=<entitlement-key>
-export MAS_APP_ID=manage
-export SLS_ENTITLEMENT_KEY=<entitlement-key>
-export SLS_STORAGE_CLASS=<storage-class>
-export SLS_LICENSE_ID=<license-id>
-export SLS_LICENSE_FILE=<license-file>
-export UDS_STORAGE_CLASS=<storage-class>
-export UDS_CONTACT_EMAIL=<your email-id>
-export UDS_CONTACT_FIRSTNAME=<your first name>
-export UDS_CONTACT_LASTNAME=<your first name>
-export MAS_INSTANCE_ID=<instance-id>
-export MAS_CONFIG_DIR=<config-dir>
-export MAS_WORKSPACE_ID=<mas-workspace-id>
-export MAS_ENTITLEMENT_KEY=<entitlement-key>
-export PROMETHEUS_STORAGE_CLASS=<storage-class>
-export PROMETHEUS_ALERTMGR_STORAGE_CLASS=<storage-class>
-export GRAFANA_INSTANCE_STORAGE_CLASS=<storage-class>
-export MONGODB_REPLICAS=1</p>
-<p>```</p>
-<ul>
-<li>To get the IBM Entitlement key and SLS License file check this <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">link</a></li>
+<li>
+<p>To get the IBM Entitlement key and SLS License file check this <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">link</a></p>
+</li>
 <li>
 <p>AWS has default storage class <code>gp2</code>.</p>
 </li>
@@ -213,8 +209,7 @@ export MONGODB_REPLICAS=1</p>
 <p>Sample environment variables:</p>
 </li>
 </ul>
-<p>```</p>
-<p>export MONGODB_STORAGE_CLASS=gp2
+<p><code>export MONGODB_STORAGE_CLASS=gp2
 export MAS_APP_ID=manage
 export SLS_STORAGE_CLASS=gp2
 export SLS_LICENSE_ID=0242ac110002 
@@ -230,8 +225,7 @@ export MAS_INSTANCE_ID=sno
 export PROMETHEUS_STORAGE_CLASS=gp2
 export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
 export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
-export MONGODB_REPLICAS=1
-``` </p>
+export MONGODB_REPLICAS=1</code> </p>
 <ul>
 <li>Run the ansible playbook to install MAS core and dependencies.</li>
 </ul>
@@ -363,5 +357,5 @@ export DB2_TEMP_STORAGE_CLASS=gp2</code></p>
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-08-15 04:17:22.014855+00:00
+Build Date UTC : 2022-08-15 04:29:48.871271+00:00
 -->
