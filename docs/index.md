@@ -67,24 +67,15 @@ Replace `xxxx` with your OpenShift token and `https://myocpserver` with your Ope
 You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
 
 - Run the core ansible collection:
-
 	- Open Terminal/PowerShell
 	
 	
-	```bash
-	docker run -ti quay.io/ibmmas/ansible-devops bash
-	tar -zxf ibm-mas_devops.tar.gz
+```
+docker run -ti quay.io/ibmmas/ansible-devops bash
+tar -zxf ibm-mas_devops.tar.gz
 
-	mkdir ~/masconfig
-	```
-	
-	```
-	docker run -ti quay.io/ibmmas/ansible-devops bash
-	tar -zxf ibm-mas_devops.tar.gz
-
-	mkdir ~/masconfig
-	```
-
+mkdir ~/masconfig
+```
 
 	- Copy the entitlement license file to masconfig folder:
 	
@@ -96,6 +87,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 			
 
 	- From the docker terminal/PowerShell:
+	
 		- Set the following environment variables:
 		
 		
@@ -157,6 +149,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	
 - Addition Details: [MAS Ansible Devops Documentation](https://ibm-mas.github.io/ansible-devops/)   
 
+
 ## Intall DB2 (optional)
 
 - Install DB2 using this [link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
@@ -172,6 +165,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	export DB2_LOGS_STORAGE_CLASS=gp2
 	export DB2_TEMP_STORAGE_CLASS=gp2
 	```
+
 
 ## Install Manage
 
