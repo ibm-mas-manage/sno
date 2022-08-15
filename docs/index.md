@@ -61,7 +61,7 @@ For example, region: us-east-2
 
 ## Install MAS and dependencies
 
-- OC Login: 
+OC Login: 
 ```
 oc login --token=xxxx --server=<https://myocpserver>
 ```
@@ -69,9 +69,9 @@ oc login --token=xxxx --server=<https://myocpserver>
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
 
-- Run the core ansible collection:
-	- Open Terminal/PowerShell
-	
+### Run the core ansible collection:
+
+1) Open Terminal/PowerShell
 	
 ```
 docker run -ti quay.io/ibmmas/ansible-devops bash
@@ -80,11 +80,11 @@ tar -zxf ibm-mas_devops.tar.gz
 mkdir ~/masconfig
 ```
 
-	- Copy the entitlement license file to masconfig folder:
-		- Open Terminal/PowerShell
-			- docker cp SRC_PATH CONTAINER:/DEST_PATH/.
-				- `docker ps` to get CONTAINER
-				- For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
+2) Copy the entitlement license file to masconfig folder:
+	- Open Terminal/PowerShell
+		- docker cp SRC_PATH CONTAINER:/DEST_PATH/.
+			- `docker ps` to get CONTAINER
+			- For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
 			
     - From the docker terminal/PowerShell, set the following environment variables:
 		
@@ -115,7 +115,7 @@ export MONGODB_REPLICAS=1
     To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	
 	
-- Sample environment variables:
+Sample environment variables:
 	
 ```
 export MONGODB_STORAGE_CLASS=gp2
@@ -137,7 +137,7 @@ export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
 export MONGODB_REPLICAS=1
 ```	
 	
-- Run the ansible playbook to install MAS core and dependencies.
+3) Run the ansible playbook to install MAS core and dependencies.
 	
 ```
 ansible-playbook playbooks/oneclick_core.yml
@@ -148,20 +148,19 @@ ansible-playbook playbooks/oneclick_core.yml
 
 ## Intall DB2 (optional)
 
-- Install DB2 using this [link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
-
-	- Sample
+Install DB2 using this [link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
 	
+Sample
 	
-	```
-	export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
-	export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
-	export DB2_META_STORAGE_CLASS=gp2
-	export DB2_DATA_STORAGE_CLASS=gp2
-	export DB2_BACKUP_STORAGE_CLASS=gp2
-	export DB2_LOGS_STORAGE_CLASS=gp2
-	export DB2_TEMP_STORAGE_CLASS=gp2
-	```
+```
+export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
+export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
+export DB2_META_STORAGE_CLASS=gp2
+export DB2_DATA_STORAGE_CLASS=gp2
+export DB2_BACKUP_STORAGE_CLASS=gp2
+export DB2_LOGS_STORAGE_CLASS=gp2
+export DB2_TEMP_STORAGE_CLASS=gp2
+```
 
 
 ## Install Manage
