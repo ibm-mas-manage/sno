@@ -80,46 +80,45 @@ tar -zxf ibm-mas_devops.tar.gz
 mkdir ~/masconfig
 ```
 
-
-	- Copy the entitlement license file to masconfig folder:
+    - Copy the entitlement license file to masconfig folder:
 	
-		- Open Terminal/PowerShell
+        - Open Terminal/PowerShell
 		
-		- docker cp SRC_PATH CONTAINER:/DEST_PATH/.
-			- `docker ps` to get CONTAINER
-			- For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
+        - docker cp SRC_PATH CONTAINER:/DEST_PATH/.
+            - `docker ps` to get CONTAINER
+            - For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
 			
 
-	- From the docker terminal/PowerShell, set the following environment variables:
+    - From the docker terminal/PowerShell, set the following environment variables:
 		
 		
-	```
-	export MONGODB_STORAGE_CLASS=<storage-class>
-	export IBM_ENTITLEMENT_KEY=<entitlement-key>
-	export MAS_APP_ID=manage
-	export SLS_ENTITLEMENT_KEY=<entitlement-key>
-	export SLS_STORAGE_CLASS=<storage-class>
-	export SLS_LICENSE_ID=<license-id>
-	export SLS_LICENSE_FILE=<license-file>
-	export UDS_STORAGE_CLASS=<storage-class>
-	export UDS_CONTACT_EMAIL=<your email-id>
-	export UDS_CONTACT_FIRSTNAME=<your first name>
-	export UDS_CONTACT_LASTNAME=<your first name>
-	export MAS_INSTANCE_ID=<instance-id>
-	export MAS_CONFIG_DIR=<config-dir>
-	export MAS_WORKSPACE_ID=<mas-workspace-id>
-	export MAS_ENTITLEMENT_KEY=<entitlement-key>
-	export PROMETHEUS_STORAGE_CLASS=<storage-class>
-	export PROMETHEUS_ALERTMGR_STORAGE_CLASS=<storage-class>
-	export GRAFANA_INSTANCE_STORAGE_CLASS=<storage-class>
-	export MONGODB_REPLICAS=1
-	```
+```
+export MONGODB_STORAGE_CLASS=<storage-class>
+export IBM_ENTITLEMENT_KEY=<entitlement-key>
+export MAS_APP_ID=manage
+export SLS_ENTITLEMENT_KEY=<entitlement-key>
+export SLS_STORAGE_CLASS=<storage-class>
+export SLS_LICENSE_ID=<license-id>
+export SLS_LICENSE_FILE=<license-file>
+export UDS_STORAGE_CLASS=<storage-class>
+export UDS_CONTACT_EMAIL=<your email-id>
+export UDS_CONTACT_FIRSTNAME=<your first name>
+export UDS_CONTACT_LASTNAME=<your first name>
+export MAS_INSTANCE_ID=<instance-id>
+export MAS_CONFIG_DIR=<config-dir>
+export MAS_WORKSPACE_ID=<mas-workspace-id>
+export MAS_ENTITLEMENT_KEY=<entitlement-key>
+export PROMETHEUS_STORAGE_CLASS=<storage-class>
+export PROMETHEUS_ALERTMGR_STORAGE_CLASS=<storage-class>
+export GRAFANA_INSTANCE_STORAGE_CLASS=<storage-class>
+export MONGODB_REPLICAS=1
+```
 	
-	!!! note
-	    To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
+!!! note
+    To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	
 	
-	- Sample environment variables:
+    - Sample environment variables:
 	
 	```
 	export MONGODB_STORAGE_CLASS=gp2
