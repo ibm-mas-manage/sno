@@ -55,7 +55,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#install-mas-and-dependencies">Install MAS and dependencies</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#run-the-core-ansible-collection">Run the core ansible collection:</a>
+    <li class="toctree-l3"><a class="reference internal" href="#run-the-core-ansible-collection">Run the core ansible collection</a>
     </li>
         </ul>
     </li>
@@ -157,20 +157,35 @@ pullSecret: '&lt;your secret&gt;'
 </code></pre>
 <p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner <code>kube:admin</code> drop down list, select <code>Copy login command</code>)</p>
-<h3 id="run-the-core-ansible-collection">Run the core ansible collection:<a class="headerlink" href="#run-the-core-ansible-collection" title="Permanent link"></a></h3>
-<p>1) Open Terminal/PowerShell</p>
+<h3 id="run-the-core-ansible-collection">Run the core ansible collection<a class="headerlink" href="#run-the-core-ansible-collection" title="Permanent link"></a></h3>
+<ul>
+<li>Open Terminal/PowerShell</li>
+</ul>
 <pre><code>docker run -ti quay.io/ibmmas/ansible-devops bash
 tar -zxf ibm-mas_devops.tar.gz
 
 mkdir ~/masconfig
 </code></pre>
-<p>2) Copy the entitlement license file to masconfig folder:
-    - Open Terminal/PowerShell
-        - docker cp SRC_PATH CONTAINER:/DEST_PATH/.
-            - <code>docker ps</code> to get CONTAINER
-            - For example, <code>docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.</code></p>
-<pre><code>- From the docker terminal/PowerShell, set the following environment variables:
-</code></pre>
+<ul>
+<li>
+<p>Copy the entitlement license file to masconfig folder:</p>
+<ul>
+<li>
+<p>Open Terminal/PowerShell</p>
+<ul>
+<li>docker cp SRC_PATH CONTAINER:/DEST_PATH/.<ul>
+<li><code>docker ps</code> to get CONTAINER</li>
+<li>For example, <code>docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>From the docker terminal/PowerShell, set the following environment variables:</p>
+</li>
+</ul>
+</li>
+</ul>
 <pre><code>export MONGODB_STORAGE_CLASS=&lt;storage-class&gt;
 export IBM_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
 export MAS_APP_ID=manage
@@ -196,7 +211,7 @@ export MONGODB_REPLICAS=1
 <p>To get the IBM Entitlement key and SLS License file check this <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">link</a></p>
 </div>
 <p>Sample environment variables:</p>
-<pre><code>export MONGODB_STORAGE_CLASS=gp2
+<pre><code>export MONGODB_STORAGE_CLASS=gp2 
 export MAS_APP_ID=manage
 export SLS_STORAGE_CLASS=gp2
 export SLS_LICENSE_ID=0242ac110002 
@@ -214,7 +229,13 @@ export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
 export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
 export MONGODB_REPLICAS=1
 </code></pre>
-<p>3) Run the ansible playbook to install MAS core and dependencies.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>gp2 is default storage class in AWS. You can optionally install Red Hat LVM (Logical Volume Manager) operator using OperatorHub for volume management.</p>
+</div>
+<ul>
+<li>Run the ansible playbook to install MAS core and dependencies.</li>
+</ul>
 <pre><code>ansible-playbook playbooks/oneclick_core.yml
 </code></pre>
 <ul>
@@ -239,7 +260,7 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 </code></pre>
 <ul>
 <li>
-<p>If you have your own database that you would like to use, inatall Manage app and configure database using the follwing steps:</p>
+<p>If you want to use an existing database, install Manage app and configure database using the following steps(MAS admin dashboard):</p>
 <ul>
 <li>
 <p>Go to MAS admin UI.</p>
@@ -257,11 +278,11 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 </ul>
 <p><img alt="image" src="images/superuser.png" /></p>
 <ul>
-<li>Create an authorized admin user using <code>Users</code> page.</li>
+<li>Create an authorized admin user using <code>Users</code> page. For example, masadmin</li>
 </ul>
 <p><img alt="image" src="images/createuser.png" /></p>
 <ul>
-<li>Install Manage from Catalog page.</li>
+<li>Login as admin user <code>masadmin</code> created in the previous step. Install Manage from Catalog page.</li>
 </ul>
 <p><img alt="image" src="images/installmanage.png" /></p>
 <ul>
@@ -337,5 +358,5 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-08-15 19:40:49.813719+00:00
+Build Date UTC : 2022-08-15 20:02:24.110623+00:00
 -->
