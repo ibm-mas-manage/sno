@@ -135,7 +135,7 @@ export MONGODB_REPLICAS=1
 ```	
 
 !!! note
-    gp2 is default storage class in AWS. You can optionally install Red Hat LVM (Logical Volume Manager) operator using OperatorHub for volume management.
+    gp2 is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.
 	
 - Run the ansible playbook to install MAS core and dependencies.
 	
