@@ -111,8 +111,7 @@ mkdir ~/masconfig
 	export MONGODB_REPLICAS=1
 	```
 	
-	!!! tip
-	- To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
+	!!! tip To get the IBM Entitlement key and SLS License file check this [link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	
 	
 	- Sample environment variables:
@@ -149,6 +148,7 @@ mkdir ~/masconfig
 ## Intall DB2 (optional)
 
 - Install DB2 using this [link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
+
 	- Sample
 	
 	
@@ -208,7 +208,7 @@ ansible-playbook  playbooks/oneclick_add_manage.yml
 		
 		![image](images/dbconnection.png)
 		 
-		- Update database configuration:
+		- Update database configuration. Select `Install Demo Data` if want to have maxdemo data.
 		
 		![image](images/dbconfig.png)
 		
