@@ -212,5 +212,5 @@ ansible-playbook playbooks/oneclick_add_manage.yml
 		
 		![image](images/dbconfig.png)
 		
-		- Apply changes by click on blue `Activate` button on the top right.
+		- Apply changes by clicking on the blue `Activate` button on the top right.
 		
