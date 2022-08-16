@@ -150,7 +150,8 @@ ansible-playbook playbooks/oneclick_core.yml
 ## Intall DB2 (optional)
 
 Install DB2 using this [Db2 link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
-Sample
+
+Sample environment variables:
 	
 ```
 export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
