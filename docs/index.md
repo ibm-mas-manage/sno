@@ -143,7 +143,7 @@ export MONGODB_REPLICAS=1
 ansible-playbook playbooks/oneclick_core.yml
 ```
 
-!!! Additional information
+!!! note
     Check out [MAS Ansible Devops Documentation](https://ibm-mas.github.io/ansible-devops/) for more information
 
 
