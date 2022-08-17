@@ -67,7 +67,7 @@ oc login --token=xxxx --server=<https://myocpserver>
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
 
-2) Run the core ansible collection by following the steps below:
+2) Run core ansible collection by following the steps below:
 
 - Open Terminal/PowerShell
 	
@@ -78,13 +78,13 @@ tar -zxf ibm-mas_devops.tar.gz
 mkdir ~/masconfig
 ```
 
-- Copy the entitlement license file to masconfig folder:
+- Copy entitlement license file to masconfig folder:
 	- Open Terminal/PowerShell
 		- docker cp SRC_PATH CONTAINER:/DEST_PATH/.
 			- `docker ps` to get CONTAINER
 			- For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
 			
-    - From the docker terminal/PowerShell, set the following environment variables:
+    - From docker Terminal/PowerShell, set the following environment variables:
 		
 		
 ```
@@ -110,7 +110,7 @@ export MONGODB_REPLICAS=1
 ```
 
 !!! note
-    How to get the `IBM Entitlement key` and `SLS License file` check this [preparation link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
+    How to get the `IBM Entitlement key` and `SLS License file` check [preparation link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 	
 	
 Sample environment variables:
@@ -136,9 +136,9 @@ export MONGODB_REPLICAS=1
 ```	
 
 !!! note
-    `gp2` is the default storage class in AWS. You can optionally install RedHat LV.M (Logical Volume Manager) operator using OperatorHub for volume management.
+    `gp2` is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.
 	
-- Run the ansible playbook to install MAS core and dependencies.
+- Run ansible playbook to install MAS core and dependencies.
 	
 ```
 ansible-playbook playbooks/oneclick_core.yml
@@ -167,13 +167,13 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 
 ## Install and Configure Manage
 
-- You can the run following automation playbook to install DB2 and Manage.
+- You can run the following automation playbook to install DB2 and Manage.
 
 ```
 ansible-playbook playbooks/oneclick_add_manage.yml
 ```
 	
-- If you want to use an existing database, install Manage app and configure database using the following steps (MAS admin dashboard):
+- If you want to use an existing database, install the Manage app and configure the database using the following steps (MAS admin dashboard):
 	 
 	- Go to MAS admin UI.
 		- From OpenShift Console, go to Routes. Select Admin dashboard. Click on Locations to go MAS admin dashboard.
@@ -182,7 +182,7 @@ ansible-playbook playbooks/oneclick_add_manage.yml
 		
 		- Make sure you can connect to coreapi service route.
 		
-		- Get the superuser password from `mas-sno-core` project secrets to login to MAS admin dashboard.
+		- Get the superuser password from `mas-sno-core` project secrets to log in to the MAS admin dashboard.
 		
 		![image](images/superuser.png)
 		
@@ -190,7 +190,7 @@ ansible-playbook playbooks/oneclick_add_manage.yml
 		
 		![image](images/createuser.png)
 		 
-		- Login as admin user `masadmin` created in the previous step. Install Manage from Catalog page.
+		- Login as admin user `masadmin` created in the previous step. Install Manage from the catalog page.
 		
 		![image](images/installmanage.png)
 		 
@@ -216,4 +216,4 @@ ansible-playbook playbooks/oneclick_add_manage.yml
 		
 		- Apply changes by clicking on the blue `Activate` button on the top right.
 		
-		- After successful activation, select Manage app by clicking on nine dot menu on the top right corner.
+		- After successful activation, the Manage app can be accessed by clicking on the nine-dot menu in the top right corner.
