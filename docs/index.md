@@ -11,12 +11,13 @@ This page documents how to setup MAS Manage on a SNO cluster.
 ## AWS
 This is based on a M5.4xlarge EC2 instance with mongo, db2u, db2w db, ibm sls, mas core, mas manage deployed.  
 - Download [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-- Use AWS login to your account
+
+- Use AWS credentials to login into your account
 
 ### Create SNO cluster
 - Download `openshift-install` and `pull` secret via this [link](https://console.redhat.com/openshift/install/aws/installer-provisioned)
 - create install-config.yaml under folder called sno
-	- Remove the worker nodes part
+	- Remove the worker nodes section
 	- Use networkType: OpenShiftSDN. Do NOT use OVNKubernetes which has a conflict with IBM SLS install. 
 
 Here is a sample install-config.yaml
@@ -215,4 +216,4 @@ ansible-playbook playbooks/oneclick_add_manage.yml
 		
 		- Apply changes by clicking on the blue `Activate` button on the top right.
 		
-		- After successful activation, you can select Manage app by clicking on nine dot menu on the top right corner.
+		- After successful activation, select Manage app by clicking on nine dot menu on the top right corner.
