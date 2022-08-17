@@ -164,7 +164,7 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 ```
 
 
-## Install Manage
+## Install and Configure Manage
 
 - You can the run following automation playbook to install DB2 and Manage.
 
