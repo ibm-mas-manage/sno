@@ -214,6 +214,6 @@ ansible-playbook playbooks/oneclick_add_manage.yml
 		
 		![image](images/dbconfig.png)
 		
-		- Apply changes by clicking on the blue `Activate` button on the top right.
+		- Apply changes by clicking on the blue `Activate` button in the top right.
 		
-		- After successful activation, the Manage app can be accessed by clicking on the nine-dot menu in the top right corner.
+		- After successful activation, the `Manage` app can be accessed by clicking on the nine-dot menu in the top right corner.
