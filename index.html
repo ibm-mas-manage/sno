@@ -151,7 +151,7 @@ pullSecret: '&lt;your secret&gt;'
 </code></pre>
 <p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner <code>kube:admin</code> drop down list, select <code>Copy login command</code>)</p>
-<p>2) Run the core ansible collection by following the steps below:</p>
+<p>2) Run core ansible collection by following the steps below:</p>
 <ul>
 <li>Open Terminal/PowerShell</li>
 </ul>
@@ -162,7 +162,7 @@ mkdir ~/masconfig
 </code></pre>
 <ul>
 <li>
-<p>Copy the entitlement license file to masconfig folder:</p>
+<p>Copy entitlement license file to masconfig folder:</p>
 <ul>
 <li>
 <p>Open Terminal/PowerShell</p>
@@ -175,7 +175,7 @@ mkdir ~/masconfig
 </ul>
 </li>
 <li>
-<p>From the docker terminal/PowerShell, set the following environment variables:</p>
+<p>From docker Terminal/PowerShell, set the following environment variables:</p>
 </li>
 </ul>
 </li>
@@ -202,7 +202,7 @@ export MONGODB_REPLICAS=1
 </code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>How to get the <code>IBM Entitlement key</code> and <code>SLS License file</code> check this <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">preparation link</a></p>
+<p>How to get the <code>IBM Entitlement key</code> and <code>SLS License file</code> check <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">preparation link</a></p>
 </div>
 <p>Sample environment variables:</p>
 <pre><code>export MONGODB_STORAGE_CLASS=gp2 
@@ -225,10 +225,10 @@ export MONGODB_REPLICAS=1
 </code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code>gp2</code> is the default storage class in AWS. You can optionally install RedHat LV.M (Logical Volume Manager) operator using OperatorHub for volume management.</p>
+<p><code>gp2</code> is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.</p>
 </div>
 <ul>
-<li>Run the ansible playbook to install MAS core and dependencies.</li>
+<li>Run ansible playbook to install MAS core and dependencies.</li>
 </ul>
 <pre><code>ansible-playbook playbooks/oneclick_core.yml
 </code></pre>
@@ -249,13 +249,13 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 </code></pre>
 <h2 id="install-and-configure-manage">Install and Configure Manage<a class="headerlink" href="#install-and-configure-manage" title="Permanent link"></a></h2>
 <ul>
-<li>You can the run following automation playbook to install DB2 and Manage.</li>
+<li>You can run the following automation playbook to install DB2 and Manage.</li>
 </ul>
 <pre><code>ansible-playbook playbooks/oneclick_add_manage.yml
 </code></pre>
 <ul>
 <li>
-<p>If you want to use an existing database, install Manage app and configure database using the following steps (MAS admin dashboard):</p>
+<p>If you want to use an existing database, install the Manage app and configure the database using the following steps (MAS admin dashboard):</p>
 <ul>
 <li>
 <p>Go to MAS admin UI.</p>
@@ -268,7 +268,7 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 <p>Make sure you can connect to coreapi service route.</p>
 </li>
 <li>
-<p>Get the superuser password from <code>mas-sno-core</code> project secrets to login to MAS admin dashboard.</p>
+<p>Get the superuser password from <code>mas-sno-core</code> project secrets to log in to the MAS admin dashboard.</p>
 </li>
 </ul>
 <p><img alt="image" src="images/superuser.png" /></p>
@@ -277,7 +277,7 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 </ul>
 <p><img alt="image" src="images/createuser.png" /></p>
 <ul>
-<li>Login as admin user <code>masadmin</code> created in the previous step. Install Manage from Catalog page.</li>
+<li>Login as admin user <code>masadmin</code> created in the previous step. Install Manage from the catalog page.</li>
 </ul>
 <p><img alt="image" src="images/installmanage.png" /></p>
 <ul>
@@ -305,7 +305,7 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 <p>Apply changes by clicking on the blue <code>Activate</code> button on the top right.</p>
 </li>
 <li>
-<p>After successful activation, select Manage app by clicking on nine dot menu on the top right corner.</p>
+<p>After successful activation, the Manage app can be accessed by clicking on the nine-dot menu in the top right corner.</p>
 </li>
 </ul>
 </li>
@@ -358,5 +358,5 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-08-17 00:18:00.792028+00:00
+Build Date UTC : 2022-08-17 00:30:12.618588+00:00
 -->
