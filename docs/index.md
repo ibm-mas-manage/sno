@@ -215,3 +215,4 @@ ansible-playbook playbooks/oneclick_add_manage.yml
 		
 		- Apply changes by clicking on the blue `Activate` button on the top right.
 		
+		- After successful activation, you can select Manage app by clicking on nine dot menu on the top right corner.
