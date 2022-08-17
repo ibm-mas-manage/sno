@@ -202,7 +202,7 @@ ansible-playbook playbooks/oneclick_add_manage.yml
 		
 		![image](images/subscription.png)
 		
-		- After deployment is completed, select `Update configuration` by selecting the action from the top right corner of the page:
+		- After deployment is complete, select `Update configuration` by selecting the action from the top right corner of the page:
 		
 		![image](images/configurationnew.png)
 		 
