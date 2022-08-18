@@ -173,7 +173,7 @@ export DB2_TEMP_STORAGE_CLASS=gp2
 ansible-playbook playbooks/oneclick_add_manage.yml
 ```
 	
-- If you want to use an existing database, install the Manage app and configure the database using the following steps (MAS admin dashboard):
+- If you want to use an existing external database, install the Manage app and configure the database using the following steps (MAS admin dashboard):
 	 
 	- Go to MAS admin UI.
 		- From OpenShift Console, go to Routes. Select Admin dashboard. Click on Locations to go MAS admin dashboard.
