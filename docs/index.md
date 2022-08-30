@@ -139,7 +139,7 @@ export MONGODB_REPLICAS=1
 !!! note
     `gp2` is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.
 	
-- Run ansible playbook to install MAS core and dependencies.
+- Run ansible playbook to install MAS core and dependencies. It takes about 1 hour to complete the installation. Some tasks takes more time to complete and you will see `Failed - Retrying...` messages.
 	
 ```
 ansible-playbook playbooks/oneclick_core.yml
@@ -176,7 +176,7 @@ export DB2_CPU_LIMITS=2000m
 
 ## Install and Configure Manage
 
-- You can run the following automation playbook to install DB2 and Manage. It takes about 1 hour to complete the installation. Some tasks takes more time to complete and you will see `Failed - Retrying...` messages.
+- You can run the following automation playbook to install DB2 and Manage. 
 
 ```
 ansible-playbook playbooks/oneclick_add_manage.yml
