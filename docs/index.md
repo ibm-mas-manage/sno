@@ -73,6 +73,7 @@ You can get OC Login information from OpenShift Console (top right corner `kube:
 	
 ```
 docker run -ti quay.io/ibmmas/ansible-devops bash
+oc login --token=xxxx --server=<https://myocpserver>
 tar -zxf ibm-mas_devops.tar.gz
 
 mkdir ~/masconfig
@@ -162,12 +163,20 @@ export DB2_DATA_STORAGE_CLASS=gp2
 export DB2_BACKUP_STORAGE_CLASS=gp2
 export DB2_LOGS_STORAGE_CLASS=gp2
 export DB2_TEMP_STORAGE_CLASS=gp2
+
+export DB2_META_STORAGE_SIZE=10Gi  
+export DB2_BACKUP_STORAGE_SIZE=10Gi  
+export DB2_LOGS_STORAGESIZE=10Gi 
+export DB2_TEMP_STORAGE_SIZE=10Gi
+export DB2_DATA_STORAGE_SIZE=20Gi
+export DB2_CPU_REQUESTS=500m
+export DB2_CPU_LIMITS=2000m
 ```
 
 
 ## Install and Configure Manage
 
-- You can run the following automation playbook to install DB2 and Manage.
+- You can run the following automation playbook to install DB2 and Manage. It takes about 1 hour to complete the installation. Some tasks takes more time to complete and you will see `Failed - Retrying...` messages.
 
 ```
 ansible-playbook playbooks/oneclick_add_manage.yml
