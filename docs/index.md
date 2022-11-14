@@ -1,15 +1,9 @@
 # Single Node OpenShift (OpenShift 4.10+) 
 **MAS 8.9/Manage 8.5**
 
-A single node offers both control and worker node functionality, users who have adopted Kubernetes at their central management sites and who wish to have independent Kubernetes clusters at edge sites can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. This page documents how to setup MAS Manage on a SNO cluster.
+A single node offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. This page documents how to setup MAS Manage on a Single Node OpenShift (SNO) cluster.
 
-A single node OpenShift deployment differs from the default self-managed/highly-available cluster profile in couple of ways:
-
-- To optimize system resource usage, many operators are configured to reduce the footprint of their operands when running on a single node OpenShift.
-
-- In environments that require high availability, it is recommended that the architecture be configured in a way in which if the hardware was to fail, those workloads are transitioned to other sites or nodes while the impacted node is recovered. 
-
-## Installing OpenShift Container Platform in a single Node OpenShift
+## Installing OpenShift on a single node 
 
 ### Requirements
 - vCPU: 16Cores
@@ -99,6 +93,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
     managementState: Removed
     ```
     to
+    
     
     ```
     managementState: Managed
