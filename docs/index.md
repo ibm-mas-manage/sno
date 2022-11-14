@@ -11,14 +11,14 @@ A single node offers both control and worker node functionality, users can deplo
 - IBM entitlement Key : Log in to the IBM Container Library with a user ID that has software download rights for your company’s Passport Advantage entitlement. Your entitlement key should be displayed on that page
 openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.
 - Openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.
-- MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select IBM MAXIMO APPLICATION SUITE AppPOINT LIC.  more details can be found in [here] (https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file)
+- MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select IBM MAXIMO APPLICATION SUITE AppPOINT LIC.  more details can be found in [here](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file)
 - Docker/Podman   
 - AWS
     - Valid AWS access key id 
     - Secret access key: If you don't it, ask your aws account admin to create one in IAM service
     - Domain or subdomain: If you don't have one, ask your aws account admin to register one through AWS Route53
 - Bare metal/vSphere: 
-    - [Requirements] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
+    - [Requirements](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
 
 ### Install OpenShift Platform Cluster on a Single Node
 
@@ -78,7 +78,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 	
 #### Bare Metal and vSphere
 
-- [Installation Instructions] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
+- [Installation Instructions](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
 - Ensure that your registry is set to managed to enable building and pushing of images.
    - Run
@@ -99,7 +99,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
     managementState: Managed
     ```
 
-   - Here is the link for [configuring the registry for bare metal] (https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+   - Here is the link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
 
 
 - Storage class : Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)
@@ -118,6 +118,8 @@ oc login --token=xxxx --server=<https://myocpserver>
 
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
+
+- Export environment variables:
 
 ```
 export MONGODB_STORAGE_CLASS=<storage-class>
