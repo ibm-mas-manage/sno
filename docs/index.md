@@ -26,7 +26,9 @@ openshift pull secret file (pull-secret). It can be downloaded from [here] (http
 - Bare metal/vSphere: 
     - [Requirements] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
 
-### Set up IBM MAS DevOps ansible collection docker container
+### Install OpenShift Platform Cluster on a Single Node
+
+#### Set up IBM MAS DevOps ansible collection docker container
 
 ```   
 mkdir ~/sno
@@ -39,7 +41,7 @@ cd /opt/app-root/src/sno/ansible-devops/ibm/mas_devops
 exit
 ```
 
-###  Log into the docker container; create a folder for mas configuration; then exit the container
+####  Log into the docker container; create a folder for mas configuration; then exit the container
 
 ```
 docker exec -it sno bash
@@ -47,14 +49,14 @@ mkdir /root/masconfig
 exit
 ```
 
-### Copy pull-secret and mas license file into the docker container
+#### Copy pull-secret and mas license file into the docker container
 
 ```
 docker cp pull-secret sno:/root/masconfig/pull-secret
 docker cp license.dat sno:/root/masconfig/license.dat
 ```
 
-### AWS
+#### AWS
 
 - Log into docker container, set env variables, then run playbook to provision SNO Cluster
 
@@ -78,7 +80,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 
 ```
 	
-### Bare Metal and vSphere
+#### Bare Metal and vSphere
 
 - [Installation Instructions] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
