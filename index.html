@@ -107,7 +107,7 @@
 <li>IBM entitlement Key : Log in to the IBM Container Library with a user ID that has software download rights for your company’s Passport Advantage entitlement. Your entitlement key should be displayed on that page
 openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.</li>
 <li>Openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.</li>
-<li>MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select IBM MAXIMO APPLICATION SUITE AppPOINT LIC.  more details can be found in [here] (https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file)</li>
+<li>MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select IBM MAXIMO APPLICATION SUITE AppPOINT LIC.  more details can be found in <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file">here</a></li>
 <li>Docker/Podman   </li>
 <li>AWS<ul>
 <li>Valid AWS access key id </li>
@@ -116,7 +116,7 @@ openshift pull secret file (pull-secret). It can be downloaded from [here] (http
 </ul>
 </li>
 <li>Bare metal/vSphere: <ul>
-<li>[Requirements] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)</li>
+<li><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing">Requirements</a></li>
 </ul>
 </li>
 </ul>
@@ -171,7 +171,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 <h4 id="bare-metal-and-vsphere">Bare Metal and vSphere<a class="headerlink" href="#bare-metal-and-vsphere" title="Permanent link"></a></h4>
 <ul>
 <li>
-<p>[Installation Instructions] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)</p>
+<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">Installation Instructions</a></p>
 </li>
 <li>
 <p>Ensure that your registry is set to managed to enable building and pushing of images.</p>
@@ -187,7 +187,7 @@ to</p>
 <p><code>managementState: Managed</code></p>
 </li>
 <li>
-<p>Here is the link for [configuring the registry for bare metal] (https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)</p>
+<p>Here is the link for <a href="https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal">configuring the registry for bare metal</a></p>
 </li>
 <li>
 <p>Storage class : Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)</p>
@@ -201,6 +201,9 @@ to</p>
 </code></pre>
 <p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner <code>kube:admin</code> drop down list, select <code>Copy login command</code>)</p>
+<ul>
+<li>Export environment variables:</li>
+</ul>
 <pre><code>export MONGODB_STORAGE_CLASS=&lt;storage-class&gt;
 export IBM_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
 export MAS_APP_ID=manage
@@ -388,5 +391,5 @@ export DB2_CPU_LIMITS=2000m
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-11-14 06:07:06.622338+00:00
+Build Date UTC : 2022-11-14 06:34:42.059478+00:00
 -->
