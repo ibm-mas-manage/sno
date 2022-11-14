@@ -49,15 +49,19 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#set-up-ibm-mas-devops-ansible-collection-docker-container">Set up IBM MAS DevOps ansible collection docker container</a>
+    <li class="toctree-l3"><a class="reference internal" href="#install-openshift-platform-cluster-on-a-single-node">Install OpenShift Platform Cluster on a Single Node</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#set-up-ibm-mas-devops-ansible-collection-docker-container">Set up IBM MAS DevOps ansible collection docker container</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#log-into-the-docker-container-create-a-folder-for-mas-configuration-then-exit-the-container">Log into the docker container; create a folder for mas configuration; then exit the container</a>
+    <li class="toctree-l4"><a class="reference internal" href="#log-into-the-docker-container-create-a-folder-for-mas-configuration-then-exit-the-container">Log into the docker container; create a folder for mas configuration; then exit the container</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#copy-pull-secret-and-mas-license-file-into-the-docker-container">Copy pull-secret and mas license file into the docker container</a>
+    <li class="toctree-l4"><a class="reference internal" href="#copy-pull-secret-and-mas-license-file-into-the-docker-container">Copy pull-secret and mas license file into the docker container</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#aws">AWS</a>
+    <li class="toctree-l4"><a class="reference internal" href="#aws">AWS</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#bare-metal-and-vsphere">Bare Metal and vSphere</a>
+    <li class="toctree-l4"><a class="reference internal" href="#bare-metal-and-vsphere">Bare Metal and vSphere</a>
+    </li>
+        </ul>
     </li>
         </ul>
     </li>
@@ -131,7 +135,8 @@ openshift pull secret file (pull-secret). It can be downloaded from [here] (http
 </ul>
 </li>
 </ul>
-<h3 id="set-up-ibm-mas-devops-ansible-collection-docker-container">Set up IBM MAS DevOps ansible collection docker container<a class="headerlink" href="#set-up-ibm-mas-devops-ansible-collection-docker-container" title="Permanent link"></a></h3>
+<h3 id="install-openshift-platform-cluster-on-a-single-node">Install OpenShift Platform Cluster on a Single Node<a class="headerlink" href="#install-openshift-platform-cluster-on-a-single-node" title="Permanent link"></a></h3>
+<h4 id="set-up-ibm-mas-devops-ansible-collection-docker-container">Set up IBM MAS DevOps ansible collection docker container<a class="headerlink" href="#set-up-ibm-mas-devops-ansible-collection-docker-container" title="Permanent link"></a></h4>
 <pre><code>mkdir ~/sno
 cd ~/sno
 git clone https://github.com/ibm-mas/ansible-devops
@@ -141,16 +146,16 @@ cd /opt/app-root/src/sno/ansible-devops/ibm/mas_devops
 ./rebuild.sh
 exit
 </code></pre>
-<h3 id="log-into-the-docker-container-create-a-folder-for-mas-configuration-then-exit-the-container">Log into the docker container; create a folder for mas configuration; then exit the container<a class="headerlink" href="#log-into-the-docker-container-create-a-folder-for-mas-configuration-then-exit-the-container" title="Permanent link"></a></h3>
+<h4 id="log-into-the-docker-container-create-a-folder-for-mas-configuration-then-exit-the-container">Log into the docker container; create a folder for mas configuration; then exit the container<a class="headerlink" href="#log-into-the-docker-container-create-a-folder-for-mas-configuration-then-exit-the-container" title="Permanent link"></a></h4>
 <pre><code>docker exec -it sno bash
 mkdir /root/masconfig
 exit
 </code></pre>
-<h3 id="copy-pull-secret-and-mas-license-file-into-the-docker-container">Copy pull-secret and mas license file into the docker container<a class="headerlink" href="#copy-pull-secret-and-mas-license-file-into-the-docker-container" title="Permanent link"></a></h3>
+<h4 id="copy-pull-secret-and-mas-license-file-into-the-docker-container">Copy pull-secret and mas license file into the docker container<a class="headerlink" href="#copy-pull-secret-and-mas-license-file-into-the-docker-container" title="Permanent link"></a></h4>
 <pre><code>docker cp pull-secret sno:/root/masconfig/pull-secret
 docker cp license.dat sno:/root/masconfig/license.dat
 </code></pre>
-<h3 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link"></a></h3>
+<h4 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link"></a></h4>
 <ul>
 <li>Log into docker container, set env variables, then run playbook to provision SNO Cluster</li>
 </ul>
@@ -172,7 +177,7 @@ export OCP_VERSION=&quot;latest-4.10&quot;
 ansible-playbook ibm.mas_devops.ocp_aws_provision
 
 </code></pre>
-<h3 id="bare-metal-and-vsphere">Bare Metal and vSphere<a class="headerlink" href="#bare-metal-and-vsphere" title="Permanent link"></a></h3>
+<h4 id="bare-metal-and-vsphere">Bare Metal and vSphere<a class="headerlink" href="#bare-metal-and-vsphere" title="Permanent link"></a></h4>
 <ul>
 <li>
 <p>[Installation Instructions] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)</p>
@@ -392,5 +397,5 @@ export DB2_CPU_LIMITS=2000m
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-11-14 05:28:37.073236+00:00
+Build Date UTC : 2022-11-14 05:39:50.591549+00:00
 -->
