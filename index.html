@@ -45,15 +45,27 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href=".">Single Node OpenShift</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#minimum-requirements">Minimum Requirements</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#aws">AWS</a>
+    <li class="toctree-l2"><a class="reference internal" href="#installing-openshift-container-platform-in-a-single-node-openshift">Installing OpenShift Container Platform in a single Node OpenShift</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#create-sno-cluster">Create SNO cluster</a>
+    <li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#set-up-ibm-mas-devops-ansible-collection-docker-container">Set up IBM MAS DevOps ansible collection docker container</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#log-into-the-docker-container-create-a-folder-for-mas-configuration-then-exit-the-container">Log into the docker container; create a folder for mas configuration; then exit the container</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#copy-pull-secret-and-mas-license-file-into-the-docker-container">Copy pull-secret and mas license file into the docker container</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#aws">AWS</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bare-metal-and-vsphere">Bare Metal and vSphere</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#install-mas-and-dependencies">Install MAS and dependencies</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#oc-login">OC Login:</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#intall-db2-optional">Intall DB2 (optional)</a>
     </li>
@@ -87,99 +99,112 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="single-node-openshift-openshift-410">Single Node OpenShift (OpenShift 4.10+)<a class="headerlink" href="#single-node-openshift-openshift-410" title="Permanent link"></a></h1>
-<p><strong>MAS 8.8/Manage 8.4</strong>
-<strong>Technology Preview</strong></p>
-<p>This page documents how to setup MAS Manage on a SNO cluster.</p>
-<h3 id="minimum-requirements">Minimum Requirements<a class="headerlink" href="#minimum-requirements" title="Permanent link"></a></h3>
+<p><strong>MAS 8.9/Manage 8.5</strong></p>
+<p>A single node offers both control and worker node functionality, users who have adopted Kubernetes at their central management sites and who wish to have independent Kubernetes clusters at edge sites can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. This page documents how to setup MAS Manage on a SNO cluster.</p>
+<p>A single node OpenShift deployment differs from the default self-managed/highly-available cluster profile in couple of ways:</p>
+<ul>
+<li>
+<p>To optimize system resource usage, many operators are configured to reduce the footprint of their operands when running on a single node OpenShift.</p>
+</li>
+<li>
+<p>In environments that require high availability, it is recommended that the architecture be configured in a way in which if the hardware was to fail, those workloads are transitioned to other sites or nodes while the impacted node is recovered. </p>
+</li>
+</ul>
+<h2 id="installing-openshift-container-platform-in-a-single-node-openshift">Installing OpenShift Container Platform in a single Node OpenShift<a class="headerlink" href="#installing-openshift-container-platform-in-a-single-node-openshift" title="Permanent link"></a></h2>
+<h3 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link"></a></h3>
 <ul>
 <li>vCPU: 16Cores</li>
 <li>RAM: 64Gb</li>
+<li>IBM entitlement Key : Log in to the IBM Container Library with a user ID that has software download rights for your company’s Passport Advantage entitlement. Your entitlement key should be displayed on that page
+openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.</li>
+<li>Openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.</li>
+<li>MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select IBM MAXIMO APPLICATION SUITE AppPOINT LIC.  more details can be found in [here] (https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file)</li>
+<li>Docker/Podman   </li>
+<li>AWS<ul>
+<li>Valid AWS access key id </li>
+<li>Secret access key: If you don't it, ask your aws account admin to create one in IAM service</li>
+<li>Domain or subdomain: If you don't have one, ask your aws account admin to register one through AWS Route53</li>
 </ul>
-<h2 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link"></a></h2>
-<p>This is based on a M5.4xlarge EC2 instance with mongo, db2u, db2w db, ibm sls, mas core, mas manage deployed.<br />
-- Download <a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">AWS CLI</a></p>
-<ul>
-<li>Use AWS credentials to login into your account</li>
-</ul>
-<h3 id="create-sno-cluster">Create SNO cluster<a class="headerlink" href="#create-sno-cluster" title="Permanent link"></a></h3>
-<ul>
-<li>Download <code>openshift-install</code> and <code>pull</code> secret via this <a href="https://console.redhat.com/openshift/install/aws/installer-provisioned">link</a></li>
-<li>create install-config.yaml under folder called sno<ul>
-<li>Remove the worker nodes section</li>
-<li>Use networkType: OpenShiftSDN. Do NOT use OVNKubernetes which has a conflict with IBM SLS install. </li>
+</li>
+<li>Bare metal/vSphere: <ul>
+<li>[Requirements] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)</li>
 </ul>
 </li>
 </ul>
-<p>Here is a sample install-config.yaml</p>
-<pre><code>apiVersion: v1
-baseDomain: &lt;your base domain&gt;
-compute:
-- name: worker
-  replicas: 0
-controlPlane:
-  name: master
-  platform:
-    aws:
-      type: m5.4xlarge 
-  replicas: 1
-metadata:
-  name: sno
-networking:
-  clusterNetwork:
-  - cidr: 10.128.0.0/14
-    hostPrefix: 23
-  machineNetwork:
-  - cidr: 10.0.0.0/16
-  networkType: OpenShiftSDN 
-  serviceNetwork:
-  - 172.30.0.0/16
-platform:
-  aws:
-    region: &lt;your region&gt;
-publish: External
-pullSecret: '&lt;your secret&gt;'
+<h3 id="set-up-ibm-mas-devops-ansible-collection-docker-container">Set up IBM MAS DevOps ansible collection docker container<a class="headerlink" href="#set-up-ibm-mas-devops-ansible-collection-docker-container" title="Permanent link"></a></h3>
+<pre><code>mkdir ~/sno
+cd ~/sno
+git clone https://github.com/ibm-mas/ansible-devops
+docker run -dit -v ~/sno:/opt/app-root/src/sno --name sno quay.io/ibmmas/ansible-devops:latest bash​
+docker exec -it sno bash
+cd /opt/app-root/src/sno/ansible-devops/ibm/mas_devops
+./rebuild.sh
+exit
 </code></pre>
-<p>For example, region: us-east-2</p>
+<h3 id="log-into-the-docker-container-create-a-folder-for-mas-configuration-then-exit-the-container">Log into the docker container; create a folder for mas configuration; then exit the container<a class="headerlink" href="#log-into-the-docker-container-create-a-folder-for-mas-configuration-then-exit-the-container" title="Permanent link"></a></h3>
+<pre><code>docker exec -it sno bash
+mkdir /root/masconfig
+exit
+</code></pre>
+<h3 id="copy-pull-secret-and-mas-license-file-into-the-docker-container">Copy pull-secret and mas license file into the docker container<a class="headerlink" href="#copy-pull-secret-and-mas-license-file-into-the-docker-container" title="Permanent link"></a></h3>
+<pre><code>docker cp pull-secret sno:/root/masconfig/pull-secret
+docker cp license.dat sno:/root/masconfig/license.dat
+</code></pre>
+<h3 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link"></a></h3>
 <ul>
-<li>Create cluster
-<code>openshift-install create cluster --dir=sno</code></li>
+<li>Log into docker container, set env variables, then run playbook to provision SNO Cluster</li>
 </ul>
+<pre><code>docker exec -it sno bash
+
+export AWS_ACCESS_KEY_ID=&quot;&lt;your aws access key id&quot;
+export AWS_SECRET_ACCESS_KEY=&quot;&lt;your aws secret access key&quot;
+export IPI_PLATFORM=aws
+export CLUSTER_TYPE=&quot;ipi&quot;
+export CLUSTER_NAME=&lt;cluster name e.g. sno&gt;
+export IPI_REGION=&lt;aws region e.g. us-east-1?
+export IPI_BASE_DOMAIN=&lt;your domain&gt;
+export IPI_PULL_SECRET_FILE=&quot;/root/masconfig/pull-secret&quot;
+export IPI_DIR=&quot;/root/sno&quot;
+export IPI_CONTROLPLANE_REPLICAS=1
+export IPI_COMPUTE_REPLICAS=0
+export OCP_VERSION=&quot;latest-4.10&quot;
+
+ansible-playbook ibm.mas_devops.ocp_aws_provision
+
+</code></pre>
+<h3 id="bare-metal-and-vsphere">Bare Metal and vSphere<a class="headerlink" href="#bare-metal-and-vsphere" title="Permanent link"></a></h3>
+<ul>
+<li>
+<p>[Installation Instructions] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)</p>
+</li>
+<li>
+<p>Ensure that your registry is set to managed to enable building and pushing of images.</p>
+</li>
+<li>
+<p>Run</p>
+<p><code>$ oc edit configs.imageregistry/cluster</code></p>
+</li>
+<li>
+<p>Then, change the line</p>
+<p><code>managementState: Removed</code>
+to</p>
+<p><code>managementState: Managed</code></p>
+</li>
+<li>
+<p>Here is the link for [configuring the registry for bare metal] (https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)</p>
+</li>
+<li>
+<p>Storage class : Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)</p>
+</li>
+</ul>
+<p>You can install LVM operator from operator hub.</p>
+<p>ToDo add Screen Shots</p>
 <h2 id="install-mas-and-dependencies">Install MAS and dependencies<a class="headerlink" href="#install-mas-and-dependencies" title="Permanent link"></a></h2>
-<p>1) OC Login: </p>
+<h3 id="oc-login">OC Login:<a class="headerlink" href="#oc-login" title="Permanent link"></a></h3>
 <pre><code>oc login --token=xxxx --server=&lt;https://myocpserver&gt;
 </code></pre>
 <p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner <code>kube:admin</code> drop down list, select <code>Copy login command</code>)</p>
-<p>2) Run core ansible collection by following the steps below:</p>
-<ul>
-<li>Open Terminal/PowerShell</li>
-</ul>
-<pre><code>docker run -ti quay.io/ibmmas/ansible-devops bash
-oc login --token=xxxx --server=&lt;https://myocpserver&gt;
-tar -zxf ibm-mas_devops.tar.gz
-
-mkdir ~/masconfig
-</code></pre>
-<ul>
-<li>
-<p>Copy entitlement license file to masconfig folder:</p>
-<ul>
-<li>
-<p>Open Terminal/PowerShell</p>
-<ul>
-<li>docker cp SRC_PATH CONTAINER:/DEST_PATH/.<ul>
-<li><code>docker ps</code> to get CONTAINER</li>
-<li>For example, <code>docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>From docker Terminal/PowerShell, set the following environment variables:</p>
-</li>
-</ul>
-</li>
-</ul>
 <pre><code>export MONGODB_STORAGE_CLASS=&lt;storage-class&gt;
 export IBM_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
 export MAS_APP_ID=manage
@@ -228,7 +253,7 @@ export MONGODB_REPLICAS=1
 <p><code>gp2</code> is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.</p>
 </div>
 <ul>
-<li>Run ansible playbook to install MAS core and dependencies. It takes about 1 hour to complete the installation. Some tasks takes more time to complete and you will see <code>Failed - Retrying...</code> messages.</li>
+<li>Run ansible playbook to install MAS core and dependencies. It takes about 1.5 hours to complete the installation. Some tasks takes more time to complete and you will see <code>Failed - Retrying...</code> messages.</li>
 </ul>
 <pre><code>ansible-playbook playbooks/oneclick_core.yml
 </code></pre>
@@ -252,8 +277,9 @@ export DB2_BACKUP_STORAGE_SIZE=10Gi
 export DB2_LOGS_STORAGESIZE=10Gi 
 export DB2_TEMP_STORAGE_SIZE=10Gi
 export DB2_DATA_STORAGE_SIZE=20Gi
-export DB2_CPU_REQUESTS=500m
+export DB2_CPU_REQUESTS=300m
 export DB2_CPU_LIMITS=2000m
+
 </code></pre>
 <h2 id="install-and-configure-manage">Install and Configure Manage<a class="headerlink" href="#install-and-configure-manage" title="Permanent link"></a></h2>
 <ul>
@@ -365,6 +391,6 @@ export DB2_CPU_LIMITS=2000m
 </html>
 
 <!--
-MkDocs version : 1.4.0
-Build Date UTC : 2022-10-06 05:09:34.032826+00:00
+MkDocs version : 1.4.2
+Build Date UTC : 2022-11-14 05:28:37.073236+00:00
 -->
