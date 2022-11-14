@@ -102,21 +102,18 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 
     ```
     $ oc edit configs.imageregistry/cluster
-
     ```
 
     - Then, change the line
 
     ```
     managementState: Removed
-
     ```
 
     to
 
     ```
     managementState: Managed
-
     ```
 
     - Here is the link for [configuring the registry for bare metal] (https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
