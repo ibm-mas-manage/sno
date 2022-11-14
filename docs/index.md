@@ -30,6 +30,7 @@ openshift pull secret file (pull-secret). It can be downloaded from [here] (http
 
 - Set up IBM MAS DevOps ansible collection docker container
 
+
 ```   
 mkdir ~/sno
 cd ~/sno
@@ -50,6 +51,7 @@ exit
 ```
 
 - Copy pull-secret and mas license file into the docker container
+
 
 ```
 docker cp pull-secret sno:/root/masconfig/pull-secret
