@@ -1,7 +1,7 @@
 # Single Node OpenShift (OpenShift 4.10+) 
 **MAS 8.9/Manage 8.5**
 
-A single node offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. This page documents how to setup MAS Manage on a Single Node OpenShift (SNO) cluster.
+A single node offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises edge deployments. This page documents how to setup MAS Manage on a Single Node OpenShift (SNO) cluster.
 
 ## Installing OpenShift on a single node 
 
