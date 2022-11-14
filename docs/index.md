@@ -1,65 +1,137 @@
 # Single Node OpenShift (OpenShift 4.10+) 
-**MAS 8.8/Manage 8.4**
-**Technology Preview**
+**MAS 8.9/Manage 8.5**
 
-This page documents how to setup MAS Manage on a SNO cluster.
+A single node offers both control and worker node functionality, users who have adopted Kubernetes at their central management sites and who wish to have independent Kubernetes clusters at edge sites can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. This page documents how to setup MAS Manage on a SNO cluster.
 
-### Minimum Requirements
+A single node OpenShift deployment differs from the default self-managed/highly-available cluster profile in couple of ways:
+
+- To optimize system resource usage, many operators are configured to reduce the footprint of their operands when running on a single node OpenShift.
+
+- In environments that require high availability, it is recommended that the architecture be configured in a way in which if the hardware was to fail, those workloads are transitioned to other sites or nodes while the impacted node is recovered. 
+
+## Installing OpenShift Container Platform in a single Node OpenShift
+
+### Requirements
 - vCPU: 16Cores
 - RAM: 64Gb
+- IBM entitlement Key : Log in to the IBM Container Library with a user ID that has software download rights for your company’s Passport Advantage entitlement. Your entitlement key should be displayed on that page
+openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.
+- Openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.
+- MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select IBM MAXIMO APPLICATION SUITE AppPOINT LIC.  more details can be found in [here] (https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file)
+- Docker/Podman   
+- AWS
+    - Valid AWS access key id 
+    - Secret access key: If you don't it, ask your aws account admin to create one in IAM service
+    - Domain or subdomain: If you don't have one, ask your aws account admin to register one through AWS Route53
+- Bare metal/vSphere: 
+    - [Requirements] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
 
-## AWS
-This is based on a M5.4xlarge EC2 instance with mongo, db2u, db2w db, ibm sls, mas core, mas manage deployed.  
-- Download [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+### Set up IBM MAS DevOps ansible collection docker container
 
-- Use AWS credentials to login into your account
+```   
+mkdir ~/sno
+cd ~/sno
+git clone https://github.com/ibm-mas/ansible-devops
+docker run -dit -v ~/sno:/opt/app-root/src/sno --name sno quay.io/ibmmas/ansible-devops:latest bash​
+docker exec -it sno bash
+cd /opt/app-root/src/sno/ansible-devops/ibm/mas_devops
+./rebuild.sh
+exit
+```
 
-### Create SNO cluster
-- Download `openshift-install` and `pull` secret via this [link](https://console.redhat.com/openshift/install/aws/installer-provisioned)
-- create install-config.yaml under folder called sno
-	- Remove the worker nodes section
-	- Use networkType: OpenShiftSDN. Do NOT use OVNKubernetes which has a conflict with IBM SLS install. 
-
-Here is a sample install-config.yaml
+###  Log into the docker container; create a folder for mas configuration; then exit the container
 
 ```
-apiVersion: v1
-baseDomain: <your base domain>
-compute:
-- name: worker
-  replicas: 0
-controlPlane:
-  name: master
-  platform:
-    aws:
-      type: m5.4xlarge 
-  replicas: 1
-metadata:
-  name: sno
-networking:
-  clusterNetwork:
-  - cidr: 10.128.0.0/14
-    hostPrefix: 23
-  machineNetwork:
-  - cidr: 10.0.0.0/16
-  networkType: OpenShiftSDN 
-  serviceNetwork:
-  - 172.30.0.0/16
-platform:
-  aws:
-    region: <your region>
-publish: External
-pullSecret: '<your secret>'
+docker exec -it sno bash
+mkdir /root/masconfig
+exit
 ```
-For example, region: us-east-2
 
-- Create cluster
-`openshift-install create cluster --dir=sno`
+### Copy pull-secret and mas license file into the docker container
+
+```
+docker cp pull-secret sno:/root/masconfig/pull-secret
+docker cp license.dat sno:/root/masconfig/license.dat
+```
+
+### AWS
+
+- Log into docker container, set env variables, then run playbook to provision SNO Cluster
+
+```
+docker exec -it sno bash
+
+export AWS_ACCESS_KEY_ID="<your aws access key id"
+export AWS_SECRET_ACCESS_KEY="<your aws secret access key"
+export IPI_PLATFORM=aws
+export CLUSTER_TYPE="ipi"
+export CLUSTER_NAME=<cluster name e.g. sno>
+export IPI_REGION=<aws region e.g. us-east-1?
+export IPI_BASE_DOMAIN=<your domain>
+export IPI_PULL_SECRET_FILE="/root/masconfig/pull-secret"
+export IPI_DIR="/root/sno"
+export IPI_CONTROLPLANE_REPLICAS=1
+export IPI_COMPUTE_REPLICAS=0
+export OCP_VERSION="latest-4.10"
+
+ansible-playbook ibm.mas_devops.ocp_aws_provision
+
+```
 	
+### Bare Metal and vSphere
+
+- The OpenShift assisted-installer 
+    - Login and select the “Create Cluster” button.
+    - Select a cluster name and add in the base domain.
+    - Select “Install single node OpenShift (SNO)” as the default is to deploy a multi-node cluster.
+    - Read and accept the warnings about single node OpenShift availability, scalability and life cycle management limitations at present given it is  a technology preview.
+    - Select “Generate Discovery ISO.”
+    - Add your public ssh key and download the ISO. 
+    - Attach this discovery ISO to the host you wish to install.
+    - Set the host to automatically boot from CDROM, and power the system up.
+    - After a few moments your host will show up in the assisted installer UI.
+    - The host will start reporting information about the system and network configuration. 
+    - Select the subnet you want OpenShift to use.
+    - Click next, review the setting and select “Install cluster”
+    - View the installation progress until the installation complete
+
+    - [Installation Link] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
+
+-  Ensure that your registry is set to managed to enable building and pushing of images.
+    - Run
+
+    ```
+    $ oc edit configs.imageregistry/cluster
+
+    ```
+
+    - Then, change the line
+
+    ```
+    managementState: Removed
+
+    ```
+
+    to
+
+    ```
+    managementState: Managed
+
+    ```
+
+    - Here is the link for [configuring the registry for bare metal] (https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+
+
+- Storage class : Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)
+
+You can install LVM operator from operator hub.
+
+ToDo add Screen Shots
+
 
 ## Install MAS and dependencies
 
-1) OC Login: 
+### OC Login: 
 ```
 oc login --token=xxxx --server=<https://myocpserver>
 ```
@@ -67,27 +139,6 @@ oc login --token=xxxx --server=<https://myocpserver>
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
 
-2) Run core ansible collection by following the steps below:
-
-- Open Terminal/PowerShell
-	
-```
-docker run -ti quay.io/ibmmas/ansible-devops bash
-oc login --token=xxxx --server=<https://myocpserver>
-tar -zxf ibm-mas_devops.tar.gz
-
-mkdir ~/masconfig
-```
-
-- Copy entitlement license file to masconfig folder:
-	- Open Terminal/PowerShell
-		- docker cp SRC_PATH CONTAINER:/DEST_PATH/.
-			- `docker ps` to get CONTAINER
-			- For example, `docker cp c:/sno/entitlement.lic a68f4b2dcc21:/opt/app-root/src/.`
-			
-    - From docker Terminal/PowerShell, set the following environment variables:
-		
-		
 ```
 export MONGODB_STORAGE_CLASS=<storage-class>
 export IBM_ENTITLEMENT_KEY=<entitlement-key>
@@ -112,8 +163,7 @@ export MONGODB_REPLICAS=1
 
 !!! note
     How to get the `IBM Entitlement key` and `SLS License file` check [preparation link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
-	
-	
+		
 Sample environment variables:
 	
 ```
@@ -139,7 +189,7 @@ export MONGODB_REPLICAS=1
 !!! note
     `gp2` is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.
 	
-- Run ansible playbook to install MAS core and dependencies. It takes about 1 hour to complete the installation. Some tasks takes more time to complete and you will see `Failed - Retrying...` messages.
+- Run ansible playbook to install MAS core and dependencies. It takes about 1.5 hours to complete the installation. Some tasks takes more time to complete and you will see `Failed - Retrying...` messages.
 	
 ```
 ansible-playbook playbooks/oneclick_core.yml
@@ -169,8 +219,9 @@ export DB2_BACKUP_STORAGE_SIZE=10Gi
 export DB2_LOGS_STORAGESIZE=10Gi 
 export DB2_TEMP_STORAGE_SIZE=10Gi
 export DB2_DATA_STORAGE_SIZE=20Gi
-export DB2_CPU_REQUESTS=500m
+export DB2_CPU_REQUESTS=300m
 export DB2_CPU_LIMITS=2000m
+
 ```
 
 
