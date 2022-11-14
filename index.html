@@ -45,7 +45,7 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href=".">Single Node OpenShift</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#installing-openshift-container-platform-in-a-single-node-openshift">Installing OpenShift Container Platform in a single Node OpenShift</a>
+    <li class="toctree-l2"><a class="reference internal" href="#installing-openshift-on-a-single-node">Installing OpenShift on a single node</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a>
     </li>
@@ -98,17 +98,8 @@
               
                 <h1 id="single-node-openshift-openshift-410">Single Node OpenShift (OpenShift 4.10+)<a class="headerlink" href="#single-node-openshift-openshift-410" title="Permanent link"></a></h1>
 <p><strong>MAS 8.9/Manage 8.5</strong></p>
-<p>A single node offers both control and worker node functionality, users who have adopted Kubernetes at their central management sites and who wish to have independent Kubernetes clusters at edge sites can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. This page documents how to setup MAS Manage on a SNO cluster.</p>
-<p>A single node OpenShift deployment differs from the default self-managed/highly-available cluster profile in couple of ways:</p>
-<ul>
-<li>
-<p>To optimize system resource usage, many operators are configured to reduce the footprint of their operands when running on a single node OpenShift.</p>
-</li>
-<li>
-<p>In environments that require high availability, it is recommended that the architecture be configured in a way in which if the hardware was to fail, those workloads are transitioned to other sites or nodes while the impacted node is recovered. </p>
-</li>
-</ul>
-<h2 id="installing-openshift-container-platform-in-a-single-node-openshift">Installing OpenShift Container Platform in a single Node OpenShift<a class="headerlink" href="#installing-openshift-container-platform-in-a-single-node-openshift" title="Permanent link"></a></h2>
+<p>A single node offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. This page documents how to setup MAS Manage on a Single Node OpenShift (SNO) cluster.</p>
+<h2 id="installing-openshift-on-a-single-node">Installing OpenShift on a single node<a class="headerlink" href="#installing-openshift-on-a-single-node" title="Permanent link"></a></h2>
 <h3 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link"></a></h3>
 <ul>
 <li>vCPU: 16Cores</li>
@@ -397,5 +388,5 @@ export DB2_CPU_LIMITS=2000m
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-11-14 05:51:46.315724+00:00
+Build Date UTC : 2022-11-14 06:07:06.622338+00:00
 -->
