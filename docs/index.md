@@ -109,9 +109,8 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
     ```
     managementState: Removed
     ```
-
     to
-
+    
     ```
     managementState: Managed
     ```
