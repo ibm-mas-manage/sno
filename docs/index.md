@@ -80,31 +80,16 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 	
 ### Bare Metal and vSphere
 
-- The OpenShift assisted-installer 
-    - Login and select the “Create Cluster” button.
-    - Select a cluster name and add in the base domain.
-    - Select “Install single node OpenShift (SNO)” as the default is to deploy a multi-node cluster.
-    - Read and accept the warnings about single node OpenShift availability, scalability and life cycle management limitations at present given it is  a technology preview.
-    - Select “Generate Discovery ISO.”
-    - Add your public ssh key and download the ISO. 
-    - Attach this discovery ISO to the host you wish to install.
-    - Set the host to automatically boot from CDROM, and power the system up.
-    - After a few moments your host will show up in the assisted installer UI.
-    - The host will start reporting information about the system and network configuration. 
-    - Select the subnet you want OpenShift to use.
-    - Click next, review the setting and select “Install cluster”
-    - View the installation progress until the installation complete
+- [Installation Instructions] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
-    - [Installation Link] (https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
-
--  Ensure that your registry is set to managed to enable building and pushing of images.
-    - Run
+- Ensure that your registry is set to managed to enable building and pushing of images.
+   - Run
 
     ```
     $ oc edit configs.imageregistry/cluster
     ```
 
-    - Then, change the line
+   - Then, change the line
 
     ```
     managementState: Removed
@@ -115,7 +100,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
     managementState: Managed
     ```
 
-    - Here is the link for [configuring the registry for bare metal] (https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+   - Here is the link for [configuring the registry for bare metal] (https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
 
 
 - Storage class : Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)
