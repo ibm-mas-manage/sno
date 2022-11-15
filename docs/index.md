@@ -1,7 +1,8 @@
 # Single Node OpenShift (OpenShift 4.10+) 
 **MAS 8.9/Manage 8.5**
 
-A single node offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. This page documents how to setup MAS Manage on a Single Node OpenShift (SNO) cluster.
+A single node offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos,
+ proof of concepts, or even on-premises edge deployments. This page documents how to setup MAS Manage on a Single Node OpenShift (SNO) cluster.
 
 ## Installing OpenShift on a single node 
 
@@ -92,8 +93,9 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
     ```
     managementState: Removed
     ```
-    to
     
+    to
+
     
     ```
     managementState: Managed
@@ -106,9 +108,35 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 
 You can install LVM operator from operator hub.
 
-ToDo add Screen Shots
+- Install ODF LVM Operator from OperatorHub
 
+![image](images/lvm.png)
 
+- Click on the tile and install 
+
+![image](images/lvminstall.png)
+
+- Click Install
+
+![image](images/lvminstall2.png)
+
+- After the operator is installed, click on `View Operator`
+
+![image](images/lvmInstalled.png)
+
+- Create LVM Operator Instance
+
+![image](images/createinstance.png)
+
+- Configure the instance
+
+![image](images/configurelvm.png)
+
+- After Configuration, the LVM storage class is created
+
+![image](images/lvmstorageclass.png)
+
+ 
 ## Install MAS and dependencies
 
 ### OC Login: 
@@ -119,7 +147,7 @@ oc login --token=xxxx --server=<https://myocpserver>
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
 
-- Export environment variables:
+- Set up environment variables
 
 ```
 export MONGODB_STORAGE_CLASS=<storage-class>
