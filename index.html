@@ -172,10 +172,10 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 <h4 id="bare-metal-and-vsphere">Bare Metal and vSphere<a class="headerlink" href="#bare-metal-and-vsphere" title="Permanent link"></a></h4>
 <ul>
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">Installation Instructions</a></p>
+<p>Installing on a single node <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">instructions</a></p>
 </li>
 <li>
-<p>Ensure that your registry is set to managed to enable building and pushing of images.</p>
+<p>Enable Image Registry: Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for <a href="https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal">configuring the registry for bare metal</a></p>
 </li>
 <li>
 <p>Run</p>
@@ -188,10 +188,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 <p><code>managementState: Managed</code></p>
 </li>
 <li>
-<p>Here is the link for <a href="https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal">configuring the registry for bare metal</a></p>
-</li>
-<li>
-<p>Storage class : Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)</p>
+<p>Storage class: Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)</p>
 </li>
 </ul>
 <p>You can install LVM operator from operator hub.</p>
@@ -419,5 +416,5 @@ export DB2_CPU_LIMITS=2000m
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-11-15 04:17:25.246784+00:00
+Build Date UTC : 2022-11-15 04:39:29.956883+00:00
 -->
