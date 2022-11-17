@@ -194,7 +194,16 @@ export MONGODB_REPLICAS=1
 
 !!! note
     `gp2` is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.
-	
+
+```
+export PROMETHEUS_ALERTMGR_STORAGE_CLASS=odf-lvm-vg1
+export UDS_STORAGE_CLASS=odf-lvm-vg1
+export MONGODB_STORAGE_CLASS=odf-lvm-vg1
+export GRAFANA_INSTANCE_STORAGE_CLASS=odf-lvm-vg1
+export SLS_STORAGE_CLASS=odf-lvm-vg1
+export PROMETHEUS_STORAGE_CLASS=odf-lvm-vg1
+
+```
 - Run ansible playbook to install MAS core and dependencies. It takes about 1.5 hours to complete the installation. Some tasks takes more time to complete and you will see `Failed - Retrying...` messages.
 	
 ```
@@ -226,7 +235,6 @@ export DB2_LOGS_STORAGESIZE=10Gi
 export DB2_TEMP_STORAGE_SIZE=10Gi
 export DB2_DATA_STORAGE_SIZE=20Gi
 export DB2_CPU_REQUESTS=300m
-export DB2_CPU_LIMITS=2000m
 
 ```
 
