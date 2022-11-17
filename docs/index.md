@@ -136,7 +136,7 @@ You can install LVM operator from operator hub.
  
 ## Install MAS and dependencies
 
-### OC Login: 
+### OC Login
 ```
 oc login --token=xxxx --server=<https://myocpserver>
 ```
