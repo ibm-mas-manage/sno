@@ -9,8 +9,7 @@ A single node offers both control and worker node functionality, users can deplo
 ### Requirements
 - vCPU: 16Cores
 - RAM: 64Gb
-- IBM entitlement Key : Log in to the IBM Container Library with a user ID that has software download rights for your company’s Passport Advantage entitlement. Your entitlement key should be displayed on that page
-openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.
+- IBM entitlement Key : Log in to the [IBM Container Library](https://myibm.ibm.com/products-services/containerlibrary) with a user ID that has software download rights for your company’s Passport Advantage entitlement to get the entitlement key.
 - Openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.
 - MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select `IBM MAXIMO APPLICATION SUITE AppPOINT LIC.`  more details can be found in [here](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file)
 - Docker/Podman   
