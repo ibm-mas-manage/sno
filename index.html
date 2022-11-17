@@ -61,7 +61,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#install-mas-and-dependencies">Install MAS and dependencies</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#oc-login">OC Login:</a>
+    <li class="toctree-l3"><a class="reference internal" href="#oc-login">OC Login</a>
     </li>
         </ul>
     </li>
@@ -105,10 +105,9 @@
 <ul>
 <li>vCPU: 16Cores</li>
 <li>RAM: 64Gb</li>
-<li>IBM entitlement Key : Log in to the IBM Container Library with a user ID that has software download rights for your company’s Passport Advantage entitlement. Your entitlement key should be displayed on that page
-openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.</li>
+<li>IBM entitlement Key : Log in to the <a href="https://myibm.ibm.com/products-services/containerlibrary">IBM Container Library</a> with a user ID that has software download rights for your company’s Passport Advantage entitlement to get the entitlement key.</li>
 <li>Openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.</li>
-<li>MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select IBM MAXIMO APPLICATION SUITE AppPOINT LIC.  more details can be found in <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file">here</a></li>
+<li>MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select <code>IBM MAXIMO APPLICATION SUITE AppPOINT LIC.</code>  more details can be found in <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file">here</a></li>
 <li>Docker/Podman   </li>
 <li>AWS<ul>
 <li>Valid AWS access key id </li>
@@ -117,7 +116,7 @@ openshift pull secret file (pull-secret). It can be downloaded from [here] (http
 </ul>
 </li>
 <li>Bare metal/vSphere: <ul>
-<li><a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing">Requirements</a></li>
+<li>Requirements <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing">link</a></li>
 </ul>
 </li>
 </ul>
@@ -221,7 +220,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 </ul>
 <p><img alt="image" src="images/lvmstorageclass.png" /></p>
 <h2 id="install-mas-and-dependencies">Install MAS and dependencies<a class="headerlink" href="#install-mas-and-dependencies" title="Permanent link"></a></h2>
-<h3 id="oc-login">OC Login:<a class="headerlink" href="#oc-login" title="Permanent link"></a></h3>
+<h3 id="oc-login">OC Login<a class="headerlink" href="#oc-login" title="Permanent link"></a></h3>
 <pre><code>oc login --token=xxxx --server=&lt;https://myocpserver&gt;
 </code></pre>
 <p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.
@@ -254,12 +253,9 @@ export MONGODB_REPLICAS=1
 <p>How to get the <code>IBM Entitlement key</code> and <code>SLS License file</code> check <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">preparation link</a></p>
 </div>
 <p>Sample environment variables:</p>
-<pre><code>export MONGODB_STORAGE_CLASS=gp2 
-export MAS_APP_ID=manage
-export SLS_STORAGE_CLASS=gp2
+<pre><code>export MAS_APP_ID=manage
 export SLS_LICENSE_ID=0242ac110002 
 export SLS_LICENSE_FILE=~/masconfig/entitlement.lic
-export UDS_STORAGE_CLASS=gp2
 export UDS_CONTACT_EMAIL=abc@us.ibm.com
 export UDS_CONTACT_FIRSTNAME=abc
 export UDS_CONTACT_LASTNAME=abc
@@ -267,15 +263,29 @@ export MAS_INSTANCE_ID=sno
 export MAS_CONFIG_DIR=~/masconfig
 export MAS_WORKSPACE_ID=masdev
 export MAS_INSTANCE_ID=sno
+export MONGODB_REPLICAS=1
+</code></pre>
+<p>AWS Storage class</p>
+<pre><code>export MONGODB_STORAGE_CLASS=gp2 
+export SLS_STORAGE_CLASS=gp2
+export UDS_STORAGE_CLASS=gp2
 export PROMETHEUS_STORAGE_CLASS=gp2
 export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
 export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
-export MONGODB_REPLICAS=1
+
 </code></pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code>gp2</code> is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.</p>
 </div>
+<pre><code>export PROMETHEUS_ALERTMGR_STORAGE_CLASS=odf-lvm-vg1
+export UDS_STORAGE_CLASS=odf-lvm-vg1
+export MONGODB_STORAGE_CLASS=odf-lvm-vg1
+export GRAFANA_INSTANCE_STORAGE_CLASS=odf-lvm-vg1
+export SLS_STORAGE_CLASS=odf-lvm-vg1
+export PROMETHEUS_STORAGE_CLASS=odf-lvm-vg1
+
+</code></pre>
 <ul>
 <li>Run ansible playbook to install MAS core and dependencies. It takes about 1.5 hours to complete the installation. Some tasks takes more time to complete and you will see <code>Failed - Retrying...</code> messages.</li>
 </ul>
@@ -302,7 +312,6 @@ export DB2_LOGS_STORAGESIZE=10Gi
 export DB2_TEMP_STORAGE_SIZE=10Gi
 export DB2_DATA_STORAGE_SIZE=20Gi
 export DB2_CPU_REQUESTS=300m
-export DB2_CPU_LIMITS=2000m
 
 </code></pre>
 <h2 id="install-and-configure-manage">Install and Configure Manage<a class="headerlink" href="#install-and-configure-manage" title="Permanent link"></a></h2>
@@ -416,5 +425,5 @@ export DB2_CPU_LIMITS=2000m
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-11-15 04:47:42.572136+00:00
+Build Date UTC : 2022-11-17 06:22:40.672147+00:00
 -->
