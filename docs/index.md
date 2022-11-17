@@ -18,7 +18,7 @@ A single node offers both control and worker node functionality, users can deplo
     - Secret access key: If you don't it, ask your aws account admin to create one in IAM service
     - Domain or subdomain: If you don't have one, ask your aws account admin to register one through AWS Route53
 - Bare metal/vSphere: 
-    - [Requirements](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
+    - Requirements [link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
 
 ### Install OpenShift Platform Cluster on a Single Node
 
