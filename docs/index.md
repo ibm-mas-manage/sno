@@ -20,7 +20,7 @@ A single node offers both control and worker node functionality, users can deplo
 - Bare metal/vSphere: 
     - Requirements [link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
 
-### Install OpenShift Platform Cluster on a Single Node
+### Installation
 
 - Set up IBM MAS DevOps ansible collection docker container
 
