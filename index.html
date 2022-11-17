@@ -296,11 +296,6 @@ export PROMETHEUS_STORAGE_CLASS=odf-lvm-vg1
 <p>Sample environment variables:</p>
 <pre><code>export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
 export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
-export DB2_META_STORAGE_CLASS=gp2
-export DB2_DATA_STORAGE_CLASS=gp2
-export DB2_BACKUP_STORAGE_CLASS=gp2
-export DB2_LOGS_STORAGE_CLASS=gp2
-export DB2_TEMP_STORAGE_CLASS=gp2
 
 export DB2_META_STORAGE_SIZE=10Gi  
 export DB2_BACKUP_STORAGE_SIZE=10Gi  
@@ -308,7 +303,20 @@ export DB2_LOGS_STORAGESIZE=10Gi
 export DB2_TEMP_STORAGE_SIZE=10Gi
 export DB2_DATA_STORAGE_SIZE=20Gi
 export DB2_CPU_REQUESTS=300m
-
+</code></pre>
+<p>AWS storage class</p>
+<pre><code>export DB2_META_STORAGE_CLASS=gp2
+export DB2_DATA_STORAGE_CLASS=gp2
+export DB2_BACKUP_STORAGE_CLASS=gp2
+export DB2_LOGS_STORAGE_CLASS=gp2
+export DB2_TEMP_STORAGE_CLASS=gp2
+</code></pre>
+<p>Bare Metal/vSphere storage class</p>
+<pre><code>export DB2_META_STORAGE_CLASS=odf-lvm-vg1
+export DB2_DATA_STORAGE_CLASS=odf-lvm-vg1
+export DB2_BACKUP_STORAGE_CLASS=odf-lvm-vg1
+export DB2_LOGS_STORAGE_CLASS=odf-lvm-vg1
+export DB2_TEMP_STORAGE_CLASS=odf-lvm-vg1
 </code></pre>
 <h2 id="install-and-configure-manage">Install and Configure Manage<a class="headerlink" href="#install-and-configure-manage" title="Permanent link"></a></h2>
 <ul>
@@ -421,5 +429,5 @@ export DB2_CPU_REQUESTS=300m
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-11-17 06:44:23.865281+00:00
+Build Date UTC : 2022-11-17 06:49:21.847137+00:00
 -->
