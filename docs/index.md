@@ -76,7 +76,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 
 ```
 	
-#### Bare Metal and vSphere
+#### Bare Metal/vSphere
 
 - OpenShift Container Platform(OCP) installation on a single node [instructions](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
