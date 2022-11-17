@@ -171,14 +171,11 @@ export MONGODB_REPLICAS=1
     How to get the `IBM Entitlement key` and `SLS License file` check [preparation link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 		
 Sample environment variables:
-	
+
 ```
-export MONGODB_STORAGE_CLASS=gp2 
 export MAS_APP_ID=manage
-export SLS_STORAGE_CLASS=gp2
 export SLS_LICENSE_ID=0242ac110002 
 export SLS_LICENSE_FILE=~/masconfig/entitlement.lic
-export UDS_STORAGE_CLASS=gp2
 export UDS_CONTACT_EMAIL=abc@us.ibm.com
 export UDS_CONTACT_FIRSTNAME=abc
 export UDS_CONTACT_LASTNAME=abc
@@ -186,10 +183,18 @@ export MAS_INSTANCE_ID=sno
 export MAS_CONFIG_DIR=~/masconfig
 export MAS_WORKSPACE_ID=masdev
 export MAS_INSTANCE_ID=sno
+export MONGODB_REPLICAS=1
+```
+
+AWS Storage class
+```
+export MONGODB_STORAGE_CLASS=gp2 
+export SLS_STORAGE_CLASS=gp2
+export UDS_STORAGE_CLASS=gp2
 export PROMETHEUS_STORAGE_CLASS=gp2
 export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
 export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
-export MONGODB_REPLICAS=1
+
 ```	
 
 !!! note
@@ -204,6 +209,7 @@ export SLS_STORAGE_CLASS=odf-lvm-vg1
 export PROMETHEUS_STORAGE_CLASS=odf-lvm-vg1
 
 ```
+
 - Run ansible playbook to install MAS core and dependencies. It takes about 1.5 hours to complete the installation. Some tasks takes more time to complete and you will see `Failed - Retrying...` messages.
 	
 ```
