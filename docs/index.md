@@ -9,17 +9,16 @@ A single node offers both control and worker node functionality, users can deplo
 ### Requirements
 - vCPU: 16Cores
 - RAM: 64Gb
-- IBM entitlement Key : Log in to the IBM Container Library with a user ID that has software download rights for your company’s Passport Advantage entitlement. Your entitlement key should be displayed on that page
-openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.
+- IBM entitlement Key : Log in to the [IBM Container Library](https://myibm.ibm.com/products-services/containerlibrary) with a user ID that has software download rights for your company’s Passport Advantage entitlement to get the entitlement key.
 - Openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.
-- MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select IBM MAXIMO APPLICATION SUITE AppPOINT LIC.  more details can be found in [here](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file)
+- MAS license file (license.dat): Access IBM License Key Center, on the Get Keys menu select IBM AppPoint Suites. Select `IBM MAXIMO APPLICATION SUITE AppPOINT LIC.`  more details can be found in [here](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file)
 - Docker/Podman   
 - AWS
     - Valid AWS access key id 
     - Secret access key: If you don't it, ask your aws account admin to create one in IAM service
     - Domain or subdomain: If you don't have one, ask your aws account admin to register one through AWS Route53
 - Bare metal/vSphere: 
-    - [Requirements](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
+    - Requirements [link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
 
 ### Install OpenShift Platform Cluster on a Single Node
 
@@ -136,7 +135,7 @@ You can install LVM operator from operator hub.
  
 ## Install MAS and dependencies
 
-### OC Login: 
+### OC Login
 ```
 oc login --token=xxxx --server=<https://myocpserver>
 ```
@@ -172,14 +171,11 @@ export MONGODB_REPLICAS=1
     How to get the `IBM Entitlement key` and `SLS License file` check [preparation link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
 		
 Sample environment variables:
-	
+
 ```
-export MONGODB_STORAGE_CLASS=gp2 
 export MAS_APP_ID=manage
-export SLS_STORAGE_CLASS=gp2
 export SLS_LICENSE_ID=0242ac110002 
 export SLS_LICENSE_FILE=~/masconfig/entitlement.lic
-export UDS_STORAGE_CLASS=gp2
 export UDS_CONTACT_EMAIL=abc@us.ibm.com
 export UDS_CONTACT_FIRSTNAME=abc
 export UDS_CONTACT_LASTNAME=abc
@@ -187,15 +183,33 @@ export MAS_INSTANCE_ID=sno
 export MAS_CONFIG_DIR=~/masconfig
 export MAS_WORKSPACE_ID=masdev
 export MAS_INSTANCE_ID=sno
+export MONGODB_REPLICAS=1
+```
+
+AWS Storage class
+```
+export MONGODB_STORAGE_CLASS=gp2 
+export SLS_STORAGE_CLASS=gp2
+export UDS_STORAGE_CLASS=gp2
 export PROMETHEUS_STORAGE_CLASS=gp2
 export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
 export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
-export MONGODB_REPLICAS=1
+
 ```	
 
 !!! note
     `gp2` is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.
-	
+
+```
+export PROMETHEUS_ALERTMGR_STORAGE_CLASS=odf-lvm-vg1
+export UDS_STORAGE_CLASS=odf-lvm-vg1
+export MONGODB_STORAGE_CLASS=odf-lvm-vg1
+export GRAFANA_INSTANCE_STORAGE_CLASS=odf-lvm-vg1
+export SLS_STORAGE_CLASS=odf-lvm-vg1
+export PROMETHEUS_STORAGE_CLASS=odf-lvm-vg1
+
+```
+
 - Run ansible playbook to install MAS core and dependencies. It takes about 1.5 hours to complete the installation. Some tasks takes more time to complete and you will see `Failed - Retrying...` messages.
 	
 ```
@@ -227,7 +241,6 @@ export DB2_LOGS_STORAGESIZE=10Gi
 export DB2_TEMP_STORAGE_SIZE=10Gi
 export DB2_DATA_STORAGE_SIZE=20Gi
 export DB2_CPU_REQUESTS=300m
-export DB2_CPU_LIMITS=2000m
 
 ```
 
