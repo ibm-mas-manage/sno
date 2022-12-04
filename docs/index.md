@@ -1,12 +1,31 @@
 # Single Node OpenShift (OpenShift 4.10+) 
 **MAS 8.9/Manage 8.5**
 
-A single node offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos,
- proof of concepts, or even on-premises edge deployments. This page documents how to setup MAS Manage on a Single Node OpenShift (SNO) cluster.
+## Summary
+A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos,
+ proof of concepts, or even on-premises edge deployments. It has limited resources.
 
-## Installing OpenShift on a single node 
+### Here are some highlights of Single Node OpenShift:
+- Requires installation via openshift installer (IPI) or Assisted Installer. [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses installation wizard on Red Hat’s OpenShift Cluster Manager site.
+- Local storage can be configured using [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator)
+- You need entitement for the official support.
 
-### Requirements
+If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. 
+
+### When to use Single Node OpenShift?
+If you want to experience a “real” cluster, a Single Node OpenShift may be a better option. You can develop and deploy applications and get a real cluster feel.
+It’s the best “small” OpenShift experience. 
+
+I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.9 and Manage 8.5. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.
+
+## Use Cases
+- SMB: End-user sites can deploy a separate independent instance of MAS, Manage and DB2 for SMB with no dependence on the centralized management 
+- Large Businesses: For large clients with satellite/remote locations deployments it can sync data to Central Data Center for Maximo EAM. 
+![image](https://user-images.githubusercontent.com/22056068/205515459-13851de9-5f12-435b-8751-004c8aeeafda.png)
+
+![image](images/sno.png)
+
+## Requirements
 - vCPU: 16Cores
 - RAM: 64Gb
 - IBM entitlement Key : Log in to the [IBM Container Library](https://myibm.ibm.com/products-services/containerlibrary) with a user ID that has software download rights for your company’s Passport Advantage entitlement to get the entitlement key.
@@ -20,10 +39,9 @@ A single node offers both control and worker node functionality, users can deplo
 - Bare metal/vSphere: 
     - Requirements [link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
 
-### Installation
+## Installation
 
 - Set up IBM MAS DevOps ansible collection docker container
-
 
 ```   
 mkdir ~/sno
