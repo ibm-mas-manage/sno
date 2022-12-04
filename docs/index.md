@@ -95,9 +95,9 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 
 - OpenShift Container Platform(OCP) installation on a single node [instructions](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
-   **Image Registry**
+- **Image Registry**
   
-     Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for [configuring the registry for bare metal]  (https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+    Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for [configuring the registry for bare metal]  (https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
    - Run
 
     ```
