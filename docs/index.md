@@ -121,6 +121,9 @@ Ensure that your registry is set to managed to enable building and pushing of im
 
 - Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)
 
+!!! note
+    You’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it.
+
 You can install LVM operator from operator hub.
 
 - Install ODF LVM Operator from OperatorHub
