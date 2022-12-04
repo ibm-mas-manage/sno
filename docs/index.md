@@ -97,7 +97,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 
 - **Image Registry**
   
-    Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for [configuring the registry for bare metal(https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+    Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
    - Run
 
     ```
