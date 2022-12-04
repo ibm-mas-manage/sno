@@ -156,6 +156,7 @@ You can install LVM operator from operator hub.
 ![image](images/lvmstorageclass.png)
 
  
+ 
 ## Install MAS and Manage
 
 *OC Login*
