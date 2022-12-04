@@ -46,26 +46,30 @@
                 <li class="toctree-l1 current"><a class="reference internal current" href=".">Single Node OpenShift</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#here-are-some-highlights-of-single-node-openshift">Here are some highlights of Single Node OpenShift:</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#when-to-use-single-node-openshift">When to use Single Node OpenShift?</a>
+    <li class="toctree-l2"><a class="reference internal" href="#highlights">Highlights</a>
     </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#when-to-use-single-node-openshift">When to use Single Node OpenShift?</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#use-cases">Use Cases</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#openshift-installation">Openshift Installation</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#aws">AWS</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#bare-metalvsphere">Bare Metal/vSphere</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#image-registry">Image Registry</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#install-mas-and-dependencies">Install MAS and dependencies</a>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#storage-class">Storage Class</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#install-mas-and-manage">Install MAS and Manage</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#intall-db2-optional">Intall DB2 (optional)</a>
     </li>
@@ -99,26 +103,24 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="single-node-openshift-openshift-410">Single Node OpenShift (OpenShift 4.10+)<a class="headerlink" href="#single-node-openshift-openshift-410" title="Permanent link"></a></h1>
-<p><strong>MAS 8.9/Manage 8.5</strong></p>
 <h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link"></a></h2>
 <p>A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos,
  proof of concepts, or even on-premises edge deployments. It has limited resources.</p>
-<h3 id="here-are-some-highlights-of-single-node-openshift">Here are some highlights of Single Node OpenShift:<a class="headerlink" href="#here-are-some-highlights-of-single-node-openshift" title="Permanent link"></a></h3>
+<h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link"></a></h2>
 <ul>
 <li>Requires installation via openshift installer (IPI) or Assisted Installer. <a href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html">Assisted Installer</a> uses installation wizard on Red Hat’s OpenShift Cluster Manager site.</li>
 <li>Local storage can be configured using <a href="https://github.com/red-hat-storage/lvm-operator">ODS LVM Operator</a></li>
 <li>You need entitement for the official support.</li>
 </ul>
 <p>If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. </p>
-<h3 id="when-to-use-single-node-openshift">When to use Single Node OpenShift?<a class="headerlink" href="#when-to-use-single-node-openshift" title="Permanent link"></a></h3>
+<h2 id="when-to-use-single-node-openshift">When to use Single Node OpenShift?<a class="headerlink" href="#when-to-use-single-node-openshift" title="Permanent link"></a></h2>
 <p>If you want to experience a “real” cluster, a Single Node OpenShift may be a better option. You can develop and deploy applications and get a real cluster feel.
 It’s the best “small” OpenShift experience. </p>
 <p>I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.9 and Manage 8.5. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.</p>
 <h2 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link"></a></h2>
 <ul>
-<li>SMB: End-user sites can deploy a separate independent instance of MAS, Manage and DB2 for SMB with no dependence on the centralized management </li>
-<li>Large Businesses: For large clients with satellite/remote locations deployments it can sync data to Central Data Center for Maximo EAM. 
-<img alt="image" src="https://user-images.githubusercontent.com/22056068/205515459-13851de9-5f12-435b-8751-004c8aeeafda.png" /></li>
+<li>Small MAS and Manage-only implementations that range from 10-30 users</li>
+<li>Satellite / Disconnected deployments, possibly connected to a big MAS. It can sync data to Central Data Center for Maximo EAM</li>
 </ul>
 <p><img alt="image" src="images/sno.png" /></p>
 <h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link"></a></h2>
@@ -140,7 +142,7 @@ It’s the best “small” OpenShift experience. </p>
 </ul>
 </li>
 </ul>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link"></a></h2>
+<h2 id="openshift-installation">Openshift Installation<a class="headerlink" href="#openshift-installation" title="Permanent link"></a></h2>
 <ul>
 <li>Set up IBM MAS DevOps ansible collection docker container</li>
 </ul>
@@ -166,7 +168,7 @@ exit
 <pre><code>docker cp pull-secret sno:/root/masconfig/pull-secret
 docker cp license.dat sno:/root/masconfig/license.dat
 </code></pre>
-<h4 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link"></a></h4>
+<h3 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link"></a></h3>
 <ul>
 <li>Log into docker container, set env variables, then run playbook to provision SNO Cluster</li>
 </ul>
@@ -188,28 +190,33 @@ export OCP_VERSION=&quot;latest-4.10&quot;
 ansible-playbook ibm.mas_devops.ocp_aws_provision
 
 </code></pre>
-<h4 id="bare-metalvsphere">Bare Metal/vSphere<a class="headerlink" href="#bare-metalvsphere" title="Permanent link"></a></h4>
+<h3 id="bare-metalvsphere">Bare Metal/vSphere<a class="headerlink" href="#bare-metalvsphere" title="Permanent link"></a></h3>
 <ul>
-<li>
-<p>OpenShift Container Platform(OCP) installation on a single node <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">instructions</a></p>
-</li>
-<li>
-<p>Enable Image Registry: Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for <a href="https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal">configuring the registry for bare metal</a></p>
-</li>
-<li>
-<p>Run</p>
-<p><code>$ oc edit configs.imageregistry/cluster</code></p>
-</li>
+<li>OpenShift Container Platform(OCP) installation on a single node <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">instructions</a></li>
+</ul>
+<h4 id="image-registry">Image Registry<a class="headerlink" href="#image-registry" title="Permanent link"></a></h4>
+<p>Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for <a href="https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal">configuring the registry for bare metal</a>
+   - Run</p>
+<pre><code>```
+$ oc edit configs.imageregistry/cluster
+```
+</code></pre>
+<ul>
 <li>
 <p>Then, change the line</p>
 <p><code>managementState: Removed</code></p>
 <p>to</p>
 <p><code>managementState: Managed</code></p>
 </li>
-<li>
-<p>Storage class: Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)</p>
-</li>
 </ul>
+<h2 id="storage-class">Storage Class<a class="headerlink" href="#storage-class" title="Permanent link"></a></h2>
+<ul>
+<li>Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it.</p>
+</div>
 <p>You can install LVM operator from operator hub.</p>
 <ul>
 <li>Install ODF LVM Operator from OperatorHub</li>
@@ -239,7 +246,7 @@ ansible-playbook ibm.mas_devops.ocp_aws_provision
 <li>After Configuration, the LVM storage class is created</li>
 </ul>
 <p><img alt="image" src="images/lvmstorageclass.png" /></p>
-<h2 id="install-mas-and-dependencies">Install MAS and dependencies<a class="headerlink" href="#install-mas-and-dependencies" title="Permanent link"></a></h2>
+<h2 id="install-mas-and-manage">Install MAS and Manage<a class="headerlink" href="#install-mas-and-manage" title="Permanent link"></a></h2>
 <p><em>OC Login</em></p>
 <pre><code>oc login --token=xxxx --server=&lt;https://myocpserver&gt;
 </code></pre>
@@ -453,5 +460,5 @@ export DB2_TEMP_STORAGE_CLASS=odf-lvm-vg1
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-12-04 21:13:23.071331+00:00
+Build Date UTC : 2022-12-04 22:54:54.364043+00:00
 -->
