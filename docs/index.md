@@ -4,7 +4,7 @@
 A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos,
  proof of concepts, or even on-premises edge deployments. It has limited resources.
 
-## Highlights of Single Node OpenShift
+## Highlights
 - Requires installation via openshift installer (IPI) or Assisted Installer. [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses installation wizard on Red Hat’s OpenShift Cluster Manager site.
 - Local storage can be configured using [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator)
 - You need entitement for the official support.
@@ -18,8 +18,8 @@ It’s the best “small” OpenShift experience.
 I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.9 and Manage 8.5. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.
 
 ## Use Cases
-- SMB: End-user sites can deploy a separate independent instance of MAS, Manage and DB2 for SMB with no dependence on the centralized management 
-- Large Businesses: For large clients with satellite/remote locations deployments it can sync data to Central Data Center for Maximo EAM. 
+- Small MAS and Manage-only implementations that range from 10-30 users
+- Satellite / Disconnected deployments, possibly connected to a big MAS. It can sync data to Central Data Center for Maximo EAM
 
 ![image](images/sno.png)
 
