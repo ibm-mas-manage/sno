@@ -45,17 +45,23 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href=".">Single Node OpenShift</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#installing-openshift-on-a-single-node">Installing OpenShift on a single node</a>
+    <li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a>
+    <li class="toctree-l3"><a class="reference internal" href="#here-are-some-highlights-of-single-node-openshift">Here are some highlights of Single Node OpenShift:</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#aws">AWS</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#bare-metalvsphere">Bare Metal/vSphere</a>
+    <li class="toctree-l3"><a class="reference internal" href="#when-to-use-single-node-openshift">When to use Single Node OpenShift?</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#use-cases">Use Cases</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#aws">AWS</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bare-metalvsphere">Bare Metal/vSphere</a>
     </li>
         </ul>
     </li>
@@ -94,10 +100,28 @@
               
                 <h1 id="single-node-openshift-openshift-410">Single Node OpenShift (OpenShift 4.10+)<a class="headerlink" href="#single-node-openshift-openshift-410" title="Permanent link"></a></h1>
 <p><strong>MAS 8.9/Manage 8.5</strong></p>
-<p>A single node offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos,
- proof of concepts, or even on-premises edge deployments. This page documents how to setup MAS Manage on a Single Node OpenShift (SNO) cluster.</p>
-<h2 id="installing-openshift-on-a-single-node">Installing OpenShift on a single node<a class="headerlink" href="#installing-openshift-on-a-single-node" title="Permanent link"></a></h2>
-<h3 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link"></a></h3>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link"></a></h2>
+<p>A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos,
+ proof of concepts, or even on-premises edge deployments. It has limited resources.</p>
+<h3 id="here-are-some-highlights-of-single-node-openshift">Here are some highlights of Single Node OpenShift:<a class="headerlink" href="#here-are-some-highlights-of-single-node-openshift" title="Permanent link"></a></h3>
+<ul>
+<li>Requires installation via openshift installer (IPI) or Assisted Installer. <a href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html">Assisted Installer</a> uses installation wizard on Red Hat’s OpenShift Cluster Manager site.</li>
+<li>Local storage can be configured using <a href="https://github.com/red-hat-storage/lvm-operator">ODS LVM Operator</a></li>
+<li>You need entitement for the official support.</li>
+</ul>
+<p>If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. </p>
+<h3 id="when-to-use-single-node-openshift">When to use Single Node OpenShift?<a class="headerlink" href="#when-to-use-single-node-openshift" title="Permanent link"></a></h3>
+<p>If you want to experience a “real” cluster, a Single Node OpenShift may be a better option. You can develop and deploy applications and get a real cluster feel.
+It’s the best “small” OpenShift experience. </p>
+<p>I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.9 and Manage 8.5. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.</p>
+<h2 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link"></a></h2>
+<ul>
+<li>SMB: End-user sites can deploy a separate independent instance of MAS, Manage and DB2 for SMB with no dependence on the centralized management </li>
+<li>Large Businesses: For large clients with satellite/remote locations deployments it can sync data to Central Data Center for Maximo EAM. 
+<img alt="image" src="https://user-images.githubusercontent.com/22056068/205515459-13851de9-5f12-435b-8751-004c8aeeafda.png" /></li>
+</ul>
+<p><img alt="image" src="images/sno.png" /></p>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link"></a></h2>
 <ul>
 <li>vCPU: 16Cores</li>
 <li>RAM: 64Gb</li>
@@ -116,7 +140,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link"></a></h3>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link"></a></h2>
 <ul>
 <li>Set up IBM MAS DevOps ansible collection docker container</li>
 </ul>
@@ -429,5 +453,5 @@ export DB2_TEMP_STORAGE_CLASS=odf-lvm-vg1
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-11-17 06:55:29.287184+00:00
+Build Date UTC : 2022-12-04 21:13:23.071331+00:00
 -->
