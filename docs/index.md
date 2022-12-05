@@ -197,177 +197,184 @@ You can install LVM operator from operator hub.
  
 ## Install MAS and Manage
 
-*OC Login*
-```
-oc login --token=xxxx --server=<https://myocpserver>
-```
+- *OC Login* : oc login --token=xxxx --server=<https://myocpserver>
 
 Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
 
-- Set up environment variables
-
-```
-export MONGODB_STORAGE_CLASS=<storage-class>
-export IBM_ENTITLEMENT_KEY=<entitlement-key>
-export MAS_APP_ID=manage
-export SLS_ENTITLEMENT_KEY=<entitlement-key>
-export SLS_STORAGE_CLASS=<storage-class>
-export SLS_LICENSE_ID=<license-id>
-export SLS_LICENSE_FILE=<license-file>
-export UDS_STORAGE_CLASS=<storage-class>
-export UDS_CONTACT_EMAIL=<your email-id>
-export UDS_CONTACT_FIRSTNAME=<your first name>
-export UDS_CONTACT_LASTNAME=<your first name>
-export MAS_INSTANCE_ID=<instance-id>
-export MAS_CONFIG_DIR=<config-dir>
-export MAS_WORKSPACE_ID=<mas-workspace-id>
-export MAS_ENTITLEMENT_KEY=<entitlement-key>
-export PROMETHEUS_STORAGE_CLASS=<storage-class>
-export PROMETHEUS_ALERTMGR_STORAGE_CLASS=<storage-class>
-export GRAFANA_INSTANCE_STORAGE_CLASS=<storage-class>
-export MONGODB_REPLICAS=1
 ```
 
-!!! note
-    How to get the `IBM Entitlement key` and `SLS License file` check [preparation link](https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation)
-		
-Sample environment variables:
+$ oc login --token=sha256~lt1uU_p_pXkBazB-DRh7-P5EVWvL1Drwvlu8o_G21u0 --server=https://api.sno4.sarika.donatelli.click:6443
+The server uses a certificate signed by an unknown authority.
+You can bypass the certificate check, but any data you send to the server could be intercepted by others.
+Use insecure connections? (y/n): y
+
+Logged into "https://api.sno4.sarika.donatelli.click:6443" as "kube:admin" using the token provided.
+
+You have access to 76 projects, the list has been suppressed. You can list all projects with 'oc projects'
+
+Using project "default".
+Welcome! See 'oc help' to get started.
 
 ```
-export MAS_APP_ID=manage
-export SLS_LICENSE_ID=0242ac110002 
-export SLS_LICENSE_FILE=~/masconfig/entitlement.lic
-export UDS_CONTACT_EMAIL=abc@us.ibm.com
-export UDS_CONTACT_FIRSTNAME=abc
-export UDS_CONTACT_LASTNAME=abc
-export MAS_INSTANCE_ID=sno
-export MAS_CONFIG_DIR=~/masconfig
-export MAS_WORKSPACE_ID=masdev
-export MAS_INSTANCE_ID=sno
-export MONGODB_REPLICAS=1
-```
-
-AWS Storage class
-```
-export MONGODB_STORAGE_CLASS=gp2 
-export SLS_STORAGE_CLASS=gp2
-export UDS_STORAGE_CLASS=gp2
-export PROMETHEUS_STORAGE_CLASS=gp2
-export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
-export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
-
-```	
-
-!!! note
-    `gp2` is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.
+- mas install
 
 ```
-export PROMETHEUS_ALERTMGR_STORAGE_CLASS=odf-lvm-vg1
-export UDS_STORAGE_CLASS=odf-lvm-vg1
-export MONGODB_STORAGE_CLASS=odf-lvm-vg1
-export GRAFANA_INSTANCE_STORAGE_CLASS=odf-lvm-vg1
-export SLS_STORAGE_CLASS=odf-lvm-vg1
-export PROMETHEUS_STORAGE_CLASS=odf-lvm-vg1
+mas install
 
+IBM Maximo Application Suite Installer
+Powered by https://github.com/ibm-mas/ansible-devops/ and https://tekton.dev/
+
+Current Limitations
+1. Support for airgap installation is limited to MAS 8.8 (core only) at present
+
+
+1. Set Target OpenShift Cluster
+Connected to OCP cluster:
+   https://console-openshift-console.apps.sno4.sarika.donatelli.click
+Connect to a different cluster [y/N] N
+
+2. Install OpenShift Pipelines Operator
+OpenShift Pipelines Operator is installed and ready
+
+3. Configure Installation
+MAS Instance ID > sno
+Use online catalog? [y/N] y
+MAS Version:
+  1. 8.9
+Select Subscription Channel > 1
+ 
+Info: SNO_MODE was not detected.
+Do you want manage demodata to be loaded or not  [Y/n] 
+
+Info: SNO_MODE was detected.
+Do you want manage demodata to be loaded or not  [Y/n] Y
+
+4. Configure Domain & Certificate Management
+Configure Custom Domain [y/N] N
+
+5. Application Selection
+Install Manage [y/N] y
+
+6a. Configure Storage Class Usage
+Maximo Application Suite and it's dependencies require storage classes that support ReadWriteOnce (RWO) access mode:
+  - ReadWriteOnce volumes can be mounted as read-write by multiple pods on a single node.
+
+  - SNO MODE is set to true
+
+Select the ReadWriteOnce storage classes to use from the list below:
+ - odf-lvm-vg1
+
+ReadWriteOnce (RWO) storage class > odf-lvm-vg1
+
+6b. DB2 Storage size, in Gi(Gigabytes)
+Size of data persistent volume > 20Gi
+Size of temporary persistent volume > 10Gi
+Size of metadata persistent volume > 10Gi
+Size of transaction logs persistent volume > 10Gi
+Size of backup persistent volume > 10Gi
+
+7. Configure IBM Container Registry
+czYWZkOWRkMDNkNjJjIn0.aRsAu30HTYJ0aYUJ4hB46GAmgK6nCu9ZBDTF_mQ6jAoV0cGxhY2UiLCJpYXQiOjE1ODM0NjIwODMsImp0aSI6ImNxxxxxxxxxxxxxxxxx
+ 
+8. Configure Product License
+License ID > 0242ac11xxxx
+License File > /opt/app-root/src/masconfig/license.dat
+ 
+9. Configure UDS
+UDS Contact Email > snouser@ibm.com
+UDS Contact First Name > sno
+UDS Contact Last Name > sno
+ 
+10. Prepare Installation
+If you are using using storage classes that utilize 'WaitForFirstConsumer' binding mode choose 'No' at the prompt below
+
+Wait for PVCs to bind? [Y/n] n
+ 
+Namespace 'mas-inst1-pipelines' is ready
+
+Installed Task Definitions
+NAME                                    IMAGE
+mas-devops-appconnect                   quay.io/ibmmas/cli:latest
+mas-devops-cert-manager                 quay.io/ibmmas/cli:latest
+mas-devops-cluster-monitoring           quay.io/ibmmas/cli:latest
+mas-devops-common-services              quay.io/ibmmas/cli:latest
+mas-devops-cos                          quay.io/ibmmas/cli:latest
+mas-devops-cp4d                         quay.io/ibmmas/cli:latest
+mas-devops-cp4d-service                 quay.io/ibmmas/cli:latest
+mas-devops-db2                          quay.io/ibmmas/cli:latest
+mas-devops-gencfg-workspace             quay.io/ibmmas/cli:latest
+mas-devops-ibm-catalogs                 quay.io/ibmmas/cli:latest
+mas-devops-kafka                        quay.io/ibmmas/cli:latest
+mas-devops-mongodb                      quay.io/ibmmas/cli:latest
+mas-devops-nvidia-gpu                   quay.io/ibmmas/cli:latest
+mas-devops-sbo                          quay.io/ibmmas/cli:latest
+mas-devops-sls                          quay.io/ibmmas/cli:latest
+mas-devops-suite-app-config             quay.io/ibmmas/cli:latest
+mas-devops-suite-app-install            quay.io/ibmmas/cli:latest
+mas-devops-suite-app-upgrade            quay.io/ibmmas/cli:latest
+mas-devops-suite-config                 quay.io/ibmmas/cli:latest
+mas-devops-suite-db2-setup-for-manage   quay.io/ibmmas/cli:latest
+mas-devops-suite-dns                    quay.io/ibmmas/cli:latest
+mas-devops-suite-install                quay.io/ibmmas/cli:latest
+mas-devops-suite-mustgather             quay.io/ibmmas/cli:latest
+mas-devops-suite-upgrade                quay.io/ibmmas/cli:latest
+mas-devops-suite-verify                 quay.io/ibmmas/cli:latest
+mas-devops-uds                          quay.io/ibmmas/cli:latest
+
+Installed Pipeline Definitions
+NAME          AGE
+mas-install   4s
+mas-update    4s
+mas-upgrade   4s
+
+quay.io/ibmmas/cli:latest is available from the target OCP cluster
+ 
+11. Review Settings
+
+    IBM Maximo Application Suite
+    Instance ID ............... sno
+    Catalog Source ............ ibm-operator-catalog
+    Subscription Channel ...... 8.9.x
+    IBM Entitled Registry ..... cp.icr.io/cp
+    IBM Open Registry ......... icr.io/cpopen
+    Entitlement Username ...... cp
+    Entitlement Key ........... eyJhbGci<snip>
+ 
+    IBM Maximo Application Suite Applications
+    IoT ...................... Skip Installation
+     - Monitor ............... Skip Installation
+     - Safety ................ Skip Installation
+    Manage ................... ibm-operator-catalog/8.5.x
+     - Predict ............... Skip Installation
+    Optimizer ................ Skip Installation
+    H & P Utilities .......... Skip Installation
+    Assist ................... Skip Installation
+    MVI ...................... Skip Installation
+ 
+    IBM Suite License Service
+    Catalog Source ............ ibm-operator-catalog
+    License ID ................ 0242ac11xxxx
+    License File .............. /workspace/entitlement/license.dat
+    IBM Entitled Registry ..... cp.icr.io/cp
+    IBM Open Registry ......... icr.io/cpopen
+    Entitlement Username ...... cp
+    Entitlement Key ........... eyJhbGci<snip>
+ 
+    IBM User Data Services
+    Contact Email ............. sno@ibm.com
+    First Name ................ sno
+    Last Name ................. sno
+ 
+    IBM Cloud Pak Foundation Services
+    Catalog Source ............ ibm-operator-catalog
+
+ 
+Proceed with these settings [y/N] y
+ 
+12. Launch Installation
+Installation started successfully
+
+View progress:
+  https://console-openshift-console.apps.sno.buyermas4aws.com/pipelines/ns/mas-sno-pipelines
 ```
-
-- Run ansible playbook to install MAS core and dependencies. It takes about 1.5 hours to complete the installation. Some tasks takes more time to complete and you will see `Failed - Retrying...` messages.
-	
-```
-ansible-playbook playbooks/oneclick_core.yml
-```
-
-!!! note
-    Check out [MAS Ansible Devops Documentation](https://ibm-mas.github.io/ansible-devops/) for more information
-
-
-## Intall DB2 (optional)
-
-Install DB2 using this [Db2 link](https://ibm-mas.github.io/ansible-devops/roles/db2/)
-
-Sample environment variables:
-	
-```
-export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
-export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
-
-export DB2_META_STORAGE_SIZE=10Gi  
-export DB2_BACKUP_STORAGE_SIZE=10Gi  
-export DB2_LOGS_STORAGESIZE=10Gi 
-export DB2_TEMP_STORAGE_SIZE=10Gi
-export DB2_DATA_STORAGE_SIZE=20Gi
-export DB2_CPU_REQUESTS=300m
-```
-
-AWS storage class
-```
-export DB2_META_STORAGE_CLASS=gp2
-export DB2_DATA_STORAGE_CLASS=gp2
-export DB2_BACKUP_STORAGE_CLASS=gp2
-export DB2_LOGS_STORAGE_CLASS=gp2
-export DB2_TEMP_STORAGE_CLASS=gp2
-```
-
-Bare Metal/vSphere storage class
-```
-export DB2_META_STORAGE_CLASS=odf-lvm-vg1
-export DB2_DATA_STORAGE_CLASS=odf-lvm-vg1
-export DB2_BACKUP_STORAGE_CLASS=odf-lvm-vg1
-export DB2_LOGS_STORAGE_CLASS=odf-lvm-vg1
-export DB2_TEMP_STORAGE_CLASS=odf-lvm-vg1
-```
-
-
-## Install and Configure Manage
-
-- You can run the following automation playbook to install DB2 and Manage. 
-
-```
-ansible-playbook playbooks/oneclick_add_manage.yml
-```
-	
-- If you want to use an existing external database, install the Manage app and configure the database using the following steps (MAS admin dashboard):
-	 
-	- Go to MAS admin UI.
-		- From OpenShift Console, go to Routes. Select Admin dashboard. Click on Locations to go MAS admin dashboard.
-		
-		![image](images/route.png)
-		
-		- Make sure you can connect to coreapi service route.
-		
-		- Get the superuser password from `mas-sno-core` project secrets to log in to the MAS admin dashboard.
-		
-		![image](images/superuser.png)
-		
-		- Create an authorized admin user using `Users` page. For example, masadmin
-		
-		![image](images/createuser.png)
-		 
-		- Login as admin user `masadmin` created in the previous step. Install Manage from the catalog page.
-		
-		![image](images/installmanage.png)
-		 
-		- Select `Application version` action to deploy operator.
-		
-		![image](images/applicationversion.png)
-		
-		- Select subscription 
-		
-		![image](images/subscription.png)
-		
-		- After deployment is complete, select `Update configuration` by selecting the action from the top right corner of the page:
-		
-		![image](images/configurationnew.png)
-		 
-		- Update database connection:
-		
-		![image](images/dbconnection.png)
-		 
-		- Update database configuration. Select `Install Demo Data` if want to add maxdemo data.
-		
-		![image](images/dbconfig.png)
-		
-		- Apply changes by clicking on the blue `Activate` button in the top right.
-		
-		- After successful activation, the `Manage` app can be accessed by clicking on the nine-dot menu in the top right corner.
