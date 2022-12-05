@@ -43,51 +43,48 @@ I have Single Node OpenShift running on a baremetal environment with 16 Cores, 6
 ```   
 mkdir ~/sno
 cd ~/sno
-git clone https://github.com/ibm-mas/ansible-devops
-docker run -dit -v ~/sno:/opt/app-root/src/sno --name sno quay.io/ibmmas/ansible-devops:latest bash​
-docker exec -it sno bash
-cd /opt/app-root/src/sno/ansible-devops/ibm/mas_devops
-./rebuild.sh
-exit
+docker pull quay.io/ibmmas/cli
+docker run -dit --name sno quay.io/ibmmas/cli:latest bash
+
 ```
 
 - Log into the docker container; create a folder for mas configuration; then exit the container
 
 ```
 docker exec -it sno bash
-mkdir /root/masconfig
+mkdir masconfig
 exit
 ```
 
 - Copy pull-secret and mas license file into the docker container
 
-
 ```
-docker cp pull-secret sno:/root/masconfig/pull-secret
-docker cp license.dat sno:/root/masconfig/license.dat
+docker cp pull-secret sno:/mascli/masconfig/pull-secret
+docker cp license.dat sno:/mascli/masconfig/license.dat
 ```
 
 ### AWS
 
-- Log into docker container, set env variables, then run playbook to provision SNO Cluster
+- Log into docker container
 
 ```
 docker exec -it sno bash
 
-export AWS_ACCESS_KEY_ID="<your aws access key id"
-export AWS_SECRET_ACCESS_KEY="<your aws secret access key"
-export IPI_PLATFORM=aws
-export CLUSTER_TYPE="ipi"
-export CLUSTER_NAME=<cluster name e.g. sno>
-export IPI_REGION=<aws region e.g. us-east-1?
-export IPI_BASE_DOMAIN=<your domain>
-export IPI_PULL_SECRET_FILE="/root/masconfig/pull-secret"
-export IPI_DIR="/root/sno"
-export IPI_CONTROLPLANE_REPLICAS=1
-export IPI_COMPUTE_REPLICAS=0
-export OCP_VERSION="latest-4.10"
+Available commands:
+  - mas install to launch a MAS install pipeline
+  - mas provision-fyre to provision an OCP cluster on IBM DevIT Fyre (internal)
+  - mas provision-roks to provision an OCP cluster on IBMCloud Red Hat OpenShift Service (ROKS)
+  - mas provision-aws to provision an OCP cluster on AWS
+  - mas provision-rosa to provision an OCP cluster on AWS Red Hat OpenShift Service (ROSA)
+  - mas setup-registry to setup a private container registry on an OCP cluster
+  - mas mirror-images to mirror container images required by mas to a private registry
+  - mas configure-ocp-for-mirror to configure a cluster to use a private registry as a mirror
+```
 
-ansible-playbook ibm.mas_devops.ocp_aws_provision
+- Run the following command to provision SNO AWS Cluster. It will automatically detect the single enode. 
+
+```
+mas provision-aws
 
 ```
 	
