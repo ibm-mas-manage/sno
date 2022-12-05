@@ -66,7 +66,7 @@ docker cp license.dat sno:/mascli/masconfig/license.dat
 ### AWS
 
 - Log into docker container
-
+- 
 ```
 docker exec -it sno bash
 
@@ -82,9 +82,44 @@ Available commands:
 ```
 
 - Run the following command to provision SNO AWS Cluster. It will automatically detect the single enode. 
-
+- Enter your AWS credentials:
+  - AWS API Key ID
+  - AWS Secret Access Key
+  - AWS Secret Access Key
+  - Cluster Name
+  - AWS Region
+  - AWS Base Domain
+  
 ```
 mas provision-aws
+
+IBM Maximo Application Suite AWS Cluster Provisioner
+Powered by https://github.com/ibm-mas/ansible-devops/
+
+ 
+AWS Access Key ID
+Provide your AWS API Key ID (if you have not set the AWS_ACCESS_KEY_ID
+environment variable) which will be used to provision an AWS instance.
+AWS API Key ID > AKIAWKXUCZ55STYXXX
+ 
+AWS Secret Access Key
+Provide your AWS Secret Access Key (if you have not set the AWS_SECRET_ACCESS_KEY
+environment variable) which will be used to provision an AWS instance.
+
+AWS Secret Access Key > HiIoMnhB13tKthkiBlXvpJM9g/znKKlCgJoyxxxx
+Re-use saved AWS Secret Access Key Starting 'HiIoMnhB13tKthkiBlXvpJM9g/znKKlCgJoyxxxx'? [Y/n] 
+ 
+AWS Cluster Configuration
+Cluster Name > sno
+AWS Region > us-east-2
+AWS Base Domain > buyermas4aws.com
+Do you want single node openshift  [Y/n] 
+ 
+OCP Version:
+  1. 4.10 EUS (MAS 8.9)
+Select Version > 1
+ 
+Proceed with these settings [y/N] y
 
 ```
 	
