@@ -66,7 +66,6 @@ docker cp license.dat sno:/mascli/masconfig/license.dat
 ### AWS
 
 - Log into docker container
-- 
 ```
 docker exec -it sno bash
 
@@ -81,7 +80,7 @@ Available commands:
   - mas configure-ocp-for-mirror to configure a cluster to use a private registry as a mirror
 ```
 
-- Run the following command to provision SNO AWS Cluster. It will automatically detect the single enode. 
+- Run the command to provision SNO AWS Cluster. It will automatically detect the single enode. 
 - Enter your AWS credentials:
   - AWS API Key ID
   - AWS Secret Access Key
@@ -120,6 +119,13 @@ OCP Version:
 Select Version > 1
  
 Proceed with these settings [y/N] y
+
+```
+- You see the following message for your cluster after it is provisioned.
+
+```
+AWS cluster is ready to use
+Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aws.com
 
 ```
 	
