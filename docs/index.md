@@ -232,7 +232,7 @@ Current Limitations
 1. Set Target OpenShift Cluster
 Connected to OCP cluster:
    https://console-openshift-console.apps.sno4.sarika.donatelli.click
-Connect to a different cluster [y/N]
+Connect to a different cluster 
 
 2. Install OpenShift Pipelines Operator
 OpenShift Pipelines Operator is installed and ready
@@ -245,7 +245,7 @@ MAS Version:
 Select Subscription Channel > 1
  
 Info: SNO_MODE was not detected.
-Do you want manage demodata to be loaded or not  [Y/n] 
+Do you want manage demodata to be loaded or not  [Y/n] N
 
 Info: SNO_MODE was detected.
 Do you want manage demodata to be loaded or not  [Y/n] Y
