@@ -106,7 +106,7 @@
               
                 <h1 id="single-node-openshift">Single Node OpenShift<a class="headerlink" href="#single-node-openshift" title="Permanent link"></a></h1>
 <h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link"></a></h2>
-<p>A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises edge deployments. .</p>
+<p>A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises edge deployments.</p>
 <h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link"></a></h2>
 <ul>
 <li>Requires installation via openshift installer (IPI) or Assisted Installer. <a href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html">Assisted Installer</a> uses installation wizard on Red Hat’s OpenShift Cluster Manager site.</li>
@@ -233,12 +233,11 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 </code></pre>
 <h3 id="bare-metalvsphere">Bare Metal/vSphere<a class="headerlink" href="#bare-metalvsphere" title="Permanent link"></a></h3>
 <ul>
-<li>OpenShift Container Platform(OCP) installation on a single node <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">instructions</a></li>
+<li>OpenShift Container Platform(OCP) installation on a single node instructions <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">link</a></li>
 </ul>
 <h4 id="image-registry">Image Registry<a class="headerlink" href="#image-registry" title="Permanent link"></a></h4>
-<pre><code>Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
-</code></pre>
 <ul>
+<li>Ensure that your registry is set to managed to enable building and pushing of images. The link for <a href="https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal">configuring the registry for bare metal</a></li>
 <li>
 <p>Run</p>
 <p><code>$ oc edit configs.imageregistry/cluster</code></p>
@@ -251,6 +250,30 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 </li>
 </ul>
 <h4 id="route">Route<a class="headerlink" href="#route" title="Permanent link"></a></h4>
+<ul>
+<li>Make sure the route <code>image-registry</code> is created in <code>openshift-image-registry</code> namespace.</li>
+</ul>
+<pre><code>kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: image-registry
+  namespace: openshift-image-registry
+  labels:
+    docker-registry: default
+spec:
+  host: image-registry.openshift-image-registry.svc
+  to:
+    kind: Service
+    name: image-registry
+    weight: 100
+  port:
+    targetPort: 5000-tcp
+  tls:
+    termination: reencrypt
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+
+</code></pre>
 <h2 id="storage-class">Storage Class<a class="headerlink" href="#storage-class" title="Permanent link"></a></h2>
 <ul>
 <li>Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install <a href="https://github.com/red-hat-storage/lvm-operator">LVM-Operator</a></li>
@@ -579,5 +602,5 @@ View progress:
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-12-15 23:17:19.022270+00:00
+Build Date UTC : 2022-12-15 23:33:27.937334+00:00
 -->
