@@ -159,7 +159,7 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 
 ## Storage Class
 
-- Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]](https://github.com/red-hat-storage/lvm-operator)
+- Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator](https://github.com/red-hat-storage/lvm-operator)
 
 !!! note
     You’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it.
