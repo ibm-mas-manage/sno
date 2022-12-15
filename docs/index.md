@@ -131,7 +131,7 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 	
 ### Bare Metal/vSphere
 
-- OpenShift Container Platform(OCP) installation on a single node instructions [Link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
+- OpenShift Container Platform(OCP) installation on a single node instructions [link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
 #### Image Registry
   
