@@ -60,16 +60,22 @@
     <li class="toctree-l3"><a class="reference internal" href="#aws">AWS</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#bare-metalvsphere">Bare Metal/vSphere</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#image-registry">Image Registry</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#route">Route</a>
+    </li>
+        </ul>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#storage-class">Storage Class</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#install-mas-and-manage">Install MAS and Manage</a>
+    <li class="toctree-l2"><a class="reference internal" href="#mas-and-manage-installation">MAS and Manage Installation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#tekton-pipeline">Tekton Pipeline</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#install-manage-without-db2">Install Manage (without DB2)</a>
+    <li class="toctree-l2"><a class="reference internal" href="#manage-installation-without-db2">Manage Installation (without DB2)</a>
     </li>
     </ul>
                 </li>
@@ -226,13 +232,14 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 </code></pre>
 <h3 id="bare-metalvsphere">Bare Metal/vSphere<a class="headerlink" href="#bare-metalvsphere" title="Permanent link"></a></h3>
 <ul>
+<li>OpenShift Container Platform(OCP) installation on a single node <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">instructions</a></li>
+</ul>
+<h4 id="image-registry">Image Registry<a class="headerlink" href="#image-registry" title="Permanent link"></a></h4>
+<pre><code>Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+</code></pre>
+<ul>
 <li>
-<p>OpenShift Container Platform(OCP) installation on a single node <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">instructions</a></p>
-</li>
-<li>
-<p><strong>Image Registry</strong></p>
-<p>Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for <a href="https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal">configuring the registry for bare metal</a>
-   - Run</p>
+<p>Run</p>
 <p><code>$ oc edit configs.imageregistry/cluster</code></p>
 </li>
 <li>
@@ -242,6 +249,7 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 <p><code>managementState: Managed</code></p>
 </li>
 </ul>
+<h4 id="route">Route<a class="headerlink" href="#route" title="Permanent link"></a></h4>
 <h2 id="storage-class">Storage Class<a class="headerlink" href="#storage-class" title="Permanent link"></a></h2>
 <ul>
 <li>Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]](https://github.com/red-hat-storage/lvm-operator)</li>
@@ -279,7 +287,7 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 <li>After Configuration, the LVM storage class is created</li>
 </ul>
 <p><img alt="image" src="images/lvmstorageclass.png" /></p>
-<h2 id="install-mas-and-manage">Install MAS and Manage<a class="headerlink" href="#install-mas-and-manage" title="Permanent link"></a></h2>
+<h2 id="mas-and-manage-installation">MAS and Manage Installation<a class="headerlink" href="#mas-and-manage-installation" title="Permanent link"></a></h2>
 <ul>
 <li><em>OC Login</em> : oc login --token=xxxx --server=<a href="https://myocpserver">https://myocpserver</a></li>
 </ul>
@@ -314,7 +322,7 @@ Current Limitations
 1. Set Target OpenShift Cluster
 Connected to OCP cluster:
    https://console-openshift-console.apps.sno4.sarika.donatelli.click
-Connect to a different cluster [y/N] N
+Connect to a different cluster [y/N]
 
 2. Install OpenShift Pipelines Operator
 OpenShift Pipelines Operator is installed and ready
@@ -464,7 +472,7 @@ View progress:
 <h2 id="tekton-pipeline">Tekton Pipeline<a class="headerlink" href="#tekton-pipeline" title="Permanent link"></a></h2>
 <p>You can see the installation progess and logs from OpenShift Console in the mas-<workspaceid>-pipelines namespace. Select Pipelines menu in the left navigation bar and click on  on PipelinesRuns tab and select pipeline run. You can click on any task and view logs.</p>
 <p><img alt="image" src="images/pipelinerun.png" /></p>
-<h2 id="install-manage-without-db2">Install Manage (without DB2)<a class="headerlink" href="#install-manage-without-db2" title="Permanent link"></a></h2>
+<h2 id="manage-installation-without-db2">Manage Installation (without DB2)<a class="headerlink" href="#manage-installation-without-db2" title="Permanent link"></a></h2>
 <ul>
 <li>
 <p>If you want to use an existing external database, install the Manage app and configure the database using the following steps (MAS admin dashboard):</p>
@@ -570,5 +578,5 @@ View progress:
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-12-15 21:20:57.314763+00:00
+Build Date UTC : 2022-12-15 22:03:09.110779+00:00
 -->
