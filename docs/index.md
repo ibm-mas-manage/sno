@@ -132,7 +132,7 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 
 - OpenShift Container Platform(OCP) installation on a single node [instructions](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
-- **Image Registry**
+#### Image Registry
   
     Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
    - Run
@@ -154,6 +154,7 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
     managementState: Managed
     ```
 
+#### Route
 
 ## Storage Class
 
@@ -194,7 +195,7 @@ You can install LVM operator from operator hub.
 
  
  
-## Install MAS and Manage
+## MAS and Manage Installation
 
 - *OC Login* : oc login --token=xxxx --server=<https://myocpserver>
 
@@ -231,7 +232,7 @@ Current Limitations
 1. Set Target OpenShift Cluster
 Connected to OCP cluster:
    https://console-openshift-console.apps.sno4.sarika.donatelli.click
-Connect to a different cluster [y/N] N
+Connect to a different cluster [y/N]
 
 2. Install OpenShift Pipelines Operator
 OpenShift Pipelines Operator is installed and ready
@@ -386,7 +387,7 @@ You can see the installation progess and logs from OpenShift Console in the mas-
 ![image](images/pipelinerun.png)
 	
 
-## Install Manage (without DB2)
+## Manage Installation (without DB2)
 
 - If you want to use an existing external database, install the Manage app and configure the database using the following steps (MAS admin dashboard):
 	 
