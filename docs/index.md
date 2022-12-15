@@ -1,4 +1,4 @@
-# Single Node OpenShift (OpenShift 4.10+) 
+# Single Node OpenShift
 
 ## Summary
 A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises edge deployments. .
@@ -23,6 +23,7 @@ I have Single Node OpenShift running on a baremetal environment with 16 Cores, 6
 ![image](images/sno.png)
 
 ## Requirements
+- OpenShift: 4.10+
 - vCPU: 16Cores
 - RAM: 64Gb
 - IBM entitlement Key : Log in to the [IBM Container Library](https://myibm.ibm.com/products-services/containerlibrary) with a user ID that has software download rights for your company’s Passport Advantage entitlement to get the entitlement key.
@@ -158,7 +159,7 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 
 ## Storage Class
 
-- Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]](https://github.com/red-hat-storage/lvm-operator)
+- Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator](https://github.com/red-hat-storage/lvm-operator)
 
 !!! note
     You’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it.
