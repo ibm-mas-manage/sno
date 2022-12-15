@@ -157,6 +157,31 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 
 #### Route
 
+- Make sure the route `image-registry` is created in `openshift-image-registry` namespace.
+
+```
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: image-registry
+  namespace: openshift-image-registry
+  labels:
+    docker-registry: default
+spec:
+  host: image-registry.openshift-image-registry.svc
+  to:
+    kind: Service
+    name: image-registry
+    weight: 100
+  port:
+    targetPort: 5000-tcp
+  tls:
+    termination: reencrypt
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+
+```
+
 ## Storage Class
 
 - Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator](https://github.com/red-hat-storage/lvm-operator)
