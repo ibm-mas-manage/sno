@@ -376,7 +376,15 @@ Installation started successfully
 
 View progress:
   https://console-openshift-console.apps.sno.buyermas4aws.com/pipelines/ns/mas-sno-pipelines
+ 
 ```
+
+## Tekton Pipeline
+
+You can see the installation progess and logs from OpenShift Console in the mas-<workspaceid>-pipelines namespace. Select Pipelines menu in the left navigation bar and click on  on PipelinesRuns tab and select pipeline run. You can click on any task and view logs.
+ 
+![image](images/pipelinerun.png)
+	
 
 ## Install Manage (without DB2)
 
@@ -424,3 +432,4 @@ View progress:
 		- Apply changes by clicking on the blue `Activate` button in the top right.
 		
 		- After successful activation, the `Manage` app can be accessed by clicking on the nine-dot menu in the top right corner.
+
