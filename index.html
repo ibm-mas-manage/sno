@@ -60,10 +60,6 @@
     <li class="toctree-l3"><a class="reference internal" href="#aws">AWS</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#bare-metalvsphere">Bare Metal/vSphere</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#image-registry">Image Registry</a>
-    </li>
-        </ul>
     </li>
         </ul>
     </li>
@@ -71,9 +67,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#install-mas-and-manage">Install MAS and Manage</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#intall-db2-optional">Intall DB2 (optional)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#install-and-configure-manage">Install and Configure Manage</a>
+    <li class="toctree-l2"><a class="reference internal" href="#install-manage-without-db2">Install Manage (without DB2)</a>
     </li>
     </ul>
                 </li>
@@ -148,60 +142,98 @@ It’s the best “small” OpenShift experience. </p>
 </ul>
 <pre><code>mkdir ~/sno
 cd ~/sno
-git clone https://github.com/ibm-mas/ansible-devops
-docker run -dit -v ~/sno:/opt/app-root/src/sno --name sno quay.io/ibmmas/ansible-devops:latest bash​
-docker exec -it sno bash
-cd /opt/app-root/src/sno/ansible-devops/ibm/mas_devops
-./rebuild.sh
-exit
+docker pull quay.io/ibmmas/cli
+docker run -dit --name sno quay.io/ibmmas/cli:latest bash
+
 </code></pre>
 <ul>
 <li>Log into the docker container; create a folder for mas configuration; then exit the container</li>
 </ul>
 <pre><code>docker exec -it sno bash
-mkdir /root/masconfig
+mkdir masconfig
 exit
 </code></pre>
 <ul>
 <li>Copy pull-secret and mas license file into the docker container</li>
 </ul>
-<pre><code>docker cp pull-secret sno:/root/masconfig/pull-secret
-docker cp license.dat sno:/root/masconfig/license.dat
+<pre><code>docker cp pull-secret sno:/mascli/masconfig/pull-secret
+docker cp license.dat sno:/mascli/masconfig/license.dat
 </code></pre>
 <h3 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link"></a></h3>
 <ul>
-<li>Log into docker container, set env variables, then run playbook to provision SNO Cluster</li>
+<li>Log into docker container</li>
 </ul>
 <pre><code>docker exec -it sno bash
 
-export AWS_ACCESS_KEY_ID=&quot;&lt;your aws access key id&quot;
-export AWS_SECRET_ACCESS_KEY=&quot;&lt;your aws secret access key&quot;
-export IPI_PLATFORM=aws
-export CLUSTER_TYPE=&quot;ipi&quot;
-export CLUSTER_NAME=&lt;cluster name e.g. sno&gt;
-export IPI_REGION=&lt;aws region e.g. us-east-1?
-export IPI_BASE_DOMAIN=&lt;your domain&gt;
-export IPI_PULL_SECRET_FILE=&quot;/root/masconfig/pull-secret&quot;
-export IPI_DIR=&quot;/root/sno&quot;
-export IPI_CONTROLPLANE_REPLICAS=1
-export IPI_COMPUTE_REPLICAS=0
-export OCP_VERSION=&quot;latest-4.10&quot;
+Available commands:
+  - mas install to launch a MAS install pipeline
+  - mas provision-fyre to provision an OCP cluster on IBM DevIT Fyre (internal)
+  - mas provision-roks to provision an OCP cluster on IBMCloud Red Hat OpenShift Service (ROKS)
+  - mas provision-aws to provision an OCP cluster on AWS
+  - mas provision-rosa to provision an OCP cluster on AWS Red Hat OpenShift Service (ROSA)
+  - mas setup-registry to setup a private container registry on an OCP cluster
+  - mas mirror-images to mirror container images required by mas to a private registry
+  - mas configure-ocp-for-mirror to configure a cluster to use a private registry as a mirror
+</code></pre>
+<ul>
+<li>Run the command to provision SNO AWS Cluster. It will automatically detect the single enode. </li>
+<li>Enter your AWS credentials:</li>
+<li>AWS API Key ID</li>
+<li>AWS Secret Access Key</li>
+<li>AWS Secret Access Key</li>
+<li>Cluster Name</li>
+<li>AWS Region</li>
+<li>AWS Base Domain</li>
+</ul>
+<pre><code>mas provision-aws
 
-ansible-playbook ibm.mas_devops.ocp_aws_provision
+IBM Maximo Application Suite AWS Cluster Provisioner
+Powered by https://github.com/ibm-mas/ansible-devops/
+
+
+AWS Access Key ID
+Provide your AWS API Key ID (if you have not set the AWS_ACCESS_KEY_ID
+environment variable) which will be used to provision an AWS instance.
+AWS API Key ID &gt; AKIAWKXUCZ55STYXXX
+
+AWS Secret Access Key
+Provide your AWS Secret Access Key (if you have not set the AWS_SECRET_ACCESS_KEY
+environment variable) which will be used to provision an AWS instance.
+
+AWS Secret Access Key &gt; HiIoMnhB13tKthkiBlXvpJM9g/znKKlCgJoyxxxx
+Re-use saved AWS Secret Access Key Starting 'HiIoMnhB13tKthkiBlXvpJM9g/znKKlCgJoyxxxx'? [Y/n] 
+
+AWS Cluster Configuration
+Cluster Name &gt; sno
+AWS Region &gt; us-east-2
+AWS Base Domain &gt; buyermas4aws.com
+Do you want single node openshift  [Y/n] 
+
+OCP Version:
+  1. 4.10 EUS (MAS 8.9)
+Select Version &gt; 1
+
+Proceed with these settings [y/N] y
+
+</code></pre>
+<ul>
+<li>You see the following message for your cluster after it is provisioned.</li>
+</ul>
+<pre><code>AWS cluster is ready to use
+Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aws.com
 
 </code></pre>
 <h3 id="bare-metalvsphere">Bare Metal/vSphere<a class="headerlink" href="#bare-metalvsphere" title="Permanent link"></a></h3>
 <ul>
-<li>OpenShift Container Platform(OCP) installation on a single node <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">instructions</a></li>
-</ul>
-<h4 id="image-registry">Image Registry<a class="headerlink" href="#image-registry" title="Permanent link"></a></h4>
+<li>
+<p>OpenShift Container Platform(OCP) installation on a single node <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">instructions</a></p>
+</li>
+<li>
+<p><strong>Image Registry</strong></p>
 <p>Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for <a href="https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal">configuring the registry for bare metal</a>
    - Run</p>
-<pre><code>```
-$ oc edit configs.imageregistry/cluster
-```
-</code></pre>
-<ul>
+<p><code>$ oc edit configs.imageregistry/cluster</code></p>
+</li>
 <li>
 <p>Then, change the line</p>
 <p><code>managementState: Removed</code></p>
@@ -211,7 +243,7 @@ $ oc edit configs.imageregistry/cluster
 </ul>
 <h2 id="storage-class">Storage Class<a class="headerlink" href="#storage-class" title="Permanent link"></a></h2>
 <ul>
-<li>Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]] (https://github.com/red-hat-storage/lvm-operator)</li>
+<li>Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]](https://github.com/red-hat-storage/lvm-operator)</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -247,114 +279,551 @@ $ oc edit configs.imageregistry/cluster
 </ul>
 <p><img alt="image" src="images/lvmstorageclass.png" /></p>
 <h2 id="install-mas-and-manage">Install MAS and Manage<a class="headerlink" href="#install-mas-and-manage" title="Permanent link"></a></h2>
-<p><em>OC Login</em></p>
-<pre><code>oc login --token=xxxx --server=&lt;https://myocpserver&gt;
-</code></pre>
+<ul>
+<li><em>OC Login</em> : oc login --token=xxxx --server=<a href="https://myocpserver">https://myocpserver</a></li>
+</ul>
 <p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.
 You can get OC Login information from OpenShift Console (top right corner <code>kube:admin</code> drop down list, select <code>Copy login command</code>)</p>
-<ul>
-<li>Set up environment variables</li>
-</ul>
-<pre><code>export MONGODB_STORAGE_CLASS=&lt;storage-class&gt;
-export IBM_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
-export MAS_APP_ID=manage
-export SLS_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
-export SLS_STORAGE_CLASS=&lt;storage-class&gt;
-export SLS_LICENSE_ID=&lt;license-id&gt;
-export SLS_LICENSE_FILE=&lt;license-file&gt;
-export UDS_STORAGE_CLASS=&lt;storage-class&gt;
-export UDS_CONTACT_EMAIL=&lt;your email-id&gt;
-export UDS_CONTACT_FIRSTNAME=&lt;your first name&gt;
-export UDS_CONTACT_LASTNAME=&lt;your first name&gt;
-export MAS_INSTANCE_ID=&lt;instance-id&gt;
-export MAS_CONFIG_DIR=&lt;config-dir&gt;
-export MAS_WORKSPACE_ID=&lt;mas-workspace-id&gt;
-export MAS_ENTITLEMENT_KEY=&lt;entitlement-key&gt;
-export PROMETHEUS_STORAGE_CLASS=&lt;storage-class&gt;
-export PROMETHEUS_ALERTMGR_STORAGE_CLASS=&lt;storage-class&gt;
-export GRAFANA_INSTANCE_STORAGE_CLASS=&lt;storage-class&gt;
-export MONGODB_REPLICAS=1
-</code></pre>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>How to get the <code>IBM Entitlement key</code> and <code>SLS License file</code> check <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#preparation">preparation link</a></p>
-</div>
-<p>Sample environment variables:</p>
-<pre><code>export MAS_APP_ID=manage
-export SLS_LICENSE_ID=0242ac110002 
-export SLS_LICENSE_FILE=~/masconfig/entitlement.lic
-export UDS_CONTACT_EMAIL=abc@us.ibm.com
-export UDS_CONTACT_FIRSTNAME=abc
-export UDS_CONTACT_LASTNAME=abc
-export MAS_INSTANCE_ID=sno
-export MAS_CONFIG_DIR=~/masconfig
-export MAS_WORKSPACE_ID=masdev
-export MAS_INSTANCE_ID=sno
-export MONGODB_REPLICAS=1
-</code></pre>
-<p>AWS Storage class</p>
-<pre><code>export MONGODB_STORAGE_CLASS=gp2 
-export SLS_STORAGE_CLASS=gp2
-export UDS_STORAGE_CLASS=gp2
-export PROMETHEUS_STORAGE_CLASS=gp2
-export PROMETHEUS_ALERTMGR_STORAGE_CLASS=go2
-export GRAFANA_INSTANCE_STORAGE_CLASS=gp2
+<pre><code>
+$ oc login --token=sha256~lt1uU_p_pXkBazB-DRh7-P5EVWvL1Drwvlu8o_G21u0 --server=https://api.sno4.sarika.donatelli.click:6443
+The server uses a certificate signed by an unknown authority.
+You can bypass the certificate check, but any data you send to the server could be intercepted by others.
+Use insecure connections? (y/n): y
 
-</code></pre>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code>gp2</code> is the default storage class in AWS. You can optionally install RedHat LVM (Logical Volume Manager) operator using OperatorHub for volume management.</p>
-</div>
-<pre><code>export PROMETHEUS_ALERTMGR_STORAGE_CLASS=odf-lvm-vg1
-export UDS_STORAGE_CLASS=odf-lvm-vg1
-export MONGODB_STORAGE_CLASS=odf-lvm-vg1
-export GRAFANA_INSTANCE_STORAGE_CLASS=odf-lvm-vg1
-export SLS_STORAGE_CLASS=odf-lvm-vg1
-export PROMETHEUS_STORAGE_CLASS=odf-lvm-vg1
+Logged into &quot;https://api.sno4.sarika.donatelli.click:6443&quot; as &quot;kube:admin&quot; using the token provided.
+
+You have access to 76 projects, the list has been suppressed. You can list all projects with 'oc projects'
+
+Using project &quot;default&quot;.
+Welcome! See 'oc help' to get started.
 
 </code></pre>
 <ul>
-<li>Run ansible playbook to install MAS core and dependencies. It takes about 1.5 hours to complete the installation. Some tasks takes more time to complete and you will see <code>Failed - Retrying...</code> messages.</li>
+<li>mas install</li>
 </ul>
-<pre><code>ansible-playbook playbooks/oneclick_core.yml
+<pre><code>mas install
+
+IBM Maximo Application Suite Installer
+Powered by https://github.com/ibm-mas/ansible-devops/ and https://tekton.dev/
+
+Current Limitations
+1. Support for airgap installation is limited to MAS 8.8 (core only) at present
+
+
+1. Set Target OpenShift Cluster
+Connected to OCP cluster:
+   https://console-openshift-console.apps.sno4.sarika.donatelli.click
+Connect to a different cluster [y/N] N
+
+2. Install OpenShift Pipelines Operator
+OpenShift Pipelines Operator is installed and ready
+
+3. Configure Installation
+MAS Instance ID &gt; sno
+Use online catalog? [y/N] y
+MAS Version:
+  1. 8.9
+Select Subscription Channel &gt; 1
+
+Info: SNO_MODE was not detected.
+Do you want manage demodata to be loaded or not  [Y/n] 
+
+Info: SNO_MODE was detected.
+Do you want manage demodata to be loaded or not  [Y/n] Y
+
+4. Configure Domain &amp; Certificate Management
+Configure Custom Domain [y/N] N
+
+5. Application Selection
+Install Manage [y/N] y
+
+6a. Configure Storage Class Usage
+Maximo Application Suite and it's dependencies require storage classes that support ReadWriteOnce (RWO) access mode:
+  - ReadWriteOnce volumes can be mounted as read-write by multiple pods on a single node.
+
+  - SNO MODE is set to true
+
+Select the ReadWriteOnce storage classes to use from the list below:
+ - odf-lvm-vg1
+
+ReadWriteOnce (RWO) storage class &gt; odf-lvm-vg1
+
+6b. DB2 Storage size, in Gi(Gigabytes)
+Size of data persistent volume &gt; 20Gi
+Size of temporary persistent volume &gt; 10Gi
+Size of metadata persistent volume &gt; 10Gi
+Size of transaction logs persistent volume &gt; 10Gi
+Size of backup persistent volume &gt; 10Gi
+
+7. Configure IBM Container Registry
+czYWZkOWRkMDNkNjJjIn0.aRsAu30HTYJ0aYUJ4hB46GAmgK6nCu9ZBDTF_mQ6jAoV0cGxhY2UiLCJpYXQiOjE1ODM0NjIwODMsImp0aSI6ImNxxxxxxxxxxxxxxxxx
+
+8. Configure Product License
+License ID &gt; 0242ac11xxxx
+License File &gt; /opt/app-root/src/masconfig/license.dat
+
+9. Configure UDS
+UDS Contact Email &gt; snouser@ibm.com
+UDS Contact First Name &gt; sno
+UDS Contact Last Name &gt; sno
+
+10. Prepare Installation
+If you are using using storage classes that utilize 'WaitForFirstConsumer' binding mode choose 'No' at the prompt below
+
+Wait for PVCs to bind? [Y/n] n
+
+Namespace 'mas-inst1-pipelines' is ready
+
+Installed Task Definitions
+NAME                                    IMAGE
+mas-devops-appconnect                   quay.io/ibmmas/cli:latest
+mas-devops-cert-manager                 quay.io/ibmmas/cli:latest
+mas-devops-cluster-monitoring           quay.io/ibmmas/cli:latest
+mas-devops-common-services              quay.io/ibmmas/cli:latest
+mas-devops-cos                          quay.io/ibmmas/cli:latest
+mas-devops-cp4d                         quay.io/ibmmas/cli:latest
+mas-devops-cp4d-service                 quay.io/ibmmas/cli:latest
+mas-devops-db2                          quay.io/ibmmas/cli:latest
+mas-devops-gencfg-workspace             quay.io/ibmmas/cli:latest
+mas-devops-ibm-catalogs                 quay.io/ibmmas/cli:latest
+mas-devops-kafka                        quay.io/ibmmas/cli:latest
+mas-devops-mongodb                      quay.io/ibmmas/cli:latest
+mas-devops-nvidia-gpu                   quay.io/ibmmas/cli:latest
+mas-devops-sbo                          quay.io/ibmmas/cli:latest
+mas-devops-sls                          quay.io/ibmmas/cli:latest
+mas-devops-suite-app-config             quay.io/ibmmas/cli:latest
+mas-devops-suite-app-install            quay.io/ibmmas/cli:latest
+mas-devops-suite-app-upgrade            quay.io/ibmmas/cli:latest
+mas-devops-suite-config                 quay.io/ibmmas/cli:latest
+mas-devops-suite-db2-setup-for-manage   quay.io/ibmmas/cli:latest
+mas-devops-suite-dns                    quay.io/ibmmas/cli:latest
+mas-devops-suite-install                quay.io/ibmmas/cli:latest
+mas-devops-suite-mustgather             quay.io/ibmmas/cli:latest
+mas-devops-suite-upgrade                quay.io/ibmmas/cli:latest
+mas-devops-suite-verify                 quay.io/ibmmas/cli:latest
+mas-devops-uds                          quay.io/ibmmas/cli:latest
+
+Installed Pipeline Definitions
+NAME          AGE
+mas-install   4s
+mas-update    4s
+mas-upgrade   4s
+
+quay.io/ibmmas/cli:latest is available from the target OCP cluster
+
+11. Review Settings
+
+    IBM Maximo Application Suite
+    Instance ID ............... sno
+    Catalog Source ............ ibm-operator-catalog
+    Subscription Channel ...... 8.9.x
+    IBM Entitled Registry ..... cp.icr.io/cp
+    IBM Open Registry ......... icr.io/cpopen
+    Entitlement Username ...... cp
+    Entitlement Key ........... eyJhbGci&lt;snip&gt;
+
+    IBM Maximo Application Suite Applications
+    IoT ...................... Skip Installation
+     - Monitor ............... Skip Installation
+     - Safety ................ Skip Installation
+    Manage ................... ibm-operator-catalog/8.5.x
+     - Predict ............... Skip Installation
+    Optimizer ................ Skip Installation
+    H &amp; P Utilities .......... Skip Installation
+    Assist ................... Skip Installation
+    MVI ...................... Skip Installation
+
+    IBM Suite License Service
+    Catalog Source ............ ibm-operator-catalog
+    License ID ................ 0242ac11xxxx
+    License File .............. /workspace/entitlement/license.dat
+    IBM Entitled Registry ..... cp.icr.io/cp
+    IBM Open Registry ......... icr.io/cpopen
+    Entitlement Username ...... cp
+    Entitlement Key ........... eyJhbGci&lt;snip&gt;
+
+    IBM User Data Services
+    Contact Email ............. sno@ibm.com
+    First Name ................ sno
+    Last Name ................. sno
+
+    IBM Cloud Pak Foundation Services
+    Catalog Source ............ ibm-operator-catalog
+
+
+Proceed with these settings [y/N] y
+
+12. Launch Installation
+Installation started successfully
+
+View progress:
+  https://console-openshift-console.apps.sno.buyermas4aws.com/pipelines/ns/mas-sno-pipelines
 </code></pre>
+<h2 id="install-manage-without-db2">Install Manage (without DB2)<a class="headerlink" href="#install-manage-without-db2" title="Permanent link"></a></h2>
+<h1 id="single-node-openshift-openshift-410_1">Single Node OpenShift (OpenShift 4.10+)<a class="headerlink" href="#single-node-openshift-openshift-410_1" title="Permanent link"></a></h1>
+<h2 id="summary_1">Summary<a class="headerlink" href="#summary_1" title="Permanent link"></a></h2>
+<p>A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos,
+ proof of concepts, or even on-premises edge deployments. It has limited resources.</p>
+<h2 id="highlights_1">Highlights<a class="headerlink" href="#highlights_1" title="Permanent link"></a></h2>
+<ul>
+<li>Requires installation via openshift installer (IPI) or Assisted Installer. <a href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html">Assisted Installer</a> uses installation wizard on Red Hat’s OpenShift Cluster Manager site.</li>
+<li>Local storage can be configured using <a href="https://github.com/red-hat-storage/lvm-operator">ODS LVM Operator</a></li>
+<li>You need entitement for the official support.</li>
+</ul>
+<p>If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. </p>
+<h2 id="when-to-use-single-node-openshift_1">When to use Single Node OpenShift?<a class="headerlink" href="#when-to-use-single-node-openshift_1" title="Permanent link"></a></h2>
+<p>If you want to experience a “real” cluster, a Single Node OpenShift may be a better option. You can develop and deploy applications and get a real cluster feel.
+It’s the best “small” OpenShift experience. </p>
+<p>I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.9 and Manage 8.5. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.</p>
+<h2 id="use-cases_1">Use Cases<a class="headerlink" href="#use-cases_1" title="Permanent link"></a></h2>
+<ul>
+<li>Small MAS and Manage-only implementations that range from 10-30 users</li>
+<li>Satellite / Disconnected deployments, possibly connected to a big MAS. It can sync data to Central Data Center for Maximo EAM</li>
+</ul>
+<p><img alt="image" src="images/sno.png" /></p>
+<h2 id="requirements_1">Requirements<a class="headerlink" href="#requirements_1" title="Permanent link"></a></h2>
+<ul>
+<li>vCPU: 16Cores</li>
+<li>RAM: 64Gb</li>
+<li>IBM entitlement Key : Log in to the <a href="https://myibm.ibm.com/products-services/containerlibrary">IBM Container Library</a> with a user ID that has software download rights for your company’s Passport Advantage entitlement to get the entitlement key.</li>
+<li>Openshift pull secret file (pull-secret). It can be downloaded from [here] (https://access.redhat.com/management). You need a valid redhat account for downloading.</li>
+<li>MAS license file (license.dat): Access <a href="https://licensing.subscribenet.com/control/ibmr/login">IBM License Key Center</a> to the <em>Get Keys</em> menu select <em>IBM AppPoint Suites</em>. Select <code>IBM MAXIMO APPLICATION SUITE AppPOINT LIC.</code>  more details can be found in <a href="https://ibm-mas.github.io/ansible-devops/playbooks/oneclick-core/#2-mas-license-file">here</a></li>
+<li>Docker/Podman   </li>
+<li>AWS<ul>
+<li>Valid AWS access key id </li>
+<li>Secret access key: If you don't it, ask your aws account admin to create one in IAM service</li>
+<li>Domain or subdomain: If you don't have one, ask your aws account admin to register one through AWS Route53</li>
+</ul>
+</li>
+<li>Bare metal/vSphere: <ul>
+<li>Requirements <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing">link</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="openshift-installation_1">Openshift Installation<a class="headerlink" href="#openshift-installation_1" title="Permanent link"></a></h2>
+<ul>
+<li>Set up IBM MAS DevOps ansible collection docker container</li>
+</ul>
+<pre><code>mkdir ~/sno
+cd ~/sno
+docker pull quay.io/ibmmas/cli
+docker run -dit --name sno quay.io/ibmmas/cli:latest bash
+
+</code></pre>
+<ul>
+<li>Log into the docker container; create a folder for mas configuration; then exit the container</li>
+</ul>
+<pre><code>docker exec -it sno bash
+mkdir masconfig
+exit
+</code></pre>
+<ul>
+<li>Copy pull-secret and mas license file into the docker container</li>
+</ul>
+<pre><code>docker cp pull-secret sno:/mascli/masconfig/pull-secret
+docker cp license.dat sno:/mascli/masconfig/license.dat
+</code></pre>
+<h3 id="aws_1">AWS<a class="headerlink" href="#aws_1" title="Permanent link"></a></h3>
+<ul>
+<li>Log into docker container</li>
+</ul>
+<pre><code>docker exec -it sno bash
+
+Available commands:
+  - mas install to launch a MAS install pipeline
+  - mas provision-fyre to provision an OCP cluster on IBM DevIT Fyre (internal)
+  - mas provision-roks to provision an OCP cluster on IBMCloud Red Hat OpenShift Service (ROKS)
+  - mas provision-aws to provision an OCP cluster on AWS
+  - mas provision-rosa to provision an OCP cluster on AWS Red Hat OpenShift Service (ROSA)
+  - mas setup-registry to setup a private container registry on an OCP cluster
+  - mas mirror-images to mirror container images required by mas to a private registry
+  - mas configure-ocp-for-mirror to configure a cluster to use a private registry as a mirror
+</code></pre>
+<ul>
+<li>Run the command to provision SNO AWS Cluster. It will automatically detect the single enode. </li>
+<li>Enter your AWS credentials:</li>
+<li>AWS API Key ID</li>
+<li>AWS Secret Access Key</li>
+<li>AWS Secret Access Key</li>
+<li>Cluster Name</li>
+<li>AWS Region</li>
+<li>AWS Base Domain</li>
+</ul>
+<pre><code>mas provision-aws
+
+IBM Maximo Application Suite AWS Cluster Provisioner
+Powered by https://github.com/ibm-mas/ansible-devops/
+
+
+AWS Access Key ID
+Provide your AWS API Key ID (if you have not set the AWS_ACCESS_KEY_ID
+environment variable) which will be used to provision an AWS instance.
+AWS API Key ID &gt; AKIAWKXUCZ55STYXXX
+
+AWS Secret Access Key
+Provide your AWS Secret Access Key (if you have not set the AWS_SECRET_ACCESS_KEY
+environment variable) which will be used to provision an AWS instance.
+
+AWS Secret Access Key &gt; HiIoMnhB13tKthkiBlXvpJM9g/znKKlCgJoyxxxx
+Re-use saved AWS Secret Access Key Starting 'HiIoMnhB13tKthkiBlXvpJM9g/znKKlCgJoyxxxx'? [Y/n] 
+
+AWS Cluster Configuration
+Cluster Name &gt; sno
+AWS Region &gt; us-east-2
+AWS Base Domain &gt; buyermas4aws.com
+Do you want single node openshift  [Y/n] 
+
+OCP Version:
+  1. 4.10 EUS (MAS 8.9)
+Select Version &gt; 1
+
+Proceed with these settings [y/N] y
+
+</code></pre>
+<ul>
+<li>You see the following message for your cluster after it is provisioned.</li>
+</ul>
+<pre><code>AWS cluster is ready to use
+Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aws.com
+
+</code></pre>
+<h3 id="bare-metalvsphere_1">Bare Metal/vSphere<a class="headerlink" href="#bare-metalvsphere_1" title="Permanent link"></a></h3>
+<ul>
+<li>
+<p>OpenShift Container Platform(OCP) installation on a single node <a href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node">instructions</a></p>
+</li>
+<li>
+<p><strong>Image Registry</strong></p>
+<p>Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for <a href="https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal">configuring the registry for bare metal</a>
+   - Run</p>
+<p><code>$ oc edit configs.imageregistry/cluster</code></p>
+</li>
+<li>
+<p>Then, change the line</p>
+<p><code>managementState: Removed</code></p>
+<p>to</p>
+<p><code>managementState: Managed</code></p>
+</li>
+</ul>
+<h2 id="storage-class_1">Storage Class<a class="headerlink" href="#storage-class_1" title="Permanent link"></a></h2>
+<ul>
+<li>Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]](https://github.com/red-hat-storage/lvm-operator)</li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Check out <a href="https://ibm-mas.github.io/ansible-devops/">MAS Ansible Devops Documentation</a> for more information</p>
+<p>You’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it.</p>
 </div>
-<h2 id="intall-db2-optional">Intall DB2 (optional)<a class="headerlink" href="#intall-db2-optional" title="Permanent link"></a></h2>
-<p>Install DB2 using this <a href="https://ibm-mas.github.io/ansible-devops/roles/db2/">Db2 link</a></p>
-<p>Sample environment variables:</p>
-<pre><code>export DB2_BACKUP_STORAGE_ACCESSMODE=READWRITEONCE
-export DB2_META_STORAGE_ACCESSMODE=READWRITEONCE
-
-export DB2_META_STORAGE_SIZE=10Gi  
-export DB2_BACKUP_STORAGE_SIZE=10Gi  
-export DB2_LOGS_STORAGESIZE=10Gi 
-export DB2_TEMP_STORAGE_SIZE=10Gi
-export DB2_DATA_STORAGE_SIZE=20Gi
-export DB2_CPU_REQUESTS=300m
-</code></pre>
-<p>AWS storage class</p>
-<pre><code>export DB2_META_STORAGE_CLASS=gp2
-export DB2_DATA_STORAGE_CLASS=gp2
-export DB2_BACKUP_STORAGE_CLASS=gp2
-export DB2_LOGS_STORAGE_CLASS=gp2
-export DB2_TEMP_STORAGE_CLASS=gp2
-</code></pre>
-<p>Bare Metal/vSphere storage class</p>
-<pre><code>export DB2_META_STORAGE_CLASS=odf-lvm-vg1
-export DB2_DATA_STORAGE_CLASS=odf-lvm-vg1
-export DB2_BACKUP_STORAGE_CLASS=odf-lvm-vg1
-export DB2_LOGS_STORAGE_CLASS=odf-lvm-vg1
-export DB2_TEMP_STORAGE_CLASS=odf-lvm-vg1
-</code></pre>
-<h2 id="install-and-configure-manage">Install and Configure Manage<a class="headerlink" href="#install-and-configure-manage" title="Permanent link"></a></h2>
+<p>You can install LVM operator from operator hub.</p>
 <ul>
-<li>You can run the following automation playbook to install DB2 and Manage. </li>
+<li>Install ODF LVM Operator from OperatorHub</li>
 </ul>
-<pre><code>ansible-playbook playbooks/oneclick_add_manage.yml
+<p><img alt="image" src="images/lvm.png" /></p>
+<ul>
+<li>Click on the tile and install </li>
+</ul>
+<p><img alt="image" src="images/lvminstall.png" /></p>
+<ul>
+<li>Click Install</li>
+</ul>
+<p><img alt="image" src="images/lvminstall2.png" /></p>
+<ul>
+<li>After the operator is installed, click on <code>View Operator</code></li>
+</ul>
+<p><img alt="image" src="images/lvmInstalled.png" /></p>
+<ul>
+<li>Create LVM Operator Instance</li>
+</ul>
+<p><img alt="image" src="images/createinstance.png" /></p>
+<ul>
+<li>Configure the instance</li>
+</ul>
+<p><img alt="image" src="images/configurelvm.png" /></p>
+<ul>
+<li>After Configuration, the LVM storage class is created</li>
+</ul>
+<p><img alt="image" src="images/lvmstorageclass.png" /></p>
+<h2 id="install-mas-and-manage_1">Install MAS and Manage<a class="headerlink" href="#install-mas-and-manage_1" title="Permanent link"></a></h2>
+<ul>
+<li><em>OC Login</em> : oc login --token=xxxx --server=<a href="https://myocpserver">https://myocpserver</a></li>
+</ul>
+<p>Replace <code>xxxx</code> with your OpenShift token and <code>https://myocpserver</code> with your OpenShift Server.
+You can get OC Login information from OpenShift Console (top right corner <code>kube:admin</code> drop down list, select <code>Copy login command</code>)</p>
+<pre><code>
+$ oc login --token=sha256~lt1uU_p_pXkBazB-DRh7-P5EVWvL1Drwvlu8o_G21u0 --server=https://api.sno4.sarika.donatelli.click:6443
+The server uses a certificate signed by an unknown authority.
+You can bypass the certificate check, but any data you send to the server could be intercepted by others.
+Use insecure connections? (y/n): y
+
+Logged into &quot;https://api.sno4.sarika.donatelli.click:6443&quot; as &quot;kube:admin&quot; using the token provided.
+
+You have access to 76 projects, the list has been suppressed. You can list all projects with 'oc projects'
+
+Using project &quot;default&quot;.
+Welcome! See 'oc help' to get started.
+
 </code></pre>
+<ul>
+<li>mas install</li>
+</ul>
+<pre><code>mas install
+
+IBM Maximo Application Suite Installer
+Powered by https://github.com/ibm-mas/ansible-devops/ and https://tekton.dev/
+
+Current Limitations
+1. Support for airgap installation is limited to MAS 8.8 (core only) at present
+
+
+1. Set Target OpenShift Cluster
+Connected to OCP cluster:
+   https://console-openshift-console.apps.sno4.sarika.donatelli.click
+Connect to a different cluster [y/N] N
+
+2. Install OpenShift Pipelines Operator
+OpenShift Pipelines Operator is installed and ready
+
+3. Configure Installation
+MAS Instance ID &gt; sno
+Use online catalog? [y/N] y
+MAS Version:
+  1. 8.9
+Select Subscription Channel &gt; 1
+
+Info: SNO_MODE was not detected.
+Do you want manage demodata to be loaded or not  [Y/n] 
+
+Info: SNO_MODE was detected.
+Do you want manage demodata to be loaded or not  [Y/n] Y
+
+4. Configure Domain &amp; Certificate Management
+Configure Custom Domain [y/N] N
+
+5. Application Selection
+Install Manage [y/N] y
+
+6a. Configure Storage Class Usage
+Maximo Application Suite and it's dependencies require storage classes that support ReadWriteOnce (RWO) access mode:
+  - ReadWriteOnce volumes can be mounted as read-write by multiple pods on a single node.
+
+  - SNO MODE is set to true
+
+Select the ReadWriteOnce storage classes to use from the list below:
+ - odf-lvm-vg1
+
+ReadWriteOnce (RWO) storage class &gt; odf-lvm-vg1
+
+6b. DB2 Storage size, in Gi(Gigabytes)
+Size of data persistent volume &gt; 20Gi
+Size of temporary persistent volume &gt; 10Gi
+Size of metadata persistent volume &gt; 10Gi
+Size of transaction logs persistent volume &gt; 10Gi
+Size of backup persistent volume &gt; 10Gi
+
+7. Configure IBM Container Registry
+czYWZkOWRkMDNkNjJjIn0.aRsAu30HTYJ0aYUJ4hB46GAmgK6nCu9ZBDTF_mQ6jAoV0cGxhY2UiLCJpYXQiOjE1ODM0NjIwODMsImp0aSI6ImNxxxxxxxxxxxxxxxxx
+
+8. Configure Product License
+License ID &gt; 0242ac11xxxx
+License File &gt; /opt/app-root/src/masconfig/license.dat
+
+9. Configure UDS
+UDS Contact Email &gt; snouser@ibm.com
+UDS Contact First Name &gt; sno
+UDS Contact Last Name &gt; sno
+
+10. Prepare Installation
+If you are using using storage classes that utilize 'WaitForFirstConsumer' binding mode choose 'No' at the prompt below
+
+Wait for PVCs to bind? [Y/n] n
+
+Namespace 'mas-inst1-pipelines' is ready
+
+Installed Task Definitions
+NAME                                    IMAGE
+mas-devops-appconnect                   quay.io/ibmmas/cli:latest
+mas-devops-cert-manager                 quay.io/ibmmas/cli:latest
+mas-devops-cluster-monitoring           quay.io/ibmmas/cli:latest
+mas-devops-common-services              quay.io/ibmmas/cli:latest
+mas-devops-cos                          quay.io/ibmmas/cli:latest
+mas-devops-cp4d                         quay.io/ibmmas/cli:latest
+mas-devops-cp4d-service                 quay.io/ibmmas/cli:latest
+mas-devops-db2                          quay.io/ibmmas/cli:latest
+mas-devops-gencfg-workspace             quay.io/ibmmas/cli:latest
+mas-devops-ibm-catalogs                 quay.io/ibmmas/cli:latest
+mas-devops-kafka                        quay.io/ibmmas/cli:latest
+mas-devops-mongodb                      quay.io/ibmmas/cli:latest
+mas-devops-nvidia-gpu                   quay.io/ibmmas/cli:latest
+mas-devops-sbo                          quay.io/ibmmas/cli:latest
+mas-devops-sls                          quay.io/ibmmas/cli:latest
+mas-devops-suite-app-config             quay.io/ibmmas/cli:latest
+mas-devops-suite-app-install            quay.io/ibmmas/cli:latest
+mas-devops-suite-app-upgrade            quay.io/ibmmas/cli:latest
+mas-devops-suite-config                 quay.io/ibmmas/cli:latest
+mas-devops-suite-db2-setup-for-manage   quay.io/ibmmas/cli:latest
+mas-devops-suite-dns                    quay.io/ibmmas/cli:latest
+mas-devops-suite-install                quay.io/ibmmas/cli:latest
+mas-devops-suite-mustgather             quay.io/ibmmas/cli:latest
+mas-devops-suite-upgrade                quay.io/ibmmas/cli:latest
+mas-devops-suite-verify                 quay.io/ibmmas/cli:latest
+mas-devops-uds                          quay.io/ibmmas/cli:latest
+
+Installed Pipeline Definitions
+NAME          AGE
+mas-install   4s
+mas-update    4s
+mas-upgrade   4s
+
+quay.io/ibmmas/cli:latest is available from the target OCP cluster
+
+11. Review Settings
+
+    IBM Maximo Application Suite
+    Instance ID ............... sno
+    Catalog Source ............ ibm-operator-catalog
+    Subscription Channel ...... 8.9.x
+    IBM Entitled Registry ..... cp.icr.io/cp
+    IBM Open Registry ......... icr.io/cpopen
+    Entitlement Username ...... cp
+    Entitlement Key ........... eyJhbGci&lt;snip&gt;
+
+    IBM Maximo Application Suite Applications
+    IoT ...................... Skip Installation
+     - Monitor ............... Skip Installation
+     - Safety ................ Skip Installation
+    Manage ................... ibm-operator-catalog/8.5.x
+     - Predict ............... Skip Installation
+    Optimizer ................ Skip Installation
+    H &amp; P Utilities .......... Skip Installation
+    Assist ................... Skip Installation
+    MVI ...................... Skip Installation
+
+    IBM Suite License Service
+    Catalog Source ............ ibm-operator-catalog
+    License ID ................ 0242ac11xxxx
+    License File .............. /workspace/entitlement/license.dat
+    IBM Entitled Registry ..... cp.icr.io/cp
+    IBM Open Registry ......... icr.io/cpopen
+    Entitlement Username ...... cp
+    Entitlement Key ........... eyJhbGci&lt;snip&gt;
+
+    IBM User Data Services
+    Contact Email ............. sno@ibm.com
+    First Name ................ sno
+    Last Name ................. sno
+
+    IBM Cloud Pak Foundation Services
+    Catalog Source ............ ibm-operator-catalog
+
+
+Proceed with these settings [y/N] y
+
+12. Launch Installation
+Installation started successfully
+
+View progress:
+  https://console-openshift-console.apps.sno.buyermas4aws.com/pipelines/ns/mas-sno-pipelines
+</code></pre>
+<h2 id="install-mas-and-manage_2">Install MAS and Manage<a class="headerlink" href="#install-mas-and-manage_2" title="Permanent link"></a></h2>
 <ul>
 <li>
 <p>If you want to use an existing external database, install the Manage app and configure the database using the following steps (MAS admin dashboard):</p>
@@ -460,5 +929,5 @@ export DB2_TEMP_STORAGE_CLASS=odf-lvm-vg1
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-12-04 22:54:54.364043+00:00
+Build Date UTC : 2022-12-15 02:50:15.081322+00:00
 -->
