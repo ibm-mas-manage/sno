@@ -104,7 +104,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="single-node-openshift-openshift-410">Single Node OpenShift (OpenShift 4.10+)<a class="headerlink" href="#single-node-openshift-openshift-410" title="Permanent link"></a></h1>
+                <h1 id="single-node-openshift">Single Node OpenShift<a class="headerlink" href="#single-node-openshift" title="Permanent link"></a></h1>
 <h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link"></a></h2>
 <p>A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises edge deployments. .</p>
 <h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link"></a></h2>
@@ -126,6 +126,7 @@ It’s the best “small” OpenShift experience. </p>
 <p><img alt="image" src="images/sno.png" /></p>
 <h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link"></a></h2>
 <ul>
+<li>OpenShift: 4.10+</li>
 <li>vCPU: 16Cores</li>
 <li>RAM: 64Gb</li>
 <li>IBM entitlement Key : Log in to the <a href="https://myibm.ibm.com/products-services/containerlibrary">IBM Container Library</a> with a user ID that has software download rights for your company’s Passport Advantage entitlement to get the entitlement key.</li>
@@ -252,7 +253,7 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 <h4 id="route">Route<a class="headerlink" href="#route" title="Permanent link"></a></h4>
 <h2 id="storage-class">Storage Class<a class="headerlink" href="#storage-class" title="Permanent link"></a></h2>
 <ul>
-<li>Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator]](https://github.com/red-hat-storage/lvm-operator)</li>
+<li>Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install <a href="https://github.com/red-hat-storage/lvm-operator">LVM-Operator</a></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -578,5 +579,5 @@ View progress:
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-12-15 22:57:57.939375+00:00
+Build Date UTC : 2022-12-15 23:09:24.175027+00:00
 -->
