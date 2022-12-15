@@ -1,7 +1,7 @@
 # Single Node OpenShift
 
 ## Summary
-A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises edge deployments. .
+A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises edge deployments.
 
 ## Highlights
 - Requires installation via openshift installer (IPI) or Assisted Installer. [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses installation wizard on Red Hat’s OpenShift Cluster Manager site.
@@ -131,11 +131,11 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 	
 ### Bare Metal/vSphere
 
-- OpenShift Container Platform(OCP) installation on a single node [instructions](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
+- OpenShift Container Platform(OCP) installation on a single node instructions [link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
 #### Image Registry
   
-    Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+- Ensure that your registry is set to managed to enable building and pushing of images. The link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
    - Run
 
     ```
@@ -156,6 +156,31 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
     ```
 
 #### Route
+
+- Make sure the route `image-registry` is created in `openshift-image-registry` namespace.
+
+```
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: image-registry
+  namespace: openshift-image-registry
+  labels:
+    docker-registry: default
+spec:
+  host: image-registry.openshift-image-registry.svc
+  to:
+    kind: Service
+    name: image-registry
+    weight: 100
+  port:
+    targetPort: 5000-tcp
+  tls:
+    termination: reencrypt
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+
+```
 
 ## Storage Class
 
