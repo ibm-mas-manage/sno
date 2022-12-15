@@ -233,29 +233,29 @@ Current Limitations
 1. Set Target OpenShift Cluster
 Connected to OCP cluster:
    https://console-openshift-console.apps.sno4.sarika.donatelli.click
-Connect to a different cluster [y/N] N \
+Connect to a different cluster [y/N] N 
 
 2. Install OpenShift Pipelines Operator
-OpenShift Pipelines Operator is installed and ready ... \
+OpenShift Pipelines Operator is installed and ready ... 
 
 3. Configure Installation
 MAS Instance ID > sno
-Use online catalog? [y/N] y \
+Use online catalog? [y/N] y 
 MAS Version:
   1. 8.9
 Select Subscription Channel > 1
  
 Info: SNO_MODE was not detected.
-Do you want manage demodata to be loaded or not  [Y/n] N \
+Do you want manage demodata to be loaded or not  [Y/n] N 
 
 Info: SNO_MODE was detected.
-Do you want manage demodata to be loaded or not  [Y/n] Y \
+Do you want manage demodata to be loaded or not  [Y/n] Y 
 
 4. Configure Domain & Certificate Management
-Configure Custom Domain [y/N] N \
+Configure Custom Domain [y/N] N 
 
 5. Application Selection
-Install Manage [y/N] y \
+Install Manage [y/N] y 
 
 6a. Configure Storage Class Usage
 Maximo Application Suite and it's dependencies require storage classes that support ReadWriteOnce (RWO) access mode:
@@ -290,7 +290,7 @@ UDS Contact Last Name > sno
 10. Prepare Installation
 If you are using using storage classes that utilize 'WaitForFirstConsumer' binding mode choose 'No' at the prompt below
 
-Wait for PVCs to bind? [Y/n] n \
+Wait for PVCs to bind? [Y/n] n 
  
 Namespace 'mas-inst1-pipelines' is ready
 
