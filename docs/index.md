@@ -1,4 +1,4 @@
-# Single Node OpenShift (OpenShift 4.10+) 
+# Single Node OpenShift
 
 ## Summary
 A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises edge deployments. .
@@ -23,6 +23,7 @@ I have Single Node OpenShift running on a baremetal environment with 16 Cores, 6
 ![image](images/sno.png)
 
 ## Requirements
+- OpenShift: 4.10+
 - vCPU: 16Cores
 - RAM: 64Gb
 - IBM entitlement Key : Log in to the [IBM Container Library](https://myibm.ibm.com/products-services/containerlibrary) with a user ID that has software download rights for your company’s Passport Advantage entitlement to get the entitlement key.
@@ -134,7 +135,7 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 
 #### Image Registry
   
-    Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+    Ensure that your registry is set to managed to enable building and pushing of images. Here is the link for [configuring the registry for bare metal(https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
    - Run
 
     ```
