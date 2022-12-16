@@ -417,6 +417,7 @@ View progress:
 ## Tekton Pipeline
 
 You can see the installation progess and logs from OpenShift Console in the mas-<workspaceid>-pipelines namespace. Select Pipelines menu in the left navigation bar and click on  on PipelinesRuns tab and select pipeline run. You can click on any task and view logs.
+	
  
 ![image](images/pipelinerun.png)
 	
