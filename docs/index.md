@@ -427,7 +427,7 @@ You can see the installation progess and logs from OpenShift Console in the mas-
 ![image](images/pipelinerun.png)
 	
 
-## Manage Installation (without DB2)
+## Manage Installation (external database)
 
 - If you want to use an existing external database, install the Manage app and configure the database using the following steps (MAS admin dashboard):
 	 
