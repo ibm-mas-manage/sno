@@ -109,8 +109,9 @@
 <p>A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises edge deployments.</p>
 <h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link"></a></h2>
 <ul>
-<li>Requires installation via openshift installer (IPI) or Assisted Installer. <a href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html">Assisted Installer</a> uses installation wizard on Red Hat’s OpenShift Cluster Manager site.</li>
-<li>Local storage can be configured using <a href="https://github.com/red-hat-storage/lvm-operator">ODS LVM Operator</a></li>
+<li>Automated SNO installation on AWS.</li>
+<li>Assisted Installer for SNO installation on bare metal and vSphere. <a href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html">Assisted Installer</a> uses installation wizard on Red Hat’s OpenShift Cluster Manager site.</li>
+<li>Local storage can be configured using <a href="https://github.com/red-hat-storage/lvm-operator">ODS LVM Operator</a>. </li>
 <li>You need entitement for the official support.</li>
 </ul>
 <p>If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. </p>
@@ -602,5 +603,5 @@ View progress:
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2022-12-15 23:33:27.937334+00:00
+Build Date UTC : 2022-12-16 02:06:33.226008+00:00
 -->
