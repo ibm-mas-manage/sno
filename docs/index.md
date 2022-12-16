@@ -193,6 +193,7 @@ spec:
 You can install LVM operator from operator hub.
 
 
+
 - Install ODF LVM Operator from OperatorHub
 
 ![image](images/lvm.png)
@@ -201,6 +202,7 @@ You can install LVM operator from operator hub.
 - Click on the tile and install 
 
 ![image](images/lvminstall.png)
+
 
 
 - Click Install
@@ -213,14 +215,17 @@ You can install LVM operator from operator hub.
 ![image](images/lvmInstalled.png)
 
 
+
 - Create LVM Operator Instance
 
 ![image](images/createinstance.png)
 
 
+
 - Configure the instance
 
 ![image](images/configurelvm.png)
+
 
 
 - After Configuration, the LVM storage class is created
