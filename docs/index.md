@@ -4,8 +4,9 @@
 A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy this smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises edge deployments.
 
 ## Highlights
-- Requires installation via openshift installer (IPI) or Assisted Installer. [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses installation wizard on Red Hat’s OpenShift Cluster Manager site.
-- Local storage can be configured using [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator)
+- Automated SNO installation on AWS.
+- Assisted Installer for SNO installation on bare metal and vSphere. [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses installation wizard on Red Hat’s OpenShift Cluster Manager site.
+- Local storage can be configured using [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator). 
 - You need entitement for the official support.
 
 If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. 
