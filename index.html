@@ -113,6 +113,7 @@
 <li>Assisted Installer for SNO installation on bare metal and vSphere. <a href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html">Assisted Installer</a> uses installation wizard on Red Hat’s OpenShift Cluster Manager site.</li>
 <li>Local storage can be configured using <a href="https://github.com/red-hat-storage/lvm-operator">ODS LVM Operator</a>. </li>
 <li>Automated installation of MAS, Manage, Mobile, and DB2 using ansible-devops/CLI. </li>
+<li>Supports mobile and 70 concurrent users.</li>
 <li>You need entitement for the official support.</li>
 </ul>
 <p>If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. </p>
@@ -122,7 +123,7 @@ It’s the best “small” OpenShift experience. </p>
 <p>I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.9 and Manage 8.5. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.</p>
 <h2 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link"></a></h2>
 <ul>
-<li>Small MAS and Manage-only implementations that range from 10-30 users</li>
+<li>Small MAS and Manage-only implementations that range from 70 concurrent users</li>
 <li>Satellite / Disconnected deployments, possibly connected to a big MAS. It can sync data to Central Data Center for Maximo EAM</li>
 </ul>
 <p><img alt="image" src="images/sno.png" /></p>
@@ -604,5 +605,5 @@ View progress:
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2023-01-03 21:36:21.188065+00:00
+Build Date UTC : 2023-01-12 21:57:54.473935+00:00
 -->
