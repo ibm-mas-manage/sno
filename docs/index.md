@@ -8,6 +8,7 @@ A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a s
 - Assisted Installer for SNO installation on bare metal and vSphere. [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses installation wizard on Red Hat’s OpenShift Cluster Manager site.
 - Local storage can be configured using [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator). 
 - Automated installation of MAS, Manage, Mobile, and DB2 using ansible-devops/CLI. 
+- Supports mobile and 70 concurrent users.
 - You need entitement for the official support.
 
 If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. 
@@ -19,7 +20,7 @@ It’s the best “small” OpenShift experience.
 I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.9 and Manage 8.5. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.
 
 ## Use Cases
-- Small MAS and Manage-only implementations that range from 10-30 users
+- Small MAS and Manage-only implementations that range from 70 concurrent users
 - Satellite / Disconnected deployments, possibly connected to a big MAS. It can sync data to Central Data Center for Maximo EAM
 
 ![image](images/sno.png)
