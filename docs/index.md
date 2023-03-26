@@ -8,20 +8,26 @@ A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a s
 - Assisted Installer for SNO installation on bare metal and vSphere. [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses installation wizard on Red Hat’s OpenShift Cluster Manager site.
 - Local storage can be configured using [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator). 
 - Automated installation of MAS, Manage, Mobile, and DB2 using ansible-devops/CLI. 
+- Automated the generation of JDBC Configuration for all three external databases(DB2, Oracle, SQL server) from CLI.
+- Supports all valid combinations of industry solutions and add-ons on SNO based on the compatibility matrix.
 - Supports mobile and 70 concurrent users.
+- Supported on bare metal, vSphere, Red Hat OpenStack, and Red Hat Virtualization platforms
 - You need entitement for the official support.
 
 If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. 
 
 ## When to use Single Node OpenShift?
-If you want to experience a “real” cluster, a Single Node OpenShift may be a better option. You can develop and deploy applications and get a real cluster feel.
-It’s the best “small” OpenShift experience. 
+- If you want to experience a “real” cluster, a Single Node OpenShift may be a better option. You can develop and deploy applications and get a real cluster feel. It’s the best “small” OpenShift experience. 
+- Workloads that require OpenShift clusters at edge sites.
+- The tradeoff with an installation on a single node is the lack of high availability.
 
-I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.9 and Manage 8.5. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.
+I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.10 and Manage 8.6. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.
 
 ## Use Cases
 - Small MAS and Manage-only implementations that range from 70 concurrent users
 - Satellite / Disconnected deployments, possibly connected to a big MAS. It can sync data to Central Data Center for Maximo EAM
+- Upgrading small Maximo customers to MAS 
+- Demo & PoC
 
 ![image](images/sno.png)
 
@@ -138,52 +144,60 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 
 #### Image Registry
   
-- Ensure that your registry is set to managed to enable building and pushing of images. The link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
-   - Run
+- Ensure that your registry is set to "Managed" to enable building and pushing of images. The link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+
+- Search for `config'
+
+![image](images/config.png)
+
+
+- Click `cluster'. Go to `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config` 
+
+![image](images/clickcluster.png)
+
+  
+- Update the cluster yaml:
+
+  - Set managementState from `Removed` to `Managed`: 
+
+  ```
+  managementState: Removed
+  ```
+  to 
+
+  ```
+  managementState: Managed
+  ```
+
+  - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
+
+  ```
+  rolloutStrategy: RollingUpdate
+  ```
+  to 
+
+  ```
+  rolloutStrategy: Recreate
+  ```
+
+  - Set Storage:
+
+  ```
+  storage: {}
+  ```
+  to 
+
+  ```
+  storage:
+    pvc:
+      claim: ''
+  ```    
+    
+ You can also use  `oc edit` to update the cluster yaml from terminal.
 
     ```
     $ oc edit configs.imageregistry/cluster
     ```
-
-   - Then, change the line
-
-    ```
-    managementState: Removed
-    ```
-    
-    to
-
-    
-    ```
-    managementState: Managed
-    ```
-
-#### Route
-
-- Make sure the route `image-registry` is created in `openshift-image-registry` namespace.
-
-```
-kind: Route
-apiVersion: route.openshift.io/v1
-metadata:
-  name: image-registry
-  namespace: openshift-image-registry
-  labels:
-    docker-registry: default
-spec:
-  host: image-registry.openshift-image-registry.svc
-  to:
-    kind: Service
-    name: image-registry
-    weight: 100
-  port:
-    targetPort: 5000-tcp
-  tls:
-    termination: reencrypt
-    insecureEdgeTerminationPolicy: None
-  wildcardPolicy: None
-
-```
 
 ## Storage Class
 
@@ -193,7 +207,6 @@ spec:
     You’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it.
 
 You can install LVM operator from operator hub.
-
 
 
 - Install ODF LVM Operator from OperatorHub
@@ -282,22 +295,72 @@ OpenShift Pipelines Operator is installed and ready ...
 MAS Instance ID > sno
 Use online catalog? [y/N] y 
 MAS Version:
-  1. 8.9
+  1. 8.10
+  2. 8.9
 Select Subscription Channel > 1
- 
-Info: SNO_MODE was not detected.
-Do you want manage demodata to be loaded or not  [Y/n] N 
 
-Info: SNO_MODE was detected.
-Do you want manage demodata to be loaded or not  [Y/n] Y 
+3.1. License Terms
+For information about your license, see   To continue with the installation, you must accept the license terms.
+Do you accept the license terms? [y/N] y
 
-4. Configure Domain & Certificate Management
-Configure Custom Domain [y/N] N 
+4. Configure Operation Mode
+Maximo Application Suite can be installed in a non-production mode for internal development and testing, this setting cannot be changed after installation:
+ - All applications, add-ons, and solutions have 0 (zero) installation AppPoints in non-production installations.
+ - These specifications are also visible in the metrics that are shared with IBM® and on the product UI.
 
-5. Application Selection
-Install Manage [y/N] y 
+Use non-production mode? [y/N] 
 
-6a. Configure Storage Class Usage
+5. Configure Domain & Certificate Management
+Configure Custom Domain [y/N]
+
+6. Application Selection
+Install IoT [y/N]
+Install Manage [y/N] y
+Custom Subscription Channel > 8.6.x-dev
++ Create demo data [Y/n]
++ Configure JMS [y/N]
+Install Optimizer [y/N]
+Install Visual Inspection [y/N]
+Install Predict [y/N]
+Install Health & Predict - Utilities [y/N]
+Install Assist [y/N]
+
+7. Configure Db2
+The installer can setup one or more IBM Db2 instances in your OpenShift cluster for the use of applications that require a JDBC datasource (IoT, Manage, Monitor, & Predict) or you may choose to configure MAS to use an existing database.
+
+Install Db2 using the IBM Db2 Universal Operator? [Y/n] n
+
+7.1 Database configuration for IoT
+Maximo IoT requires a shared system-scope Db2 instance because others application in the suite require access to the same database source.
+ - Only IBM Db2 is supported for this database
+
+System Database configuration for IoT is not required because the application is not being installed
+
+7.2 Database configuration for Manage
+Maximo Manage can be configured to share the system Db2 instance or use it's own dedicated database.
+ - IBM Db2, Oracle Database, & Microsoft SQL Server are all supported database options
+
+Do you want to generate a dedicated JDBC configuration for Manage? [y/N] y
+
+Select Local configuration directory > /mascli/masconfig
+Configuration Display Name: jdbc-sb1-manage
+JDBC Connection String: jdbc:sqlserver://;serverName=ssldbsvl1.fyre.ibm.com;portNumber=1433;databaseName=maxdb80;integratedSecurity=false;sendStringParametersAsUnicode=false;selectMethod=cursor;encrypt=true;trustServerCertificate=true;
+JDBC User Name: maximo
+JDBC Password: maximo
+SSL Enabled [y/n]: y
+Path to certificate file: /mascli/masconfig/mssql.pem
+Configuring workspace-application JDBC configuration for sb1
+
+8. Additional Configuration
+Additional resource definitions can be applied to the OpenShift Cluster during the MAS configuration step.
+The primary purpose of this is to apply configuration for Maximo Application Suite itself, but you can use this to deploy ANY additional resource into your cluster.
+
+The following additional configurations will be applied:
+ - jdbc-sb1-wsapp.yaml
+
+Are these the correct configuration files to apply? [y/N] y
+
+9. Configure Storage Class Usage
 Maximo Application Suite and it's dependencies require storage classes that support ReadWriteOnce (RWO) access mode:
   - ReadWriteOnce volumes can be mounted as read-write by multiple pods on a single node.
 
@@ -308,26 +371,17 @@ Select the ReadWriteOnce storage classes to use from the list below:
 
 ReadWriteOnce (RWO) storage class > odf-lvm-vg1
 
-6b. DB2 Storage size, in Gi(Gigabytes)
-Size of data persistent volume > 20Gi
-Size of temporary persistent volume > 10Gi
-Size of metadata persistent volume > 10Gi
-Size of transaction logs persistent volume > 10Gi
-Size of backup persistent volume > 10Gi
-
-7. Configure IBM Container Registry
+10. Configure IBM Container Registry
 czYWZkOWRkMDNkNjJjIn0.aRsAu30HTYJ0aYUJ4hB46GAmgK6nCu9ZBDTF_mQ6jAoV0cGxhY2UiLCJpYXQiOjE1ODM0NjIwODMsImp0aSI6ImNxxxxxxxxxxxxxxxxx
  
-8. Configure Product License
+11. Configure Product License
 License ID > 0242ac11xxxx
 License File > /opt/app-root/src/masconfig/license.dat
  
-9. Configure UDS
-UDS Contact Email > snouser@ibm.com
-UDS Contact First Name > sno
-UDS Contact Last Name > sno
+12. Configure UDS
+Maximo Application Suite version v8.10+ no longer requires IBM User Data Services as a dependency.
  
-10. Prepare Installation
+13. Prepare Installation
 If you are using using storage classes that utilize 'WaitForFirstConsumer' binding mode choose 'No' at the prompt below
 
 Wait for PVCs to bind? [Y/n] n 
@@ -376,7 +430,7 @@ quay.io/ibmmas/cli:latest is available from the target OCP cluster
     IBM Maximo Application Suite
     Instance ID ............... sno
     Catalog Source ............ ibm-operator-catalog
-    Subscription Channel ...... 8.9.x
+    Subscription Channel ...... 8.10.x
     IBM Entitled Registry ..... cp.icr.io/cp
     IBM Open Registry ......... icr.io/cpopen
     Entitlement Username ...... cp
@@ -386,7 +440,7 @@ quay.io/ibmmas/cli:latest is available from the target OCP cluster
     IoT ...................... Skip Installation
      - Monitor ............... Skip Installation
      - Safety ................ Skip Installation
-    Manage ................... ibm-operator-catalog/8.5.x
+    Manage ................... ibm-operator-catalog/8.6.x
      - Predict ............... Skip Installation
     Optimizer ................ Skip Installation
     H & P Utilities .......... Skip Installation
@@ -428,51 +482,5 @@ You can see the installation progess and logs from OpenShift Console in the mas-
  
 ![image](images/pipelinerun.png)
 	
-
-## Manage Installation (external database)
-
-- If you want to use an existing external database, install the Manage app and configure the database using the following steps (MAS admin dashboard):
-	 
-	- Go to MAS admin UI.
-		- From OpenShift Console, go to Routes. Select Admin dashboard. Click on Locations to go MAS admin dashboard.
-		
-		![image](images/route.png)
-		
-		- Make sure you can connect to coreapi service route.
-		
-		- Get the superuser password from `mas-sno-core` project secrets to log in to the MAS admin dashboard.
-		
-		![image](images/superuser.png)
-		
-		- Create an authorized admin user using `Users` page. For example, masadmin
-		
-		![image](images/createuser.png)
-		 
-		- Login as admin user `masadmin` created in the previous step. Install Manage from the catalog page.
-		
-		![image](images/installmanage.png)
-		 
-		- Select `Application version` action to deploy operator.
-		
-		![image](images/applicationversion.png)
-		
-		- Select subscription 
-		
-		![image](images/subscription.png)
-		
-		- After deployment is complete, select `Update configuration` by selecting the action from the top right corner of the page:
-		
-		![image](images/configurationnew.png)
-		 
-		- Update database connection:
-		
-		![image](images/dbconnection.png)
-		 
-		- Update database configuration. Select `Install Demo Data` if want to add maxdemo data.
-		
-		![image](images/dbconfig.png)
-		
-		- Apply changes by clicking on the blue `Activate` button in the top right.
-		
-		- After successful activation, the `Manage` app can be accessed by clicking on the nine-dot menu in the top right corner.
-
+ 
+	
