@@ -228,8 +228,8 @@ oc patch storageclass odf-lvm-vg1 -p '{"metadata":
 ``` 
 
 #### Enable Image Registry
-You need to enable the image registry for building and pushing of images. The link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
-
+You need to enable the image registry for building and pushing of images. 
+- Link: [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
 - In the OpenShift Console UI, Home->Search for `config` and click `cluster`. 
 
 ![image](images/config.png)
@@ -269,7 +269,7 @@ You can also use  `oc edit` to update the cluster yaml using command line:
 ```
 $ oc edit configs.imageregistry/cluster
 ```
-Check if the `image-storage-registry` PVC is bound. If it is in pending status, please follow the steps in `Troubleshooting` section before installing MAS and Manage.
+Check if the `image-storage-registry` PVC is bound. If it is in pending status, please follow the steps in "Troubleshooting" section before installing MAS and Manage.
 
 ## MAS and Manage Installation
 
@@ -504,16 +504,16 @@ You can see the installation progess and logs from OpenShift Console in the mas-
 ## Troubleshooting
 
 ### BareMetal/VSphere
-To enable building and pushing of images, the 'image-storage-registry` PVC should be in the bound status. If the image-registry-storage PVC is in Pending status, you can follow the steps below to update the `image-storage-registry` PVC:
-- Storage->PersistentVolumeCLaims. Select `image-storage-registry` PVC. Go the YAML tab and download it using the Download button on the botton right.
+To enable building and pushing of images, the `image-storage-registry` PVC should be in the bound status. If the image-registry-storage PVC is in Pending status, you need to follow the steps below to update the image-storage-registry PVC:
+- In the OpenShift Console UI, go to Storage->PersistentVolumeCLaims. Select `image-storage-registry` PVC.
+- Go the YAML tab and download it using the Download button on the botton right.
 - Update the downloaded file. 
   - Remove the metadata fields uid, resourceVersion, creationTimestamp
   - Remove the manageFields section
   - Remove the status section
   - Modify the accessModes from ReadWriteMany to ReadWriteOnce	
 - Delete `image-storage-registry` PVC.
-- Use the Create PersistentVolumeClaim button to create a new one (the project at the top right should 
-still be openshift-image-registry). Click on the “Edit YAML” link at the top right of the screen. Replace 
+- Use the Create PersistentVolumeClaim button to create a new one (the project at the top right should still be openshift-image-registry). Click on the "Edit YAML” link at the top right of the screen. Replace 
 the content of the yaml with the modified one you edited.
 - Click the Create button at the bottom. The new PVC should immediately go into the “bound” state).
 - Sample PVC	
