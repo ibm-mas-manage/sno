@@ -236,12 +236,12 @@ You need to enable the image registry for building and pushing of images. Link: 
 
 ![image](images/searchconfig.png)
 
-- Click `cluster`. Go to the `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config`. Update the cluster yaml:
+- Click `cluster`. Go to the `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config`. 
 
 ![image](images/configcluster.png)
 
- 
-- Set managementState from `Removed` to `Managed`: 
+- Update the cluster yaml:
+  - Set managementState from `Removed` to `Managed`: 
 ```
 managementState: Removed
 ```
@@ -250,7 +250,7 @@ to
 managementState: Managed
 ```
   
-- Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
+  - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
 ```
 rolloutStrategy: RollingUpdate
 ```
@@ -259,7 +259,7 @@ to
 rolloutStrategy: Recreate
 ```
 
-- Set Storage:
+  - Set Storage:
 ```
 storage: {}
 ```
