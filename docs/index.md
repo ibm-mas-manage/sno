@@ -242,33 +242,33 @@ You need to enable the image registry for building and pushing of images. Link: 
 
 - Update the cluster yaml:
   - Set managementState from `Removed` to `Managed`: 
-```
-managementState: Removed
-```
-to 
-```
-managementState: Managed
-```
+  ```
+  managementState: Removed
+  ```
+  to 
+  ```
+  managementState: Managed
+  ```
   
   - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
-```
-rolloutStrategy: RollingUpdate
-```
-to 
-```
-rolloutStrategy: Recreate
-```
+  ```
+  rolloutStrategy: RollingUpdate
+  ```
+  to 
+  ```
+  rolloutStrategy: Recreate
+  ```
 
   - Set Storage:
-```
-storage: {}
-```
-to 
-```
-storage:
-  pvc:
-    claim: ''
-```    
+  ```
+  storage: {}
+  ```
+  to 
+  ```
+  storage:
+    pvc:
+      claim: ''
+  ```    
 
 You can also use  `oc edit` to update the cluster yaml using command line:
 ```
