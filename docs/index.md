@@ -249,7 +249,6 @@ You need to enable the image registry for building and pushing of images. Link: 
   ```
   managementState: Managed
   ```
-  
   - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
   ```
   rolloutStrategy: RollingUpdate
@@ -258,7 +257,6 @@ You need to enable the image registry for building and pushing of images. Link: 
   ```
   rolloutStrategy: Recreate
   ```
-
   - Set Storage:
   ```
   storage: {}
