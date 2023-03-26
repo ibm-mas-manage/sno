@@ -229,8 +229,8 @@ oc patch storageclass odf-lvm-vg1 -p '{"metadata":
 ``` 
 
 #### Enable Image Registry
-You need to enable the image registry for building and pushing of images. 
-- Link: [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+You need to enable the image registry for building and pushing of images. Link: [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+
 - In the OpenShift Console UI, Home->Search for `config`
 
 ![image](images/searchconfig.png)
