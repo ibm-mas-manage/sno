@@ -1,7 +1,11 @@
 # Single Node OpenShift
 
 ## Summary
-A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises deployments.
+Single Node OpenShift (SNO) is a configuration of a standard OpenShift cluster that consists of a single control plane node that is configured to run workloads on it. This configuration offers both control and worker node functionality, allowing users to deploy a smaller OpenShift footprint and have minimal to no dependence on a centralized management cluster. SNO can run autonomously when needed, making it a useful solution for resource-constrained environments, demos, proof of concepts, or even on-premises deployments.
+
+By deploying SNO, users can experience the benefits of OpenShift in a more compact environment that requires fewer resources. It can also provide a simple and efficient way to test new features or applications in a controlled environment. However, it's important to keep in mind that SNO lacks high availability, so it may not be suitable for mission-critical workloads that require constant uptime.
+
+Overall, SNO offers a flexible and convenient way to deploy OpenShift for a variety of use cases.
 
 ## Highlights
 - Automated SNO installation on AWS.
