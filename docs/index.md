@@ -144,60 +144,10 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 	
 ### Bare Metal/vSphere
 
+#### Installation
 - OpenShift Container Platform(OCP) installation on a single node instructions [link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
-#### Image Registry
-  
-- Ensure that your registry is set to "Managed" to enable building and pushing of images. The link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
-
-- Search for `config`
-
-![image](images/config.png)
-
-
-- Click `cluster`. Go to `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config` 
-
-![image](images/clickcluster.png)
-
-  
-- Update the cluster yaml:
- 
-  - Set managementState from `Removed` to `Managed`: 
-  ```
-  managementState: Removed
-  ```
-  to 
-  ```
-  managementState: Managed
-  ```
-  
-  - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
-  ```
-  rolloutStrategy: RollingUpdate
-  ```
-  to 
-  ```
-  rolloutStrategy: Recreate
-  ```
-
-  - Set Storage:
-  ```
-  storage: {}
-  ```
-  to 
-  ```
-  storage:
-    pvc:
-      claim: ''
-  ```    
-    
- You can also use  `oc edit` to update the cluster yaml from terminal.
- ```
- $ oc edit configs.imageregistry/cluster
- ```
-
-## Storage Class
-
+#### Storage Class
 - Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator](https://github.com/red-hat-storage/lvm-operator)
 
 !!! note
@@ -244,7 +194,55 @@ You can install LVM operator from operator hub.
 
 ![image](images/lvmstorageclass.png)
 
+ - Update 
+
+#### Image Registry
+Ensure that your registry is set to "Managed" to enable building and pushing of images. The link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+
+- Search for `config`
+
+![image](images/config.png)
+
+- Click `cluster`. Go to `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config` 
+
+![image](images/clickcluster.png)
+
+  
+- Update the cluster yaml:
  
+  - Set managementState from `Removed` to `Managed`: 
+  ```
+  managementState: Removed
+  ```
+  to 
+  ```
+  managementState: Managed
+  ```
+  
+  - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
+  ```
+  rolloutStrategy: RollingUpdate
+  ```
+  to 
+  ```
+  rolloutStrategy: Recreate
+  ```
+
+  - Set Storage:
+  ```
+  storage: {}
+  ```
+  to 
+  ```
+  storage:
+    pvc:
+      claim: ''
+  ```    
+    
+ You can also use  `oc edit` to update the cluster yaml from terminal.
+ ```
+ $ oc edit configs.imageregistry/cluster
+ ```
  
 ## MAS and Manage Installation
 
@@ -365,8 +363,6 @@ Are these the correct configuration files to apply? [y/N] y
 Maximo Application Suite and it's dependencies require storage classes that support ReadWriteOnce (RWO) access mode:
   - ReadWriteOnce volumes can be mounted as read-write by multiple pods on a single node.
 
-  - SNO MODE is set to true
-
 Select the ReadWriteOnce storage classes to use from the list below:
  - odf-lvm-vg1
 
@@ -477,8 +473,7 @@ You can see the installation progess and logs from OpenShift Console in the mas-
 	
  
 ![image](images/pipelinerun.png)
-	
- 
+
 ## Troubleshooting
 
 ### BareMetal/VSphere
