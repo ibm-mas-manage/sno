@@ -236,11 +236,10 @@ You need to enable the image registry for building and pushing of images. Link: 
 
 ![image](images/searchconfig.png)
 
-- Click `cluster`
+- Click `cluster`. Go to the `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config`. Update the cluster yaml:
 
 ![image](images/configcluster.png)
 
-- Go to the `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config`. Update the cluster yaml:
  
 - Set managementState from `Removed` to `Managed`: 
 ```
