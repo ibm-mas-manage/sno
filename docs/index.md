@@ -148,13 +148,14 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 - OpenShift Container Platform(OCP) installation on a single node instructions [link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
 #### Storage Class
-- Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator](https://github.com/red-hat-storage/lvm-operator)
+- Local storage in OpenShift means storage devices or filesystems available locally on a node server. You need to provide the cluster with a storage class 
+and related provisioner. 
+- Install [LVM-Operator](https://github.com/red-hat-storage/lvm-operator) for local storage.
 
 !!! note
     You’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it.
 
 You can install LVM operator from operator hub.
-
 
 - Install ODF LVM Operator from OperatorHub
 
@@ -229,11 +230,11 @@ oc patch storageclass odf-lvm-vg1 -p '{"metadata":
 #### Enable Image Registry
 You need to enable the image registry for building and pushing of images. The link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
 
-- Search for `config` and click `cluster`. 
+- In the OpenShift Console UI, Home->Search for `config` and click `cluster`. 
 
 ![image](images/config.png)
 
-- Go to `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config`. Update the cluster yaml:
+- Go to the `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config`. Update the cluster yaml:
  
 - Set managementState from `Removed` to `Managed`: 
 ```
@@ -264,7 +265,7 @@ storage:
     claim: ''
 ```    
 
-You can also use  `oc edit` to update the cluster yaml from terminal.
+You can also use  `oc edit` to update the cluster yaml using command line:
 ```
 $ oc edit configs.imageregistry/cluster
 ```
