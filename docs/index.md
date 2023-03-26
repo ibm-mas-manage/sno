@@ -1,27 +1,37 @@
 # Single Node OpenShift
 
 ## Summary
-A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a single control plane node that is configured to run workloads on it. It offers both control and worker node functionality, users can deploy smaller OpenShift footprint and have minimal to no dependence on the centralized management cluster and can run autonomously when needed. It can be deployed to resource-constrained environments for demos, proof of concepts, or even on-premises deployments.
+Single Node OpenShift (SNO) is a configuration of a standard OpenShift cluster that consists of a single control plane node that is configured to run workloads on it. This configuration offers both control and worker node functionality, allowing users to deploy a smaller OpenShift footprint and have minimal to no dependence on a centralized management cluster. SNO can run autonomously when needed, making it a useful solution for resource-constrained environments, demos, proof of concepts, or even on-premises deployments.
+
+By deploying SNO, users can experience the benefits of OpenShift in a more compact environment that requires fewer resources. It can also provide a simple and efficient way to test new features or applications in a controlled environment. However, it's important to keep in mind that SNO lacks high availability, so it may not be suitable for mission-critical workloads that require constant uptime.
+
+Overall, SNO offers a flexible and convenient way to deploy OpenShift for a variety of use cases.
 
 ## Highlights
 - Automated SNO installation on AWS.
-- Assisted Installer for SNO installation on bare metal and vSphere. [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses installation wizard on Red Hat’s OpenShift Cluster Manager site.
-- Local storage can be configured using [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator). 
-- Automated installation of MAS, Manage, Mobile, and DB2 using ansible-devops/CLI. 
-- Supports mobile and 70 concurrent users.
+- Assisted Installer for SNO installation on bare metal and vSphere. The [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses a wizard on Red Hat’s OpenShift Cluster Manager site.
+- Allows for local storage configuration using the ODS [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator). 
+- Automates installation of MAS, Manage, Mobile, and DB2 using ansible-devops/CLI. 
+- Generates JDBC Configuration for all three external databases(DB2, Oracle, SQL server) from CLI.
+- Supports all valid combinations of industry solutions and add-ons on SNO based on the compatibility matrix.
+- Supports 70 concurrent users.
 - You need entitement for the official support.
+- Supported on bare metal, vSphere, Red Hat OpenStack, and Red Hat Virtualization platforms.
 
 If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. 
 
 ## When to use Single Node OpenShift?
-If you want to experience a “real” cluster, a Single Node OpenShift may be a better option. You can develop and deploy applications and get a real cluster feel.
-It’s the best “small” OpenShift experience. 
+- For edge sites or scenarios where OpenShift clusters are required, but high availability is not critical, Single Node OpenShift can be an appropriate solution.
+- For developers who want to experience a "real" cluster environment, Single Node OpenShift is a good option. It enables them to develop and deploy applications in a cluster environment, providing a "small" OpenShift experience. 
+- It's important to note that Single Node OpenShift lacks high availability, which is a tradeoff that should be considered.
 
-I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.9 and Manage 8.5. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.
+I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.10 and Manage 8.6. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.
 
 ## Use Cases
 - Small MAS and Manage-only implementations that range from 70 concurrent users
 - Satellite / Disconnected deployments, possibly connected to a big MAS. It can sync data to Central Data Center for Maximo EAM
+- Upgrading small Maximo customers to MAS 
+- Demo & PoC
 
 ![image](images/sno.png)
 
@@ -118,7 +128,7 @@ AWS Base Domain > buyermas4aws.com
 Do you want single node openshift  [Y/n] 
  
 OCP Version:
-  1. 4.10 EUS (MAS 8.9)
+  1. 4.10 EUS 
 Select Version > 1
  
 Proceed with these settings [y/N] y
@@ -134,67 +144,18 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
 	
 ### Bare Metal/vSphere
 
+#### Installation
 - OpenShift Container Platform(OCP) installation on a single node instructions [link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node)
 
-#### Image Registry
-  
-- Ensure that your registry is set to managed to enable building and pushing of images. The link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
-   - Run
-
-    ```
-    $ oc edit configs.imageregistry/cluster
-    ```
-
-   - Then, change the line
-
-    ```
-    managementState: Removed
-    ```
-    
-    to
-
-    
-    ```
-    managementState: Managed
-    ```
-
-#### Route
-
-- Make sure the route `image-registry` is created in `openshift-image-registry` namespace.
-
-```
-kind: Route
-apiVersion: route.openshift.io/v1
-metadata:
-  name: image-registry
-  namespace: openshift-image-registry
-  labels:
-    docker-registry: default
-spec:
-  host: image-registry.openshift-image-registry.svc
-  to:
-    kind: Service
-    name: image-registry
-    weight: 100
-  port:
-    targetPort: 5000-tcp
-  tls:
-    termination: reencrypt
-    insecureEdgeTerminationPolicy: None
-  wildcardPolicy: None
-
-```
-
-## Storage Class
-
-- Local storage in Kubernetes means storage devices or filesystems available locally on a node server. Install [LVM-Operator](https://github.com/red-hat-storage/lvm-operator)
+#### Storage Class
+- Local storage in OpenShift means storage devices or filesystems available locally on a node server. You need to provide the cluster with a storage class 
+and related provisioner. 
+- Install [LVM-Operator](https://github.com/red-hat-storage/lvm-operator) for local storage.
 
 !!! note
     You’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it.
 
 You can install LVM operator from operator hub.
-
-
 
 - Install ODF LVM Operator from OperatorHub
 
@@ -234,17 +195,97 @@ You can install LVM operator from operator hub.
 
 ![image](images/lvmstorageclass.png)
 
+- Set the LVM storage class as the default:
+  - In the OpenShift Console UI, go to Storage -> StorageClasses using the left menu. You should see `odf-lvm-vg1`.
+  - Click on it, in the next screen click on the YAML tab.
+  - Add storageclass.kubernetes.io/is-default-class: "true" under the annotations.
  
- 
-## MAS and Manage Installation
-
-- *OC Login* : oc login --token=xxxx --server=<https://myocpserver>
-
-Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
-You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
+- The YAML should look like this:
 
 ```
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: odf-lvm-vg1
+  uid: 55909d9c-882c-4cbb-962d-e7dbed289946
+  resourceVersion: '7200873'
+  creationTimestamp: '2023-03-26T02:15:25Z'
+  annotations:
+    description: Provides RWO and RWOP Filesystem & Block volumes
+    storageclass.kubernetes.io/is-default-class: 'true'
+  managedFields:
+provisioner: topolvm.cybozu.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  topolvm.cybozu.com/device-class: vg1
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+```
 
+- You can also use CLI command to set the storageclass as the default:
+```
+oc patch storageclass odf-lvm-vg1 -p '{"metadata": 
+{"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+``` 
+
+#### Enable Image Registry
+You need to enable the image registry for building and pushing of images. Link: [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
+
+- In the OpenShift Console UI, Home->Search for `config`
+
+![image](images/searchconfig.png)
+
+- Click `cluster`. Go to the `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config`. 
+
+![image](images/configcluster.png)
+
+- Update the cluster yaml:
+  - Set managementState from `Removed` to `Managed`: 
+  ```
+  managementState: Removed
+  ```
+  to 
+  ```
+  managementState: Managed
+  ```
+  - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
+  ```
+  rolloutStrategy: RollingUpdate
+  ```
+  to 
+  ```
+  rolloutStrategy: Recreate
+  ```
+  - Set Storage:
+  ```
+  storage: {}
+  ```
+  to 
+  ```
+  storage:
+    pvc:
+      claim: ''
+  ```    
+
+You can also use  `oc edit` to update the cluster yaml using command line:
+```
+$ oc edit configs.imageregistry/cluster
+```
+Check if the `image-storage-registry` PVC is bound. If it is in pending status, please follow the steps in "Troubleshooting" section before installing MAS and Manage.
+
+## MAS and Manage Installation
+
+- Login to your OpenShift: Use the OpenShift Console top right pulldown menu to get the login command to OpenShift.
+
+![image](images/copyloginmenu.png)
+
+
+- Click on the `Copy login command`, the click on the “Display Token” word that will be shown in the page that just opened, and then copy the login command shown under `Log in with this token`:
+
+![image](images/copylogincmd.png)
+
+```
 $ oc login --token=sha256~lt1uU_p_pXkBazB-DRh7-P5EVWvL1Drwvlu8o_G21u0 --server=https://api.sno4.sarika.donatelli.click:6443
 The server uses a certificate signed by an unknown authority.
 You can bypass the certificate check, but any data you send to the server could be intercepted by others.
@@ -282,52 +323,95 @@ OpenShift Pipelines Operator is installed and ready ...
 MAS Instance ID > sno
 Use online catalog? [y/N] y 
 MAS Version:
-  1. 8.9
+  1. 8.10
+  2. 8.9
 Select Subscription Channel > 1
- 
-Info: SNO_MODE was not detected.
-Do you want manage demodata to be loaded or not  [Y/n] N 
 
-Info: SNO_MODE was detected.
-Do you want manage demodata to be loaded or not  [Y/n] Y 
+3.1. License Terms
+For information about your license, see   To continue with the installation, you must accept the license terms.
+Do you accept the license terms? [y/N] y
 
-4. Configure Domain & Certificate Management
-Configure Custom Domain [y/N] N 
+4. Configure Operation Mode
+Maximo Application Suite can be installed in a non-production mode for internal development and testing, this setting cannot be changed after installation:
+ - All applications, add-ons, and solutions have 0 (zero) installation AppPoints in non-production installations.
+ - These specifications are also visible in the metrics that are shared with IBM® and on the product UI.
 
-5. Application Selection
-Install Manage [y/N] y 
+Use non-production mode? [y/N] 
 
-6a. Configure Storage Class Usage
+5. Configure Domain & Certificate Management
+Configure Custom Domain [y/N]
+
+6. Application Selection
+Install IoT [y/N]
+Install Manage [y/N] y
+Custom Subscription Channel > 8.6.x-dev
++ Create demo data [Y/n]
++ Configure JMS [y/N]
++ Customize database settings [y/N] y
+Schema > maximo
+Tablespace > maximo
+Indexspace > maximo
+Install Optimizer [y/N]
+Install Visual Inspection [y/N]
+Install Predict [y/N]
+Install Health & Predict - Utilities [y/N]
+Install Assist [y/N]
+
+7. Configure Db2
+The installer can setup one or more IBM Db2 instances in your OpenShift cluster for the use of applications that require a JDBC datasource (IoT, Manage, Monitor, & Predict) or you may choose to configure MAS to use an existing database.
+
+Install Db2 using the IBM Db2 Universal Operator? [Y/n] n
+
+7.1 Database configuration for IoT
+Maximo IoT requires a shared system-scope Db2 instance because others application in the suite require access to the same database source.
+ - Only IBM Db2 is supported for this database
+
+System Database configuration for IoT is not required because the application is not being installed
+
+7.2 Database configuration for Manage
+Maximo Manage can be configured to share the system Db2 instance or use it's own dedicated database.
+ - IBM Db2, Oracle Database, & Microsoft SQL Server are all supported database options
+
+Do you want to generate a dedicated JDBC configuration for Manage? [y/N] y
+
+Select Local configuration directory > /mascli/masconfig
+Configuration Display Name: jdbc-sb1-manage
+JDBC Connection String: jdbc:sqlserver://;serverName=ssldbsvl1.fyre.ibm.com;portNumber=1433;databaseName=maxdb80;integratedSecurity=false;sendStringParametersAsUnicode=false;selectMethod=cursor;encrypt=true;trustServerCertificate=true;
+JDBC User Name: maximo
+JDBC Password: maximo
+SSL Enabled [y/n]: y
+Path to certificate file: /mascli/masconfig/mssql.pem
+Configuring workspace-application JDBC configuration for sb1
+
+8. Additional Configuration
+Additional resource definitions can be applied to the OpenShift Cluster during the MAS configuration step.
+The primary purpose of this is to apply configuration for Maximo Application Suite itself, but you can use this to deploy ANY additional resource into your cluster.
+
+The following additional configurations will be applied:
+ - jdbc-sb1-wsapp.yaml
+
+Are these the correct configuration files to apply? [y/N] y
+
+9. Configure Storage Class Usage
 Maximo Application Suite and it's dependencies require storage classes that support ReadWriteOnce (RWO) access mode:
   - ReadWriteOnce volumes can be mounted as read-write by multiple pods on a single node.
-
-  - SNO MODE is set to true
 
 Select the ReadWriteOnce storage classes to use from the list below:
  - odf-lvm-vg1
 
 ReadWriteOnce (RWO) storage class > odf-lvm-vg1
 
-6b. DB2 Storage size, in Gi(Gigabytes)
-Size of data persistent volume > 20Gi
-Size of temporary persistent volume > 10Gi
-Size of metadata persistent volume > 10Gi
-Size of transaction logs persistent volume > 10Gi
-Size of backup persistent volume > 10Gi
-
-7. Configure IBM Container Registry
+10. Configure IBM Container Registry
 czYWZkOWRkMDNkNjJjIn0.aRsAu30HTYJ0aYUJ4hB46GAmgK6nCu9ZBDTF_mQ6jAoV0cGxhY2UiLCJpYXQiOjE1ODM0NjIwODMsImp0aSI6ImNxxxxxxxxxxxxxxxxx
  
-8. Configure Product License
+11. Configure Product License
 License ID > 0242ac11xxxx
 License File > /opt/app-root/src/masconfig/license.dat
  
-9. Configure UDS
-UDS Contact Email > snouser@ibm.com
-UDS Contact First Name > sno
-UDS Contact Last Name > sno
+12. Configure UDS
+Maximo Application Suite version v8.10+ no longer requires IBM User Data Services as a dependency.
  
-10. Prepare Installation
+13. Prepare Installation
 If you are using using storage classes that utilize 'WaitForFirstConsumer' binding mode choose 'No' at the prompt below
 
 Wait for PVCs to bind? [Y/n] n 
@@ -376,7 +460,7 @@ quay.io/ibmmas/cli:latest is available from the target OCP cluster
     IBM Maximo Application Suite
     Instance ID ............... sno
     Catalog Source ............ ibm-operator-catalog
-    Subscription Channel ...... 8.9.x
+    Subscription Channel ...... 8.10.x
     IBM Entitled Registry ..... cp.icr.io/cp
     IBM Open Registry ......... icr.io/cpopen
     Entitlement Username ...... cp
@@ -386,7 +470,7 @@ quay.io/ibmmas/cli:latest is available from the target OCP cluster
     IoT ...................... Skip Installation
      - Monitor ............... Skip Installation
      - Safety ................ Skip Installation
-    Manage ................... ibm-operator-catalog/8.5.x
+    Manage ................... ibm-operator-catalog/8.6.x
      - Predict ............... Skip Installation
     Optimizer ................ Skip Installation
     H & P Utilities .......... Skip Installation
@@ -401,11 +485,6 @@ quay.io/ibmmas/cli:latest is available from the target OCP cluster
     IBM Open Registry ......... icr.io/cpopen
     Entitlement Username ...... cp
     Entitlement Key ........... eyJhbGci<snip>
- 
-    IBM User Data Services
-    Contact Email ............. sno@ibm.com
-    First Name ................ sno
-    Last Name ................. sno
  
     IBM Cloud Pak Foundation Services
     Catalog Source ............ ibm-operator-catalog
@@ -427,52 +506,51 @@ You can see the installation progess and logs from OpenShift Console in the mas-
 	
  
 ![image](images/pipelinerun.png)
+
+## Troubleshooting
+
+### BareMetal/VSphere
+To enable building and pushing of images, the `image-storage-registry` PVC should be in the bound status. If the image-registry-storage PVC is in Pending status, you need to follow the steps below to update the image-storage-registry PVC:
+- In the OpenShift Console UI, go to Storage->PersistentVolumeCLaims. Select `image-storage-registry` PVC.
+- Go the YAML tab and download it using the Download button on the botton right.
+- Update the downloaded file. 
+  - Remove the metadata fields uid, resourceVersion, creationTimestamp
+  - Remove the manageFields section
+  - Remove the status section
+  - Modify the accessModes from ReadWriteMany to ReadWriteOnce	
+- Delete `image-storage-registry` PVC.
+- Use the Create PersistentVolumeClaim button to create a new one (the project at the top right should still be openshift-image-registry). Click on the "Edit YAML” link at the top right of the screen. Replace 
+the content of the yaml with the modified one you edited.
+- Click the Create button at the bottom. The new PVC should immediately go into the “bound” state).
+- Sample PVC	
+```
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: image-registry-storage
+  namespace: openshift-image-registry
+  annotations:
+    imageregistry.openshift.io: 'true'
+    pv.kubernetes.io/bind-completed: 'yes'
+    pv.kubernetes.io/bound-by-controller: 'yes'
+    volume.beta.kubernetes.io/storage-provisioner: topolvm.cybozu.com
+    volume.kubernetes.io/storage-provisioner: topolvm.cybozu.com
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: odf-lvm-vg1
+  volumeMode: Filesystem
+```
+
+- If `image-storage-registry` PVC is still not bound:
+  -  Uninstall LVM operator.
+  -  Clean the disk and reinstall LVM Operator.
+	
 	
 
-## Manage Installation (external database)
-
-- If you want to use an existing external database, install the Manage app and configure the database using the following steps (MAS admin dashboard):
-	 
-	- Go to MAS admin UI.
-		- From OpenShift Console, go to Routes. Select Admin dashboard. Click on Locations to go MAS admin dashboard.
-		
-		![image](images/route.png)
-		
-		- Make sure you can connect to coreapi service route.
-		
-		- Get the superuser password from `mas-sno-core` project secrets to log in to the MAS admin dashboard.
-		
-		![image](images/superuser.png)
-		
-		- Create an authorized admin user using `Users` page. For example, masadmin
-		
-		![image](images/createuser.png)
-		 
-		- Login as admin user `masadmin` created in the previous step. Install Manage from the catalog page.
-		
-		![image](images/installmanage.png)
-		 
-		- Select `Application version` action to deploy operator.
-		
-		![image](images/applicationversion.png)
-		
-		- Select subscription 
-		
-		![image](images/subscription.png)
-		
-		- After deployment is complete, select `Update configuration` by selecting the action from the top right corner of the page:
-		
-		![image](images/configurationnew.png)
-		 
-		- Update database connection:
-		
-		![image](images/dbconnection.png)
-		 
-		- Update database configuration. Select `Install Demo Data` if want to add maxdemo data.
-		
-		![image](images/dbconfig.png)
-		
-		- Apply changes by clicking on the blue `Activate` button in the top right.
-		
-		- After successful activation, the `Manage` app can be accessed by clicking on the nine-dot menu in the top right corner.
-
+	
