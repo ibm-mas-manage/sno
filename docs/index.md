@@ -231,9 +231,13 @@ oc patch storageclass odf-lvm-vg1 -p '{"metadata":
 #### Enable Image Registry
 You need to enable the image registry for building and pushing of images. 
 - Link: [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
-- In the OpenShift Console UI, Home->Search for `config` and click `cluster`. 
+- In the OpenShift Console UI, Home->Search for `config`
 
-![image](images/config.png)
+![image](images/searchconfig.png)
+
+- Click `cluster`
+
+![image](images/configcluster.png)
 
 - Go to the `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config`. Update the cluster yaml:
  
@@ -274,13 +278,16 @@ Check if the `image-storage-registry` PVC is bound. If it is in pending status, 
 
 ## MAS and Manage Installation
 
-- *OC Login* : oc login --token=xxxx --server=<https://myocpserver>
+- Login to your OpenShift: Use the OpenShift Console top right pulldown menu to get the login command to OpenShift.
 
-Replace `xxxx` with your OpenShift token and `https://myocpserver` with your OpenShift Server.
-You can get OC Login information from OpenShift Console (top right corner `kube:admin` drop down list, select `Copy login command`)
+![image](images/copyloginmenu.png)
+
+
+- Click on the `Copy login command`, the click on the “Display Token” word that will be shown in the page that just opened, and then copy the login command shown under `Log in with this token`:
+
+![image](images/copylogincmd.png)
 
 ```
-
 $ oc login --token=sha256~lt1uU_p_pXkBazB-DRh7-P5EVWvL1Drwvlu8o_G21u0 --server=https://api.sno4.sarika.donatelli.click:6443
 The server uses a certificate signed by an unknown authority.
 You can bypass the certificate check, but any data you send to the server could be intercepted by others.
