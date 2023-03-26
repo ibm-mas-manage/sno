@@ -221,7 +221,8 @@ reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
 ```
-- You can also use CLI command:
+
+- You can also use CLI command to set the storageclass as the default:
 ```
 oc patch storageclass odf-lvm-vg1 -p '{"metadata": 
 {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
