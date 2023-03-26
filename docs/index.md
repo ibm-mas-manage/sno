@@ -128,7 +128,7 @@ AWS Base Domain > buyermas4aws.com
 Do you want single node openshift  [Y/n] 
  
 OCP Version:
-  1. 4.10 EUS (MAS 8.9)
+  1. 4.10 EUS 
 Select Version > 1
  
 Proceed with these settings [y/N] y
@@ -150,47 +150,41 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
   
 - Ensure that your registry is set to "Managed" to enable building and pushing of images. The link for [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
 
-- Search for `config'
+- Search for `config`
 
 ![image](images/config.png)
 
 
-- Click `cluster'. Go to `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config` 
+- Click `cluster`. Go to `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config` 
 
 ![image](images/clickcluster.png)
 
   
 - Update the cluster yaml:
-
+ 
   - Set managementState from `Removed` to `Managed`: 
-
   ```
   managementState: Removed
   ```
   to 
-
   ```
   managementState: Managed
   ```
-
+  
   - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
-
   ```
   rolloutStrategy: RollingUpdate
   ```
   to 
-
   ```
   rolloutStrategy: Recreate
   ```
 
   - Set Storage:
-
   ```
   storage: {}
   ```
   to 
-
   ```
   storage:
     pvc:
@@ -198,10 +192,9 @@ Connected to OCP cluster: https://console-openshift-console.apps.sno.buyermas4aw
   ```    
     
  You can also use  `oc edit` to update the cluster yaml from terminal.
-
-    ```
-    $ oc edit configs.imageregistry/cluster
-    ```
+ ```
+ $ oc edit configs.imageregistry/cluster
+ ```
 
 ## Storage Class
 
@@ -323,6 +316,10 @@ Install Manage [y/N] y
 Custom Subscription Channel > 8.6.x-dev
 + Create demo data [Y/n]
 + Configure JMS [y/N]
++ Customize database settings [y/N] y
+Schema > maximo
+Tablespace > maximo
+Indexspace > maximo
 Install Optimizer [y/N]
 Install Visual Inspection [y/N]
 Install Predict [y/N]
@@ -460,11 +457,6 @@ quay.io/ibmmas/cli:latest is available from the target OCP cluster
     Entitlement Username ...... cp
     Entitlement Key ........... eyJhbGci<snip>
  
-    IBM User Data Services
-    Contact Email ............. sno@ibm.com
-    First Name ................ sno
-    Last Name ................. sno
- 
     IBM Cloud Pak Foundation Services
     Catalog Source ............ ibm-operator-catalog
 
@@ -487,4 +479,44 @@ You can see the installation progess and logs from OpenShift Console in the mas-
 ![image](images/pipelinerun.png)
 	
  
+## Troubleshooting
+
+### BareMetal/VSphere
+
+If the `image-registry-storage` PVC is not bound, update the following values:
+
+- Go to Storage->PersistenetVolumeCLaims->Select `image-storage-registry` PVC. Go the YAML tab and download it to save a copy. 
+- Delete `image-storage-registry` PVC.
+- Add `image-storage-registry` PVC again.
+- Sample PVC	
+```
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: image-registry-storage
+  namespace: openshift-image-registry
+  annotations:
+    imageregistry.openshift.io: 'true'
+    pv.kubernetes.io/bind-completed: 'yes'
+    pv.kubernetes.io/bound-by-controller: 'yes'
+    volume.beta.kubernetes.io/storage-provisioner: topolvm.cybozu.com
+    volume.kubernetes.io/storage-provisioner: topolvm.cybozu.com
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: odf-lvm-vg1
+  volumeMode: Filesystem
+```
+
+- If `image-storage-registry` PVC is still not bound:
+  -  Uninstall LVM operator.
+  -  Clean the disk and reinstall LVM Operator.
+	
+	
+
 	
