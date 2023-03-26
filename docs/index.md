@@ -5,21 +5,21 @@ A Single Node OpenShift(SNO) is a configuration of a standard OpenShift with a s
 
 ## Highlights
 - Automated SNO installation on AWS.
-- Assisted Installer for SNO installation on bare metal and vSphere. [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses installation wizard on Red Hat’s OpenShift Cluster Manager site.
-- Local storage can be configured using [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator). 
-- Automated installation of MAS, Manage, Mobile, and DB2 using ansible-devops/CLI. 
-- Automated the generation of JDBC Configuration for all three external databases(DB2, Oracle, SQL server) from CLI.
+- Assisted Installer for SNO installation on bare metal and vSphere. The [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses a wizard on Red Hat’s OpenShift Cluster Manager site.
+- Allows for local storage configuration using the ODS [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator). 
+- Automates installation of MAS, Manage, Mobile, and DB2 using ansible-devops/CLI. 
+- Generates JDBC Configuration for all three external databases(DB2, Oracle, SQL server) from CLI.
 - Supports all valid combinations of industry solutions and add-ons on SNO based on the compatibility matrix.
-- Supports mobile and 70 concurrent users.
-- Supported on bare metal, vSphere, Red Hat OpenStack, and Red Hat Virtualization platforms
+- Supports 70 concurrent users.
 - You need entitement for the official support.
+- Supported on bare metal, vSphere, Red Hat OpenStack, and Red Hat Virtualization platforms.
 
 If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. 
 
 ## When to use Single Node OpenShift?
-- If you want to experience a “real” cluster, a Single Node OpenShift may be a better option. You can develop and deploy applications and get a real cluster feel. It’s the best “small” OpenShift experience. 
-- Workloads that require OpenShift clusters at edge sites.
-- The tradeoff with an installation on a single node is the lack of high availability.
+- For edge sites or scenarios where OpenShift clusters are required, but high availability is not critical, Single Node OpenShift can be an appropriate solution.
+- For developers who want to experience a "real" cluster environment, Single Node OpenShift is a good option. It enables them to develop and deploy applications in a cluster environment, providing a "small" OpenShift experience. 
+- It's important to note that Single Node OpenShift lacks high availability, which is a tradeoff that should be considered.
 
 I have Single Node OpenShift running on a baremetal environment with 16 Cores, 64GB RAM and 2 SSDs with MAS 8.10 and Manage 8.6. The first SSD has the OS, and the second disk is configured to be used by the LVM Operator.
 
