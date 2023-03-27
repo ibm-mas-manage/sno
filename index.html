@@ -351,9 +351,7 @@ volumeBindingMode: WaitForFirstConsumer
 <ul>
 <li>Set rolloutStrategy from 'RollingUpdate<code>to</code>Recreate`:</li>
 </ul>
-<p>```</p>
-<p>rolloutStrategy: RollingUpdate
-```</p>
+<p><code>rolloutStrategy: RollingUpdate</code></p>
 <p>to</p>
 <p><code>rolloutStrategy: Recreate</code></p>
 <ul>
@@ -598,19 +596,27 @@ View progress:
 <p><img alt="image" src="images/pipelinerun.png" /></p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link"></a></h2>
 <h3 id="baremetalvsphere">BareMetal/VSphere<a class="headerlink" href="#baremetalvsphere" title="Permanent link"></a></h3>
-<p>To enable building and pushing of images, the <code>image-storage-registry</code> PVC should be in the bound status. If the image-registry-storage PVC is in Pending status, you need to follow the steps below to update the image-storage-registry PVC:
-- In the OpenShift Console UI, go to Storage-&gt;PersistentVolumeCLaims. Select <code>image-storage-registry</code> PVC.
-- Go the YAML tab and download it using the Download button on the botton right.
-- Update the downloaded file. 
-  - Remove the metadata fields uid, resourceVersion, creationTimestamp
-  - Remove the manageFields section
-  - Remove the status section
-  - Modify the accessModes from ReadWriteMany to ReadWriteOnce<br />
-- Delete <code>image-storage-registry</code> PVC.
-- Use the Create PersistentVolumeClaim button to create a new one (the project at the top right should still be openshift-image-registry). Click on the "Edit YAML” link at the top right of the screen. Replace 
-the content of the yaml with the modified one you edited.
-- Click the Create button at the bottom. The new PVC should immediately go into the “bound” state).
-- Sample PVC    </p>
+<p>To enable building and pushing of images, the <code>image-storage-registry</code> PVC should be in the bound status. If the image-registry-storage PVC is in Pending status, you need to follow the steps below to update the image-storage-registry PVC:</p>
+<ul>
+<li>In the OpenShift Console UI, go to Storage-&gt;PersistentVolumeCLaims. Select <code>image-storage-registry</code> PVC.</li>
+<li>Go the YAML tab and download it using the Download button on the botton right.</li>
+<li>
+<p>Update the downloaded file. </p>
+<ul>
+<li>Remove the metadata fields uid, resourceVersion, creationTimestamp</li>
+<li>Remove the manageFields section</li>
+<li>Remove the status section</li>
+<li>Modify the accessModes from ReadWriteMany to ReadWriteOnce</li>
+</ul>
+</li>
+<li>
+<p>Delete <code>image-storage-registry</code> PVC.</p>
+</li>
+<li>Use the Create PersistentVolumeClaim button to create a new one (the project at the top right should still be openshift-image-registry). Click on the "Edit YAML” link at the top right of the screen. Replace 
+the content of the yaml with the modified one you edited.</li>
+<li>Click the Create button at the bottom. The new PVC should immediately go into the “bound” state).</li>
+<li>Sample PVC    </li>
+</ul>
 <pre><code>kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -688,5 +694,5 @@ spec:
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2023-03-27 00:31:07.810627+00:00
+Build Date UTC : 2023-03-27 00:35:56.103457+00:00
 -->
