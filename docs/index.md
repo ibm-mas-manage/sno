@@ -195,12 +195,16 @@ You can install LVM operator from operator hub.
 
 ![image](images/lvmstorageclass.png)
 
+
 - Set the LVM storage class as the default:
+
   - In the OpenShift Console UI, go to Storage -> StorageClasses using the left menu. You should see `odf-lvm-vg1`.
   - Click on it, in the next screen click on the YAML tab.
   - Add storageclass.kubernetes.io/is-default-class: "true" under the annotations.
  
 - The YAML should look like this:
+
+
 
 ```
 kind: StorageClass
@@ -242,26 +246,38 @@ You need to enable the image registry for building and pushing of images. Link: 
 
 - Update the cluster yaml:
   - Set managementState from `Removed` to `Managed`: 
+  
   ```
   managementState: Removed
   ```
-  to 
+  
+  to
+  
   ```
   managementState: Managed
   ```
+  
   - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
+  
   ```
+  
   rolloutStrategy: RollingUpdate
   ```
-  to 
+  
+  to
+  
   ```
   rolloutStrategy: Recreate
   ```
+
   - Set Storage:
+  
   ```
   storage: {}
   ```
+  
   to 
+  
   ```
   storage:
     pvc:
@@ -269,9 +285,11 @@ You need to enable the image registry for building and pushing of images. Link: 
   ```    
 
 You can also use  `oc edit` to update the cluster yaml using command line:
+
 ```
 $ oc edit configs.imageregistry/cluster
 ```
+
 Check if the `image-storage-registry` PVC is bound. If it is in pending status, please follow the steps in "Troubleshooting" section before installing MAS and Manage.
 
 ## MAS and Manage Installation
@@ -284,6 +302,7 @@ Check if the `image-storage-registry` PVC is bound. If it is in pending status, 
 - Click on the `Copy login command`, the click on the “Display Token” word that will be shown in the page that just opened, and then copy the login command shown under `Log in with this token`:
 
 ![image](images/copylogincmd.png)
+
 
 ```
 $ oc login --token=sha256~lt1uU_p_pXkBazB-DRh7-P5EVWvL1Drwvlu8o_G21u0 --server=https://api.sno4.sarika.donatelli.click:6443
@@ -302,6 +321,7 @@ Welcome! See 'oc help' to get started.
 - mas install
 
 ```
+
 mas install
 
 IBM Maximo Application Suite Installer
@@ -507,6 +527,7 @@ You can see the installation progess and logs from OpenShift Console in the mas-
  
 ![image](images/pipelinerun.png)
 
+	
 ## Troubleshooting
 
 ### BareMetal/VSphere
@@ -550,7 +571,5 @@ spec:
 - If `image-storage-registry` PVC is still not bound:
   -  Uninstall LVM operator.
   -  Clean the disk and reinstall LVM Operator.
-	
-	
 
 	
