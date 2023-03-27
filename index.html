@@ -117,12 +117,14 @@
 <ul>
 <li>Automated SNO installation on AWS.</li>
 <li>Assisted Installer for SNO installation on bare metal and vSphere. The <a href="https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html">Assisted Installer</a> uses a wizard on Red Hat’s OpenShift Cluster Manager site.</li>
-<li>Allows for local storage configuration using the ODS <a href="https://github.com/red-hat-storage/lvm-operator">ODS LVM Operator</a>. </li>
-<li>Automates installation of MAS, Manage, Mobile, and DB2 using ansible-devops/CLI. </li>
+<li>A Local storage class is provided by the <a href="https://github.com/red-hat-storage/lvm-operator">ODF LVM Operator</a>, using a dedicated disk.</li>
+<li>Automated installation of MAS, Manage, Mobile, and DB2 using ansible-devops/CLI. <ul>
 <li>Generates JDBC Configuration for all three external databases(DB2, Oracle, SQL server) from CLI.</li>
-<li>Supports all valid combinations of industry solutions and add-ons on SNO based on the compatibility matrix.</li>
+</ul>
+</li>
+<li>Supports all valid combinations of industry solutions and add-ons based on the compatibility matrix.</li>
 <li>Supports 70 concurrent users.</li>
-<li>You need entitement for the official support.</li>
+<li>Entitement needed for the official support.</li>
 <li>Supported on bare metal, vSphere, Red Hat OpenStack, and Red Hat Virtualization platforms.</li>
 </ul>
 <p>If you want to use Persistent Volumes, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. </p>
@@ -694,5 +696,5 @@ spec:
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2023-03-27 01:36:13.000362+00:00
+Build Date UTC : 2023-03-27 01:49:04.824021+00:00
 -->
