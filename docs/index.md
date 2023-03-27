@@ -205,6 +205,7 @@ You can install LVM operator from operator hub.
 - The YAML should look like this:
 
 
+
 ```
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
@@ -570,7 +571,5 @@ spec:
 - If `image-storage-registry` PVC is still not bound:
   -  Uninstall LVM operator.
   -  Clean the disk and reinstall LVM Operator.
-	
-	
 
 	
