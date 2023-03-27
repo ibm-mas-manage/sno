@@ -260,19 +260,26 @@ You need to enable the image registry for building and pushing of images. Link: 
 
     - Set managementState from `Removed` to `Managed`: 
   
+  
     `managementState: Removed' 
+  
     to
+    
     `managementState: Managed`
+  
   
     - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
   
     'rolloutStrategy: RollingUpdate`
+    
     to
+    
     `rolloutStrategy: Recreate`
 
     - Set Storage:
   
     `storage: {}`
+    
     to 
     
     `storage:
