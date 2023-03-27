@@ -262,7 +262,7 @@ You need to enable the image registry for building and pushing of images. Link: 
   
   
 
-    `managementState: Removed` 
+    `managementState: Removed`
   
   
     to
@@ -271,10 +271,10 @@ You need to enable the image registry for building and pushing of images. Link: 
     `managementState: Managed`
   
   
-    - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
+    - Set rolloutStrategy from `RollingUpdate` to `Recreate`:
   
   
-    'rolloutStrategy: RollingUpdate`
+    `rolloutStrategy: RollingUpdate`
   
     
     to
