@@ -162,9 +162,11 @@ You can install LVM operator from operator hub.
 ![image](images/lvm.png)
 
 
+
 - Click on the tile and install 
 
 ![image](images/lvminstall.png)
+
 
 
 
@@ -173,15 +175,18 @@ You can install LVM operator from operator hub.
 ![image](images/lvminstall2.png)
 
 
+
 - After the operator is installed, click on `View Operator`
 
 ![image](images/lvmInstalled.png)
 
 
 
+
 - Create LVM Operator Instance
 
 ![image](images/createinstance.png)
+
 
 
 
@@ -198,11 +203,13 @@ You can install LVM operator from operator hub.
 
 - Set the LVM storage class as the default:
 
-  - In the OpenShift Console UI, go to Storage -> StorageClasses using the left menu. You should see `odf-lvm-vg1`.
-  - Click on it, in the next screen click on the YAML tab.
-  - Add storageclass.kubernetes.io/is-default-class: "true" under the annotations.
+    - In the OpenShift Console UI, go to Storage -> StorageClasses using the left menu. You should see `odf-lvm-vg1`.
+    - Click on it, in the next screen click on the YAML tab.
+    - Add storageclass.kubernetes.io/is-default-class: "true" under the annotations.
+
  
 - The YAML should look like this:
+
 
 
 
@@ -228,9 +235,9 @@ volumeBindingMode: WaitForFirstConsumer
 ```
 
 - You can also use CLI command to set the storageclass as the default:
+
 ```
-oc patch storageclass odf-lvm-vg1 -p '{"metadata": 
-{"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+oc patch storageclass odf-lvm-vg1 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ``` 
 
 #### Enable Image Registry
@@ -244,45 +251,49 @@ You need to enable the image registry for building and pushing of images. Link: 
 
 ![image](images/configcluster.png)
 
-- Update the cluster yaml:
-  - Set managementState from `Removed` to `Managed`: 
-  
-  ```
-  managementState: Removed
-  ```
-  
-  to
-  
-  ```
-  managementState: Managed
-  ```
-  
-  - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
-  
-  ```
-  
-  rolloutStrategy: RollingUpdate
-  ```
-  
-  to
-  
-  ```
-  rolloutStrategy: Recreate
-  ```
 
-  - Set Storage:
+- Update the cluster yaml:
+
+
+    - Set managementState from `Removed` to `Managed`: 
   
-  ```
-  storage: {}
-  ```
+    ```
+    managementState: Removed
+    ```
   
-  to 
+    to
   
-  ```
-  storage:
-    pvc:
-      claim: ''
-  ```    
+    ```
+    managementState: Managed
+    ```
+  
+    - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
+  
+    ```
+  
+    rolloutStrategy: RollingUpdate
+    ```
+  
+    to
+  
+    ```
+    rolloutStrategy: Recreate
+    ```
+
+    - Set Storage:
+  
+    ```
+    storage: {}
+    ```
+  
+    to 
+  
+    ```
+    storage:
+      pvc:
+        claim: ''
+    ```    
+
 
 You can also use  `oc edit` to update the cluster yaml using command line:
 
@@ -292,11 +303,13 @@ $ oc edit configs.imageregistry/cluster
 
 Check if the `image-storage-registry` PVC is bound. If it is in pending status, please follow the steps in "Troubleshooting" section before installing MAS and Manage.
 
+
 ## MAS and Manage Installation
 
 - Login to your OpenShift: Use the OpenShift Console top right pulldown menu to get the login command to OpenShift.
 
 ![image](images/copyloginmenu.png)
+
 
 
 - Click on the `Copy login command`, the click on the “Display Token” word that will be shown in the page that just opened, and then copy the login command shown under `Log in with this token`:
@@ -569,7 +582,9 @@ spec:
 ```
 
 - If `image-storage-registry` PVC is still not bound:
-  -  Uninstall LVM operator.
-  -  Clean the disk and reinstall LVM Operator.
+
+    - Uninstall LVM operator.
+    -  Clean the disk and reinstall LVM Operator.
+
 
 	
