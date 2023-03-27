@@ -345,23 +345,20 @@ volumeBindingMode: WaitForFirstConsumer
 <ul>
 <li>Set managementState from <code>Removed</code> to <code>Managed</code>: </li>
 </ul>
-<p><code>managementState: Removed</code></p>
-<p>to</p>
-<p><code>managementState: Managed</code></p>
+<p><code>managementState: Removed' 
+to</code>managementState: Managed`</p>
 <ul>
 <li>Set rolloutStrategy from 'RollingUpdate<code>to</code>Recreate`:</li>
 </ul>
-<p><code>rolloutStrategy: RollingUpdate</code></p>
-<p>to</p>
-<p><code>rolloutStrategy: Recreate</code></p>
+<p>'rolloutStrategy: RollingUpdate<code>to</code>rolloutStrategy: Recreate`</p>
 <ul>
 <li>Set Storage:</li>
 </ul>
-<p><code>storage: {}</code></p>
-<p>to </p>
+<p><code>storage: {}</code>
+to </p>
 <p><code>storage:
   pvc:
-    claim: ''</code>    </p>
+    claim: ''</code></p>
 </li>
 </ul>
 <p>You can also use  <code>oc edit</code> to update the cluster yaml using command line:</p>
@@ -694,5 +691,5 @@ spec:
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2023-03-27 00:35:56.103457+00:00
+Build Date UTC : 2023-03-27 00:47:25.681692+00:00
 -->
