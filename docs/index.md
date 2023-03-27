@@ -261,18 +261,24 @@ You need to enable the image registry for building and pushing of images. Link: 
     - Set managementState from `Removed` to `Managed`: 
   
   
-    `managementState: Removed' 
+
+    `managementState: Removed`
+  
   
     to
-    
+  
+  
     `managementState: Managed`
   
   
-    - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
+    - Set rolloutStrategy from `RollingUpdate` to `Recreate`:
   
-    'rolloutStrategy: RollingUpdate`
+  
+    `rolloutStrategy: RollingUpdate`
+  
     
     to
+    
     
     `rolloutStrategy: Recreate`
 
@@ -280,7 +286,9 @@ You need to enable the image registry for building and pushing of images. Link: 
   
     `storage: {}`
     
+
     to 
+    
     
     `storage:
       pvc:
