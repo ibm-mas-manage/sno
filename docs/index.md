@@ -10,7 +10,7 @@ Overall, SNO offers a flexible and convenient way to deploy OpenShift for a vari
 ## Highlights
 - Automated SNO installation on AWS.
 - Assisted Installer for SNO installation on bare metal and vSphere. The [Assisted Installer](https://docs.openshift.com/container-platform/4.10/installing/installing_sno/install-sno-installing-sno.html) uses a wizard on Red Hat’s OpenShift Cluster Manager site.
-- A Local storage class is provided by the [ODF LVM Operator](https://github.com/red-hat-storage/lvm-operator), using a dedicated disk.
+- Local storage can be configured using [ODS LVM Operator](https://github.com/red-hat-storage/lvm-operator)
 - Automated installation of MAS, Manage, Mobile, and DB2 using ansible-devops/CLI. 
     - Generates JDBC Configuration for all three external databases(DB2, Oracle, SQL server) from CLI.
 - Supports all valid combinations of industry solutions and add-ons based on the compatibility matrix.
