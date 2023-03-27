@@ -293,8 +293,12 @@ and related provisioner. </li>
 </ul>
 <p><img alt="image" src="images/lvmstorageclass.png" /></p>
 <ul>
-<li>Set the LVM storage class as the default:</li>
-<li>In the OpenShift Console UI, go to Storage -&gt; StorageClasses using the left menu. You should see <code>odf-lvm-vg1</code>.</li>
+<li>
+<p>Set the LVM storage class as the default:</p>
+</li>
+<li>
+<p>In the OpenShift Console UI, go to Storage -&gt; StorageClasses using the left menu. You should see <code>odf-lvm-vg1</code>.</p>
+</li>
 <li>Click on it, in the next screen click on the YAML tab.</li>
 <li>
 <p>Add storageclass.kubernetes.io/is-default-class: "true" under the annotations.</p>
@@ -340,21 +344,27 @@ volumeBindingMode: WaitForFirstConsumer
 <p><img alt="image" src="images/configcluster.png" /></p>
 <ul>
 <li>Update the cluster yaml:</li>
-<li>Set managementState from <code>Removed</code> to <code>Managed</code>: 
-  <code>managementState: Removed</code>
-  to 
-  <code>managementState: Managed</code></li>
-<li>Set rolloutStrategy from 'RollingUpdate<code>to</code>Recreate`:
-  <code>rolloutStrategy: RollingUpdate</code>
-  to 
-  <code>rolloutStrategy: Recreate</code></li>
-<li>Set Storage:
-  <code>storage: {}</code>
-  to 
-  <code>storage:
-    pvc:
-      claim: ''</code>    </li>
+<li>Set managementState from <code>Removed</code> to <code>Managed</code>: </li>
 </ul>
+<p><code>managementState: Removed</code></p>
+<p>to</p>
+<p><code>managementState: Managed</code></p>
+<ul>
+<li>Set rolloutStrategy from 'RollingUpdate<code>to</code>Recreate`:</li>
+</ul>
+<p>```</p>
+<p>rolloutStrategy: RollingUpdate
+  ```</p>
+<p>to</p>
+<p><code>rolloutStrategy: Recreate</code></p>
+<ul>
+<li>Set Storage:</li>
+</ul>
+<p><code>storage: {}</code></p>
+<p>to </p>
+<p><code>storage:
+    pvc:
+      claim: ''</code>    </p>
 <p>You can also use  <code>oc edit</code> to update the cluster yaml using command line:</p>
 <pre><code>$ oc edit configs.imageregistry/cluster
 </code></pre>
@@ -384,7 +394,8 @@ Welcome! See 'oc help' to get started.
 <ul>
 <li>mas install</li>
 </ul>
-<pre><code>mas install
+<pre><code>
+mas install
 
 IBM Maximo Application Suite Installer
 Powered by https://github.com/ibm-mas/ansible-devops/ and https://tekton.dev/
@@ -672,5 +683,5 @@ spec:
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2023-03-26 23:56:39.974695+00:00
+Build Date UTC : 2023-03-27 00:12:10.368264+00:00
 -->
