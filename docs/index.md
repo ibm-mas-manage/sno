@@ -202,11 +202,15 @@ You can install LVM operator from operator hub.
 
 
 - Set the LVM storage class as the default:
+
     - In the OpenShift Console UI, go to Storage -> StorageClasses using the left menu. You should see `odf-lvm-vg1`.
     - Click on it, in the next screen click on the YAML tab.
     - Add storageclass.kubernetes.io/is-default-class: "true" under the annotations.
+
  
 - The YAML should look like this:
+
+
 
 
 ```
@@ -249,6 +253,7 @@ You need to enable the image registry for building and pushing of images. Link: 
 
 
 - Update the cluster yaml:
+
 
     - Set managementState from `Removed` to `Managed`: 
   
@@ -577,7 +582,9 @@ spec:
 ```
 
 - If `image-storage-registry` PVC is still not bound:
+
     - Uninstall LVM operator.
     -  Clean the disk and reinstall LVM Operator.
+
 
 	
