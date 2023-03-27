@@ -261,6 +261,7 @@ You need to enable the image registry for building and pushing of images. Link: 
     - Set managementState from `Removed` to `Managed`: 
   
   
+
     `managementState: Removed` 
   
   
@@ -274,7 +275,7 @@ You need to enable the image registry for building and pushing of images. Link: 
   
   
     'rolloutStrategy: RollingUpdate`
-    
+  
     
     to
     
@@ -285,7 +286,7 @@ You need to enable the image registry for building and pushing of images. Link: 
   
     `storage: {}`
     
-    
+
     to 
     
     
