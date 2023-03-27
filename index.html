@@ -295,13 +295,11 @@ and related provisioner. </li>
 <ul>
 <li>
 <p>Set the LVM storage class as the default:</p>
-</li>
-<li>
-<p>In the OpenShift Console UI, go to Storage -&gt; StorageClasses using the left menu. You should see <code>odf-lvm-vg1</code>.</p>
-</li>
+<ul>
+<li>In the OpenShift Console UI, go to Storage -&gt; StorageClasses using the left menu. You should see <code>odf-lvm-vg1</code>.</li>
 <li>Click on it, in the next screen click on the YAML tab.</li>
-<li>
-<p>Add storageclass.kubernetes.io/is-default-class: "true" under the annotations.</p>
+<li>Add storageclass.kubernetes.io/is-default-class: "true" under the annotations.</li>
+</ul>
 </li>
 <li>
 <p>The YAML should look like this:</p>
@@ -329,8 +327,7 @@ volumeBindingMode: WaitForFirstConsumer
 <ul>
 <li>You can also use CLI command to set the storageclass as the default:</li>
 </ul>
-<pre><code>oc patch storageclass odf-lvm-vg1 -p '{&quot;metadata&quot;: 
-{&quot;annotations&quot;:{&quot;storageclass.kubernetes.io/is-default-class&quot;:&quot;true&quot;}}}'
+<pre><code>oc patch storageclass odf-lvm-vg1 -p '{&quot;metadata&quot;: {&quot;annotations&quot;:{&quot;storageclass.kubernetes.io/is-default-class&quot;:&quot;true&quot;}}}'
 </code></pre>
 <h4 id="enable-image-registry">Enable Image Registry<a class="headerlink" href="#enable-image-registry" title="Permanent link"></a></h4>
 <p>You need to enable the image registry for building and pushing of images. Link: <a href="https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal">configuring the registry for bare metal</a></p>
@@ -343,7 +340,9 @@ volumeBindingMode: WaitForFirstConsumer
 </ul>
 <p><img alt="image" src="images/configcluster.png" /></p>
 <ul>
-<li>Update the cluster yaml:</li>
+<li>
+<p>Update the cluster yaml:</p>
+<ul>
 <li>Set managementState from <code>Removed</code> to <code>Managed</code>: </li>
 </ul>
 <p><code>managementState: Removed</code></p>
@@ -354,7 +353,7 @@ volumeBindingMode: WaitForFirstConsumer
 </ul>
 <p>```</p>
 <p>rolloutStrategy: RollingUpdate
-  ```</p>
+```</p>
 <p>to</p>
 <p><code>rolloutStrategy: Recreate</code></p>
 <ul>
@@ -363,8 +362,10 @@ volumeBindingMode: WaitForFirstConsumer
 <p><code>storage: {}</code></p>
 <p>to </p>
 <p><code>storage:
-    pvc:
-      claim: ''</code>    </p>
+  pvc:
+    claim: ''</code>    </p>
+</li>
+</ul>
 <p>You can also use  <code>oc edit</code> to update the cluster yaml using command line:</p>
 <pre><code>$ oc edit configs.imageregistry/cluster
 </code></pre>
@@ -633,9 +634,13 @@ spec:
   volumeMode: Filesystem
 </code></pre>
 <ul>
-<li>If <code>image-storage-registry</code> PVC is still not bound:</li>
+<li>
+<p>If <code>image-storage-registry</code> PVC is still not bound:</p>
+<ul>
 <li>Uninstall LVM operator.</li>
 <li>Clean the disk and reinstall LVM Operator.</li>
+</ul>
+</li>
 </ul>
               
             </div>
@@ -683,5 +688,5 @@ spec:
 
 <!--
 MkDocs version : 1.4.2
-Build Date UTC : 2023-03-27 00:12:10.368264+00:00
+Build Date UTC : 2023-03-27 00:26:15.394289+00:00
 -->
