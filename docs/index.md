@@ -260,35 +260,26 @@ You need to enable the image registry for building and pushing of images. Link: 
 
     - Set managementState from `Removed` to `Managed`: 
   
- ![image](images/removed.png)
-  
+    `managementState: Removed' 
     to
-  
- ![image](images/managed.png)
-    
+    `managementState: Managed`
   
     - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
   
- ![image](images/rollingupdate.png)
-  
-  
+    'rolloutStrategy: RollingUpdate`
     to
-  
-  
- ![image](images/recreate.png)
-
+    `rolloutStrategy: Recreate`
 
     - Set Storage:
-    
   
- ![image](images/storageold.png)
-   
-   
+    `storage: {}`
     to 
-  
-  
-  ![image](images/storagenew.png)
-   
+    
+    `storage:
+      pvc:
+        claim: ''`
+      
+
 
 You can also use  `oc edit` to update the cluster yaml using command line:
 
@@ -585,6 +576,5 @@ spec:
 
     - Uninstall LVM operator.
     - Clean the disk and reinstall LVM Operator.
-
 
 
