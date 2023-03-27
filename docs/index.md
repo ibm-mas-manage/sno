@@ -212,7 +212,6 @@ You can install LVM operator from operator hub.
 
 
 
-
 ```
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
@@ -234,11 +233,14 @@ allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
 ```
 
+
 - You can also use CLI command to set the storageclass as the default:
+
 
 ```
 oc patch storageclass odf-lvm-vg1 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ``` 
+
 
 #### Enable Image Registry
 You need to enable the image registry for building and pushing of images. Link: [configuring the registry for bare metal](https://docs.openshift.com/container-platform/4.8/registry/configuring_registry_storage/configuring-registry-storage-baremetal.html#configuring-registry-storage-baremetal)
@@ -246,6 +248,7 @@ You need to enable the image registry for building and pushing of images. Link: 
 - In the OpenShift Console UI, Home->Search for `config`
 
 ![image](images/searchconfig.png)
+
 
 - Click `cluster`. Go to the `YAML` tab.  Click on the top right `Action` drop down and select `Edit Config`. 
 
@@ -261,7 +264,9 @@ You need to enable the image registry for building and pushing of images. Link: 
     managementState: Removed
     ```
   
+  
     to
+  
   
     ```
     managementState: Managed
@@ -269,8 +274,8 @@ You need to enable the image registry for building and pushing of images. Link: 
   
     - Set rolloutStrategy from 'RollingUpdate` to `Recreate`:
   
-    ```
   
+    ```
     rolloutStrategy: RollingUpdate
     ```
   
@@ -280,6 +285,7 @@ You need to enable the image registry for building and pushing of images. Link: 
     rolloutStrategy: Recreate
     ```
 
+
     - Set Storage:
   
     ```
@@ -287,6 +293,7 @@ You need to enable the image registry for building and pushing of images. Link: 
     ```
   
     to 
+  
   
     ```
     storage:
@@ -296,6 +303,7 @@ You need to enable the image registry for building and pushing of images. Link: 
 
 
 You can also use  `oc edit` to update the cluster yaml using command line:
+
 
 ```
 $ oc edit configs.imageregistry/cluster
@@ -545,18 +553,22 @@ You can see the installation progess and logs from OpenShift Console in the mas-
 
 ### BareMetal/VSphere
 To enable building and pushing of images, the `image-storage-registry` PVC should be in the bound status. If the image-registry-storage PVC is in Pending status, you need to follow the steps below to update the image-storage-registry PVC:
+	
 - In the OpenShift Console UI, go to Storage->PersistentVolumeCLaims. Select `image-storage-registry` PVC.
 - Go the YAML tab and download it using the Download button on the botton right.
 - Update the downloaded file. 
-  - Remove the metadata fields uid, resourceVersion, creationTimestamp
-  - Remove the manageFields section
-  - Remove the status section
-  - Modify the accessModes from ReadWriteMany to ReadWriteOnce	
+
+    - Remove the metadata fields uid, resourceVersion, creationTimestamp
+    - Remove the manageFields section
+    - Remove the status section
+    - Modify the accessModes from ReadWriteMany to ReadWriteOnce
+	
 - Delete `image-storage-registry` PVC.
 - Use the Create PersistentVolumeClaim button to create a new one (the project at the top right should still be openshift-image-registry). Click on the "Edit YAML” link at the top right of the screen. Replace 
 the content of the yaml with the modified one you edited.
 - Click the Create button at the bottom. The new PVC should immediately go into the “bound” state).
 - Sample PVC	
+	
 ```
 kind: PersistentVolumeClaim
 apiVersion: v1
