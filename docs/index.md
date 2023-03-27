@@ -584,7 +584,7 @@ spec:
 - If `image-storage-registry` PVC is still not bound:
 
     - Uninstall LVM operator.
-    -  Clean the disk and reinstall LVM Operator.
+    - Clean the disk and reinstall LVM Operator.
 
 
-	
+
