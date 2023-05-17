@@ -571,8 +571,6 @@ metadata:
   namespace: openshift-image-registry
   annotations:
     imageregistry.openshift.io: 'true'
-    pv.kubernetes.io/bind-completed: 'yes'
-    pv.kubernetes.io/bound-by-controller: 'yes'
     volume.beta.kubernetes.io/storage-provisioner: topolvm.cybozu.com
     volume.kubernetes.io/storage-provisioner: topolvm.cybozu.com
   finalizers:
