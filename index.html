@@ -36,7 +36,7 @@
           <a href="." class="icon icon-home"> Single Node OpenShift
         </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -97,7 +97,7 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
       <li>Single Node OpenShift</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/ibm-mas-manage/sno/blob/master/docs/index.md" class="icon icon-github"> Edit on GitHub</a>
@@ -626,8 +626,6 @@ metadata:
   namespace: openshift-image-registry
   annotations:
     imageregistry.openshift.io: 'true'
-    pv.kubernetes.io/bind-completed: 'yes'
-    pv.kubernetes.io/bound-by-controller: 'yes'
     volume.beta.kubernetes.io/storage-provisioner: topolvm.cybozu.com
     volume.kubernetes.io/storage-provisioner: topolvm.cybozu.com
   finalizers:
@@ -695,6 +693,6 @@ spec:
 </html>
 
 <!--
-MkDocs version : 1.4.2
-Build Date UTC : 2023-03-27 02:44:46.245712+00:00
+MkDocs version : 1.4.3
+Build Date UTC : 2023-05-17 17:30:48.019481+00:00
 -->
