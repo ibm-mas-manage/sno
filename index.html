@@ -73,14 +73,6 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#mas-and-manage-installation">MAS and Manage Installation</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#tekton-pipeline">Tekton Pipeline</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#baremetalvsphere">BareMetal/VSphere</a>
-    </li>
-        </ul>
-    </li>
     </ul>
                 </li>
               </ul>
@@ -163,6 +155,10 @@
 </ul>
 </li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are installing ODS LVM, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. </p>
+</div>
 <h2 id="openshift-installation">Openshift Installation<a class="headerlink" href="#openshift-installation" title="Permanent link"></a></h2>
 <ul>
 <li>Set up IBM MAS DevOps ansible collection docker container</li>
@@ -186,6 +182,7 @@ exit
 <pre><code>docker cp pull-secret sno:/mascli/masconfig/pull-secret
 docker cp license.dat sno:/mascli/masconfig/license.dat
 </code></pre>
+<p>If you are installing on AWS, go to <strong>AWS</strong> section. If you are installing on BareMetal/vSphere, go to <strong>Bare Metal/vSphere</strong> section.</p>
 <h3 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link"></a></h3>
 <ul>
 <li>Log into docker container</li>
@@ -391,57 +388,72 @@ You have access to 76 projects, the list has been suppressed. You can list all p
 Using project &quot;default&quot;.
 Welcome! See 'oc help' to get started.
 
+- Log into the docker container:
+
+</code></pre>
+<ul>
+<li>docker exec -it sno bash</li>
+</ul>
+<pre><code>- Run mas install:
+
 </code></pre>
 <ul>
 <li>mas install</li>
 </ul>
 <pre><code>
-mas install
 
-IBM Maximo Application Suite Installer
-Powered by https://github.com/ibm-mas/ansible-devops/ and https://tekton.dev/
-
-Current Limitations
-1. Support for airgap installation is limited to MAS 8.8 (core only) at present
-
-
-1. Set Target OpenShift Cluster
+</code></pre>
+<p>mas install</p>
+<p>IBM Maximo Application Suite Installer
+Powered by https://github.com/ibm-mas/ansible-devops/ and https://tekton.dev/</p>
+<p>Current Limitations
+1. Support for airgap installation is limited to MAS 8.8 (core only) at present</p>
+<ol>
+<li>
+<p>Set Target OpenShift Cluster
 Connected to OCP cluster:
    https://console-openshift-console.apps.sno4.sarika.donatelli.click
-Connect to a different cluster [y/N] N 
-
-2. Install OpenShift Pipelines Operator
-OpenShift Pipelines Operator is installed and ready ... 
-
-3. Configure Installation
+Connect to a different cluster [y/N] N </p>
+</li>
+<li>
+<p>Install OpenShift Pipelines Operator
+OpenShift Pipelines Operator is installed and ready ... </p>
+</li>
+<li>
+<p>Configure Installation
 MAS Instance ID &gt; sno
 Use online catalog? [y/N] y 
-MAS Version:
-  1. 8.10
-  2. 8.9
-Select Subscription Channel &gt; 1
-
-3.1. License Terms
+MAS Version:</p>
+</li>
+<li>8.10</li>
+<li>8.9
+Select Subscription Channel &gt; 1</li>
+</ol>
+<p>3.1. License Terms
 For information about your license, see   To continue with the installation, you must accept the license terms.
-Do you accept the license terms? [y/N] y
-
-4. Configure Operation Mode
-Maximo Application Suite can be installed in a non-production mode for internal development and testing, this setting cannot be changed after installation:
- - All applications, add-ons, and solutions have 0 (zero) installation AppPoints in non-production installations.
- - These specifications are also visible in the metrics that are shared with IBM® and on the product UI.
-
-Use non-production mode? [y/N] 
-
-5. Configure Domain &amp; Certificate Management
-Configure Custom Domain [y/N]
-
-6. Application Selection
+Do you accept the license terms? [y/N] y</p>
+<ol>
+<li>Configure Operation Mode
+Maximo Application Suite can be installed in a non-production mode for internal development and testing, this setting cannot be changed after installation:</li>
+<li>All applications, add-ons, and solutions have 0 (zero) installation AppPoints in non-production installations.</li>
+<li>These specifications are also visible in the metrics that are shared with IBM® and on the product UI.</li>
+</ol>
+<p>Use non-production mode? [y/N] </p>
+<ol>
+<li>
+<p>Configure Domain &amp; Certificate Management
+Configure Custom Domain [y/N]</p>
+</li>
+<li>
+<p>Application Selection
 Install IoT [y/N]
 Install Manage [y/N] y
-Custom Subscription Channel &gt; 8.6.x-dev
-+ Create demo data [Y/n]
-+ Configure JMS [y/N]
-+ Customize database settings [y/N] y
+Custom Subscription Channel &gt; 8.6.x-dev</p>
+</li>
+<li>Create demo data [Y/n]</li>
+<li>Configure JMS [y/N]</li>
+<li>
+<p>Customize database settings [y/N] y
 Schema &gt; maximo
 Tablespace &gt; maximo
 Indexspace &gt; maximo
@@ -449,70 +461,68 @@ Install Optimizer [y/N]
 Install Visual Inspection [y/N]
 Install Predict [y/N]
 Install Health &amp; Predict - Utilities [y/N]
-Install Assist [y/N]
-
-7. Configure Db2
-The installer can setup one or more IBM Db2 instances in your OpenShift cluster for the use of applications that require a JDBC datasource (IoT, Manage, Monitor, &amp; Predict) or you may choose to configure MAS to use an existing database.
-
-Install Db2 using the IBM Db2 Universal Operator? [Y/n] n
-
-7.1 Database configuration for IoT
+Install Assist [y/N]</p>
+</li>
+<li>
+<p>Configure Db2
+The installer can setup one or more IBM Db2 instances in your OpenShift cluster for the use of applications that require a JDBC datasource (IoT, Manage, Monitor, &amp; Predict) or you may choose to configure MAS to use an existing database.</p>
+</li>
+</ol>
+<p>Install Db2 using the IBM Db2 Universal Operator? [Y/n] n</p>
+<p>7.1 Database configuration for IoT
 Maximo IoT requires a shared system-scope Db2 instance because others application in the suite require access to the same database source.
- - Only IBM Db2 is supported for this database
-
-System Database configuration for IoT is not required because the application is not being installed
-
-7.2 Database configuration for Manage
+ - Only IBM Db2 is supported for this database</p>
+<p>System Database configuration for IoT is not required because the application is not being installed</p>
+<p>7.2 Database configuration for Manage
 Maximo Manage can be configured to share the system Db2 instance or use it's own dedicated database.
- - IBM Db2, Oracle Database, &amp; Microsoft SQL Server are all supported database options
-
-Do you want to generate a dedicated JDBC configuration for Manage? [y/N] y
-
-Select Local configuration directory &gt; /mascli/masconfig
+ - IBM Db2, Oracle Database, &amp; Microsoft SQL Server are all supported database options</p>
+<p>Do you want to generate a dedicated JDBC configuration for Manage? [y/N] y</p>
+<p>Select Local configuration directory &gt; /mascli/masconfig
 Configuration Display Name: jdbc-sb1-manage
 JDBC Connection String: jdbc:sqlserver://;serverName=ssldbsvl1.fyre.ibm.com;portNumber=1433;databaseName=maxdb80;integratedSecurity=false;sendStringParametersAsUnicode=false;selectMethod=cursor;encrypt=true;trustServerCertificate=true;
 JDBC User Name: maximo
 JDBC Password: maximo
 SSL Enabled [y/n]: y
 Path to certificate file: /mascli/masconfig/mssql.pem
-Configuring workspace-application JDBC configuration for sb1
-
-8. Additional Configuration
+Configuring workspace-application JDBC configuration for sb1</p>
+<ol>
+<li>Additional Configuration
 Additional resource definitions can be applied to the OpenShift Cluster during the MAS configuration step.
-The primary purpose of this is to apply configuration for Maximo Application Suite itself, but you can use this to deploy ANY additional resource into your cluster.
-
-The following additional configurations will be applied:
- - jdbc-sb1-wsapp.yaml
-
-Are these the correct configuration files to apply? [y/N] y
-
-9. Configure Storage Class Usage
-Maximo Application Suite and it's dependencies require storage classes that support ReadWriteOnce (RWO) access mode:
-  - ReadWriteOnce volumes can be mounted as read-write by multiple pods on a single node.
-
-Select the ReadWriteOnce storage classes to use from the list below:
- - odf-lvm-vg1
-
-ReadWriteOnce (RWO) storage class &gt; odf-lvm-vg1
-
-10. Configure IBM Container Registry
-czYWZkOWRkMDNkNjJjIn0.aRsAu30HTYJ0aYUJ4hB46GAmgK6nCu9ZBDTF_mQ6jAoV0cGxhY2UiLCJpYXQiOjE1ODM0NjIwODMsImp0aSI6ImNxxxxxxxxxxxxxxxxx
-
-11. Configure Product License
+The primary purpose of this is to apply configuration for Maximo Application Suite itself, but you can use this to deploy ANY additional resource into your cluster.</li>
+</ol>
+<p>The following additional configurations will be applied:
+ - jdbc-sb1-wsapp.yaml</p>
+<p>Are these the correct configuration files to apply? [y/N] y</p>
+<ol>
+<li>Configure Storage Class Usage
+Maximo Application Suite and it's dependencies require storage classes that support ReadWriteOnce (RWO) access mode:</li>
+<li>ReadWriteOnce volumes can be mounted as read-write by multiple pods on a single node.</li>
+</ol>
+<p>Select the ReadWriteOnce storage classes to use from the list below:
+ - odf-lvm-vg1</p>
+<p>ReadWriteOnce (RWO) storage class &gt; odf-lvm-vg1</p>
+<ol>
+<li>
+<p>Configure IBM Container Registry
+czYWZkOWRkMDNkNjJjIn0.aRsAu30HTYJ0aYUJ4hB46GAmgK6nCu9ZBDTF_mQ6jAoV0cGxhY2UiLCJpYXQiOjE1ODM0NjIwODMsImp0aSI6ImNxxxxxxxxxxxxxxxxx</p>
+</li>
+<li>
+<p>Configure Product License
 License ID &gt; 0242ac11xxxx
-License File &gt; /opt/app-root/src/masconfig/license.dat
-
-12. Configure UDS
-Maximo Application Suite version v8.10+ no longer requires IBM User Data Services as a dependency.
-
-13. Prepare Installation
-If you are using using storage classes that utilize 'WaitForFirstConsumer' binding mode choose 'No' at the prompt below
-
-Wait for PVCs to bind? [Y/n] n 
-
-Namespace 'mas-inst1-pipelines' is ready
-
-Installed Task Definitions
+License File &gt; /opt/app-root/src/masconfig/license.dat</p>
+</li>
+<li>
+<p>Configure UDS
+Maximo Application Suite version v8.10+ no longer requires IBM User Data Services as a dependency.</p>
+</li>
+<li>
+<p>Prepare Installation
+If you are using using storage classes that utilize 'WaitForFirstConsumer' binding mode choose 'No' at the prompt below</p>
+</li>
+</ol>
+<p>Wait for PVCs to bind? [Y/n] n </p>
+<p>Namespace 'mas-inst1-pipelines' is ready</p>
+<p>Installed Task Definitions
 NAME                                    IMAGE
 mas-devops-appconnect                   quay.io/ibmmas/cli:latest
 mas-devops-cert-manager                 quay.io/ibmmas/cli:latest
@@ -539,87 +549,84 @@ mas-devops-suite-install                quay.io/ibmmas/cli:latest
 mas-devops-suite-mustgather             quay.io/ibmmas/cli:latest
 mas-devops-suite-upgrade                quay.io/ibmmas/cli:latest
 mas-devops-suite-verify                 quay.io/ibmmas/cli:latest
-mas-devops-uds                          quay.io/ibmmas/cli:latest
-
-Installed Pipeline Definitions
+mas-devops-uds                          quay.io/ibmmas/cli:latest</p>
+<p>Installed Pipeline Definitions
 NAME          AGE
 mas-install   4s
 mas-update    4s
-mas-upgrade   4s
+mas-upgrade   4s</p>
+<p>quay.io/ibmmas/cli:latest is available from the target OCP cluster</p>
+<ol>
+<li>
+<p>Review Settings</p>
+<p>IBM Maximo Application Suite
+Instance ID ............... sno
+Catalog Source ............ ibm-operator-catalog
+Subscription Channel ...... 8.10.x
+IBM Entitled Registry ..... cp.icr.io/cp
+IBM Open Registry ......... icr.io/cpopen
+Entitlement Username ...... cp
+Entitlement Key ........... eyJhbGci<snip></p>
+<p>IBM Maximo Application Suite Applications
+IoT ...................... Skip Installation
+ - Monitor ............... Skip Installation
+ - Safety ................ Skip Installation
+Manage ................... ibm-operator-catalog/8.6.x
+ - Predict ............... Skip Installation
+Optimizer ................ Skip Installation
+H &amp; P Utilities .......... Skip Installation
+Assist ................... Skip Installation
+MVI ...................... Skip Installation</p>
+<p>IBM Suite License Service
+Catalog Source ............ ibm-operator-catalog
+License ID ................ 0242ac11xxxx
+License File .............. /workspace/entitlement/license.dat
+IBM Entitled Registry ..... cp.icr.io/cp
+IBM Open Registry ......... icr.io/cpopen
+Entitlement Username ...... cp
+Entitlement Key ........... eyJhbGci<snip></p>
+<p>IBM Cloud Pak Foundation Services
+Catalog Source ............ ibm-operator-catalog</p>
+</li>
+</ol>
+<p>Proceed with these settings [y/N] y</p>
+<ol>
+<li>Launch Installation
+Installation started successfully</li>
+</ol>
+<p>View progress:
+  https://console-openshift-console.apps.sno.buyermas4aws.com/pipelines/ns/mas-sno-pipelines</p>
+<pre><code>
+## Tekton Pipeline
 
-quay.io/ibmmas/cli:latest is available from the target OCP cluster
-
-11. Review Settings
-
-    IBM Maximo Application Suite
-    Instance ID ............... sno
-    Catalog Source ............ ibm-operator-catalog
-    Subscription Channel ...... 8.10.x
-    IBM Entitled Registry ..... cp.icr.io/cp
-    IBM Open Registry ......... icr.io/cpopen
-    Entitlement Username ...... cp
-    Entitlement Key ........... eyJhbGci&lt;snip&gt;
-
-    IBM Maximo Application Suite Applications
-    IoT ...................... Skip Installation
-     - Monitor ............... Skip Installation
-     - Safety ................ Skip Installation
-    Manage ................... ibm-operator-catalog/8.6.x
-     - Predict ............... Skip Installation
-    Optimizer ................ Skip Installation
-    H &amp; P Utilities .......... Skip Installation
-    Assist ................... Skip Installation
-    MVI ...................... Skip Installation
-
-    IBM Suite License Service
-    Catalog Source ............ ibm-operator-catalog
-    License ID ................ 0242ac11xxxx
-    License File .............. /workspace/entitlement/license.dat
-    IBM Entitled Registry ..... cp.icr.io/cp
-    IBM Open Registry ......... icr.io/cpopen
-    Entitlement Username ...... cp
-    Entitlement Key ........... eyJhbGci&lt;snip&gt;
-
-    IBM Cloud Pak Foundation Services
-    Catalog Source ............ ibm-operator-catalog
+You can see the installation progess and logs from OpenShift Console in the mas-&lt;workspaceid&gt;-pipelines namespace. Select Pipelines menu in the left navigation bar and click on  on PipelinesRuns tab and select pipeline run. You can click on any task and view logs.
 
 
-Proceed with these settings [y/N] y
+![image](images/pipelinerun.png)
 
-12. Launch Installation
-Installation started successfully
 
-View progress:
-  https://console-openshift-console.apps.sno.buyermas4aws.com/pipelines/ns/mas-sno-pipelines
+## Troubleshooting
+
+### BareMetal/VSphere
+To enable building and pushing of images, the `image-storage-registry` PVC should be in the bound status. If the image-registry-storage PVC is in Pending status, you need to follow the steps below to update the image-storage-registry PVC:
+
+- In the OpenShift Console UI, go to Storage-&gt;PersistentVolumeCLaims. Select `image-storage-registry` PVC.
+- Go the YAML tab and download it using the Download button on the botton right.
+- Update the downloaded file. 
+
+    - Remove the metadata fields uid, resourceVersion, creationTimestamp
+    - Remove the manageFields section
+    - Remove the status section
+    - Modify the accessModes from ReadWriteMany to ReadWriteOnce
+
+- Delete `image-storage-registry` PVC.
+- Use the Create PersistentVolumeClaim button to create a new one (the project at the top right should still be openshift-image-registry). Click on the &quot;Edit YAML” link at the top right of the screen. Replace 
+the content of the yaml with the modified one you edited.
+- Click the Create button at the bottom. The new PVC should immediately go into the “bound” state).
+- Sample PVC    
 
 </code></pre>
-<h2 id="tekton-pipeline">Tekton Pipeline<a class="headerlink" href="#tekton-pipeline" title="Permanent link"></a></h2>
-<p>You can see the installation progess and logs from OpenShift Console in the mas-<workspaceid>-pipelines namespace. Select Pipelines menu in the left navigation bar and click on  on PipelinesRuns tab and select pipeline run. You can click on any task and view logs.</p>
-<p><img alt="image" src="images/pipelinerun.png" /></p>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link"></a></h2>
-<h3 id="baremetalvsphere">BareMetal/VSphere<a class="headerlink" href="#baremetalvsphere" title="Permanent link"></a></h3>
-<p>To enable building and pushing of images, the <code>image-storage-registry</code> PVC should be in the bound status. If the image-registry-storage PVC is in Pending status, you need to follow the steps below to update the image-storage-registry PVC:</p>
-<ul>
-<li>In the OpenShift Console UI, go to Storage-&gt;PersistentVolumeCLaims. Select <code>image-storage-registry</code> PVC.</li>
-<li>Go the YAML tab and download it using the Download button on the botton right.</li>
-<li>
-<p>Update the downloaded file. </p>
-<ul>
-<li>Remove the metadata fields uid, resourceVersion, creationTimestamp</li>
-<li>Remove the manageFields section</li>
-<li>Remove the status section</li>
-<li>Modify the accessModes from ReadWriteMany to ReadWriteOnce</li>
-</ul>
-</li>
-<li>
-<p>Delete <code>image-storage-registry</code> PVC.</p>
-</li>
-<li>Use the Create PersistentVolumeClaim button to create a new one (the project at the top right should still be openshift-image-registry). Click on the "Edit YAML” link at the top right of the screen. Replace 
-the content of the yaml with the modified one you edited.</li>
-<li>Click the Create button at the bottom. The new PVC should immediately go into the “bound” state).</li>
-<li>Sample PVC    </li>
-</ul>
-<pre><code>kind: PersistentVolumeClaim
+<p>kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: image-registry-storage
@@ -638,7 +645,7 @@ spec:
       storage: 100Gi
   storageClassName: odf-lvm-vg1
   volumeMode: Filesystem
-</code></pre>
+```</p>
 <ul>
 <li>
 <p>If <code>image-storage-registry</code> PVC is still not bound:</p>
@@ -694,5 +701,5 @@ spec:
 
 <!--
 MkDocs version : 1.4.3
-Build Date UTC : 2023-05-17 17:30:48.019481+00:00
+Build Date UTC : 2023-06-03 20:20:56.225200+00:00
 -->
