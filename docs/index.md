@@ -79,7 +79,7 @@ exit
 docker cp pull-secret sno:/mascli/masconfig/pull-secret
 docker cp license.dat sno:/mascli/masconfig/license.dat
 ```
-If you are installing on AWS, go to **AWS** section. If you are installing on BareMetal/vSphere, go to **Bare Metal/vSphere** section.
+If you are installing on AWS, go to the **AWS** section. If you are installing on Bare Metal/vSphere, go to the **Bare Metal/vSphere** section.
 
 ### AWS
 
@@ -337,19 +337,13 @@ You have access to 76 projects, the list has been suppressed. You can list all p
 Using project "default".
 Welcome! See 'oc help' to get started.
 
-- Log into the docker container:
-
-```
-- docker exec -it sno bash
-```
-- Run mas install:
-
-```
-- mas install
 ```
 
+- Log into docker container; and run mas install
 
 ```
+docker exec -it sno bash
+
 mas install
 
 IBM Maximo Application Suite Installer
