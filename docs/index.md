@@ -346,6 +346,7 @@ Welcome! See 'oc help' to get started.
 ```
 docker exec -it sno bash
 ```
+
 - Run mas install:
 
 ```
