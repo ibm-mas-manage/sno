@@ -344,13 +344,12 @@ Welcome! See 'oc help' to get started.
 - Log into the docker container:
 
 ```
-- docker exec -it sno bash
-
+docker exec -it sno bash
 ```
 - Run mas install:
 
 ```
-- mas install
+mas install
 ```
 
 ```
