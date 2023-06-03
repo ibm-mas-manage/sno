@@ -50,7 +50,11 @@ I have Single Node OpenShift running on a baremetal environment with 16 Cores, 6
 - Bare metal/vSphere: 
     - Requirements [link](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/installing/installing-on-a-single-node#install-sno-requirements-for-installing-on-a-single-node_install-sno-preparing)
 
+!!! note
+    If you are installing ODS LVM, you’ll need an additional disk, an SSD preferably, and configre ODS LVM Operator to use it. 
+
 ## Openshift Installation
+
 - Set up IBM MAS DevOps ansible collection docker container
 
 ```   
@@ -75,6 +79,7 @@ exit
 docker cp pull-secret sno:/mascli/masconfig/pull-secret
 docker cp license.dat sno:/mascli/masconfig/license.dat
 ```
+If you are installing on AWS, go to **AWS** section. If you are installing on BareMetal/vSphere, go to **Bare Metal/vSphere** section.
 
 ### AWS
 
@@ -332,11 +337,19 @@ You have access to 76 projects, the list has been suppressed. You can list all p
 Using project "default".
 Welcome! See 'oc help' to get started.
 
+- Log into the docker container:
+
+```
+- docker exec -it sno bash
+```
+- Run mas install:
+
 ```
 - mas install
-
 ```
 
+
+```
 mas install
 
 IBM Maximo Application Suite Installer
